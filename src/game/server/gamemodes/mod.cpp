@@ -123,7 +123,7 @@ void CGameControllerMOD::Tick()
 				GameServer()->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "game", aBuf);
 
 				// notify all
-				GameServer()->SendChatTarget(-1, "————这里是Huinight的猎人杀————");
+				GameServer()->SendChatTarget(-1, "————————————————————————————");
 				str_format(aBuf, sizeof(aBuf), "本回合有 %d 个Hunter has been selected.", m_Hunters);
 				GameServer()->SendChatTarget(-1, aBuf);
 				GameServer()->SendChatTarget(-1, "秘密随机分配Civic和Hunter俩阵营 消灭对立阵营胜利 活人看不到死人消息 打字杀易被针对 猎人高伤榴弹有破片 有瞬杀锤子 其余武器双倍伤害");
@@ -274,5 +274,4 @@ void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 	if(pChr->GetPlayer()->GetHunter())
 		pChr->GiveWeapon(WEAPON_HAMMER, -1);
 	pChr->GiveWeapon(WEAPON_GUN, 10);
-	pChr->SetActiveWeapon(WEAPON_GUN)
 }
