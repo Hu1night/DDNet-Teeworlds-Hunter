@@ -195,17 +195,17 @@ const char *IGameController::GetTeamName(int Team)
 	if(IsTeamplay())
 	{
 		if(Team == TEAM_RED)
-			return "red team";
+			return "红队";
 		else if(Team == TEAM_BLUE)
-			return "blue team";
+			return "蓝队";
 	}
 	else
 	{
 		if(Team == 0)
-			return "game";
+			return "游戏";
 	}
 
-	return "spectators";
+	return "旁观者";
 }
 
 static bool IsSeparator(char c) { return c == ';' || c == ' ' || c == ',' || c == '\t'; }

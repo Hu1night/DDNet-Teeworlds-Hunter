@@ -854,7 +854,8 @@ void CCharacter::Snap(int SnappingClient)
 
 	pCharacter->m_PlayerFlags = GetPlayer()->m_PlayerFlags;
 }
+
 void CCharacter::SetActiveWeapon(int Weapon)
 {
-	m_LastWeapon = Weapon;//这个函数是抄infcrDust的
+	m_LastWeapon = Weapon;//这个函数是抄infclassR(InfectionDust)的
 }
