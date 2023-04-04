@@ -306,9 +306,5 @@ void CPlayer::SetHunter(bool isHunter)
 	if(isHunter)
 	{
 		GameServer()->SendBroadcast("      这局你是Hunter! 有高伤武器和瞬杀锤子\n      分辨队友 噶了所有平民胜利!", m_ClientID);//猎人提示往右靠以更好提示身份
-	}else
-	{
-		// 以后这样放OK？
-		GameServer()->SendBroadcast("这局你是Civic! 噶了所有猎人胜利!                 ", m_ClientID);//平民提示往左靠以更好提示身份
 	}
 }

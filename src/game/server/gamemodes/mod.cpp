@@ -87,6 +87,7 @@ void CGameControllerMOD::Tick()
 			}
 			else
 			{
+				GameServer()->SendBroadcast("这局你是Civic! 噶了所有猎人胜利!                 ", -1);//平民提示往左靠以更好提示身份
 				m_Hunters = g_Config.m_HuntHunterFixed ? g_Config.m_HuntHunterNumber : ((m_Civics + g_Config.m_HuntHunterRatio - 1) / g_Config.m_HuntHunterRatio);
 					str_copy(aBuf, "Hunter是: ", sizeof(aBuf));
 					str_copy(m_aHuntersMessage, "Hunter是: ", sizeof(m_aHuntersMessage));
@@ -125,7 +126,7 @@ void CGameControllerMOD::Tick()
 
 				if(g_Config.m_Huntnormalround)
 				{
-					GameServer()->SendChatTarget(-1, "————这里是Huinight的猎人杀————");
+					GameServer()->SendChatTarget(-1, "—————欢迎来到Hunter猎人杀—————");
 					str_format(aBuf, sizeof(aBuf), "本回合有 %d 个Hunter has been selected.", m_Hunters);
 					GameServer()->SendChatTarget(-1, aBuf);
 					GameServer()->SendChatTarget(-1, "秘密随机分配Civic和Hunter俩阵营 消灭对立阵营胜利 活人看不到死人消息 打字杀易被针对 猎人高伤榴弹有破片 有瞬杀锤子 其余武器双倍伤害");

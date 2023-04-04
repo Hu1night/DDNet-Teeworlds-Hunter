@@ -461,7 +461,7 @@ void IGameController::Tick()
 		}
 		else
 		{
-			if(Server()->Tick() > m_GameOverTick+Server()->TickSpeed()*1)
+			if(Server()->Tick() > m_GameOverTick+Server()->TickSpeed()*3)
 			{
 				CycleMap();
 				StartRound();
