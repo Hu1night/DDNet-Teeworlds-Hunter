@@ -71,7 +71,7 @@ void CGameControllerMOD::Tick()
 			int LeastPlayers = g_Config.m_HuntHunterFixed ? (g_Config.m_HuntHunterNumber + 1) : 2;
 			if(m_Civics < LeastPlayers)
 			{
-				if(Server()->Tick() % (Server()->TickSpeed() * 2) == 0)
+				if(Server()->Tick() % (Server()->TickSpeed() * 4) == 0)
 				{
 					str_format(aBuf, sizeof(aBuf), "这里是猎人杀PVP\n分Civic和Hunter两个阵营\n消灭对立阵营胜利\n至少需要 %d 玩家才能开始", LeastPlayers);
 					GameServer()->SendBroadcast(aBuf, -1);
@@ -123,13 +123,17 @@ void CGameControllerMOD::Tick()
 				GameServer()->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "game", aBuf);
 
 				// notify all
-				GameServer()->SendChatTarget(-1, "————————————————————————————");
-				str_format(aBuf, sizeof(aBuf), "本回合有 %d 个Hunter has been selected.", m_Hunters);
-				GameServer()->SendChatTarget(-1, aBuf);
-				GameServer()->SendChatTarget(-1, "秘密随机分配Civic和Hunter俩阵营 消灭对立阵营胜利 活人看不到死人消息 打字杀易被针对 猎人高伤榴弹有破片 有瞬杀锤子 其余武器双倍伤害");
-				GameServer()->SendChatTarget(-1, "分辨出对立玩家并消灭他们来取得胜利");
-				GameServer()->SendChatTarget(-1, "Be warned! Sudden Death.");
-				GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_EN);
+
+				if(g_Config.m_Huntnormalround)
+				{
+					GameServer()->SendChatTarget(-1, "————这里是Huinight的猎人杀————");
+					str_format(aBuf, sizeof(aBuf), "本回合有 %d 个Hunter has been selected.", m_Hunters);
+					GameServer()->SendChatTarget(-1, aBuf);
+					GameServer()->SendChatTarget(-1, "秘密随机分配Civic和Hunter俩阵营 消灭对立阵营胜利 活人看不到死人消息 打字杀易被针对 猎人高伤榴弹有破片 有瞬杀锤子 其余武器双倍伤害");
+					GameServer()->SendChatTarget(-1, "分辨出对立玩家并消灭他们来取得胜利");
+					GameServer()->SendChatTarget(-1, "Be warned! Sudden Death.");
+					GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_PL);
+				}
 
 				for(int i = 0; i < MAX_CLIENTS; i++)
 					if(GameServer()->m_apPlayers[i] && GameServer()->m_apPlayers[i]->GetTeam() == TEAM_SPECTATORS)
@@ -236,8 +240,6 @@ void CGameControllerMOD::DoWincheck()
 		for(int i = 0; i < MAX_CLIENTS; i++)
 			if(GameServer()->m_apPlayers[i] && GameServer()->m_apPlayers[i]->GetTeam() != TEAM_SPECTATORS)
 				GameServer()->m_apPlayers[i]->m_HiddenScore += GameServer()->m_apPlayers[i]->GetHunter() ? g_Config.m_HuntScoreHunterWin : g_Config.m_HuntScoreCivicWin;
-		// round end sound
-		GameServer()->CreateSoundGlobal(SOUND_CTF_CAPTURE);
 		// add hidden scores back to players
 		for(int i = 0; i < MAX_CLIENTS; i++)
 			if(GameServer()->m_apPlayers[i])
@@ -265,13 +267,27 @@ bool CGameControllerMOD::CanChangeTeam(CPlayer *pPlayer, int JoinTeam)
 	return pPlayer->GetCharacter() && pPlayer->GetCharacter()->IsAlive();
 }
 
+void CGameControllerMOD::Funchatsound()
+{
+	GameServer()->CreateSoundGlobal(SOUND_MENU);
+}
+
 void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 {
 	// default health
-	pChr->IncreaseHealth(10);
+	pChr->IncreaseHealth(g_Config.m_HuntRoundStartHealth);
+	pChr->IncreaseArmor(g_Config.m_HuntRoundStartArmor);
 
 	// give default weapons
-	if(pChr->GetPlayer()->GetHunter())
+	if(g_Config.m_HuntCivicWpHammerAllow)
+	{
 		pChr->GiveWeapon(WEAPON_HAMMER, -1);
+	}
+	else if(g_Config.m_HunterWpHammerAllow)
+	{
+		if(pChr->GetPlayer()->GetHunter())
+			pChr->GiveWeapon(WEAPON_HAMMER, -1);
+	}
 	pChr->GiveWeapon(WEAPON_GUN, 10);
+	pChr->SetActiveWeapon(WEAPON_GUN);
 }

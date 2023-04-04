@@ -180,7 +180,7 @@ void CCharacter::HandleNinja()
 				if(m_NumObjectsHit < 10)
 					m_apHitObjects[m_NumObjectsHit++] = aEnts[i];
 
-				aEnts[i]->TakeDamage(vec2(0, -10.0f),m_pPlayer->GetHunter() ? 20.0 : 13.0, m_pPlayer->GetCID(), WEAPON_NINJA);
+				aEnts[i]->TakeDamage(vec2(0, -10.0f),m_pPlayer->GetHunter() ? g_Config.m_HunterWpNinjaDmg : 13.0, m_pPlayer->GetCID(), WEAPON_NINJA);
 			}
 		}
 
@@ -313,7 +313,7 @@ void CCharacter::FireWeapon()
 				else
 					Dir = vec2(0.f, -1.f);
 
-				pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(Dir + vec2(0.f, -1.1f)) * 10.0f, m_pPlayer->GetHunter() ? 20.0 : g_pData->m_Weapons.m_Hammer.m_pBase->m_Damage,
+				pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(Dir + vec2(0.f, -1.1f)) * 10.0f, m_pPlayer->GetHunter() ? g_Config.m_HunterWpHammerDmg : g_Config.m_HuntCivicWpHammerDmg,
 					m_pPlayer->GetCID(), m_ActiveWeapon);
 
 				Hits++;
@@ -332,7 +332,7 @@ void CCharacter::FireWeapon()
 				ProjStartPos,
 				Direction,
 				(int)(Server()->TickSpeed()*GameServer()->Tuning()->m_GunLifetime),
-				m_pPlayer->GetHunter() ? g_Config.m_HuntPowerup : 1, 0, 0, -1, WEAPON_GUN);
+				m_pPlayer->GetHunter() ? g_Config.m_HunterWpPowerup : 1, 0, 0, -1, WEAPON_GUN);
 
 			GameServer()->CreateSound(m_Pos, SOUND_GUN_FIRE);
 		} break;
@@ -354,7 +354,7 @@ void CCharacter::FireWeapon()
 					ProjStartPos,
 					vec2(cosf(a), sinf(a))*Speed,
 					(int)(Server()->TickSpeed()*GameServer()->Tuning()->m_ShotgunLifetime),
-					m_pPlayer->GetHunter() ? g_Config.m_HuntPowerup : 1, 0, 0, -1, WEAPON_SHOTGUN);
+					m_pPlayer->GetHunter() ? g_Config.m_HunterWpPowerup : 1, 0, 0, -1, WEAPON_SHOTGUN);
 			}
 
 			GameServer()->CreateSound(m_Pos, SOUND_SHOTGUN_FIRE);
@@ -856,5 +856,5 @@ void CCharacter::Snap(int SnappingClient)
 }
 void CCharacter::SetActiveWeapon(int Weapon)
 {
-	m_ActiveWeapon = Weapon;//这个函数是抄infcrDust的
+	m_LastWeapon = Weapon;//这个函数是抄infcrDust的
 }

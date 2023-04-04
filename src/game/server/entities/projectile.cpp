@@ -76,7 +76,7 @@ void CProjectile::Tick()
 		if(m_Explosive)
 		{
 			GameServer()->CreateExplosion(CurPos, m_Owner, m_Weapon, false);
-			if(g_Config.m_HuntGrenadeShotgunEffect && OwnerChar && OwnerChar->GetPlayer() && OwnerChar->GetPlayer()->GetHunter())
+			if(g_Config.m_HunterWpGrenadeFwAllow && OwnerChar && OwnerChar->GetPlayer() && OwnerChar->GetPlayer()->GetHunter())
 			{
 				/*
 				GameServer()->CreateExplosion(CurPos+vec2(50,50), m_Owner, m_Weapon, false);
@@ -87,7 +87,7 @@ void CProjectile::Tick()
 
 				CMsgPacker Msg(NETMSGTYPE_SV_EXTRAPROJECTILE);
 
-				for(int i=0;i<14;i++)
+				for(int i=0;i<g_Config.m_HunterWpGrenadeFw;i++)
 				{
 					float a = (rand()%314)/5.0;
 					vec2 dir = vec2(cosf(a), sinf(a));

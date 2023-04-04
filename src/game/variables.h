@@ -84,16 +84,38 @@ MACRO_CONFIG_INT(SvVoteKick, sv_vote_kick, 1, 0, 1, CFGFLAG_SERVER, "Allow votin
 MACRO_CONFIG_INT(SvVoteKickMin, sv_vote_kick_min, 0, 0, MAX_CLIENTS, CFGFLAG_SERVER, "Minimum number of players required to start a kick vote")
 MACRO_CONFIG_INT(SvVoteKickBantime, sv_vote_kick_bantime, 5, 0, 1440, CFGFLAG_SERVER, "The time to ban a player if kicked by vote. 0 makes it just use kick")
 
-MACRO_CONFIG_INT(HuntForceTeamTalk, hunt_force_team_talk, 1, 0, 1, CFGFLAG_SERVER, "Force spectators to talk within their team")
+//以下是Hunter设置
+
+MACRO_CONFIG_INT(SvGameOverTime, sv_gameovertime, 6, 1, 20, CFGFLAG_SERVER, "结算画面显示时间（默认6,最小1,最大20）")
+
 MACRO_CONFIG_INT(HuntHunterFixed, hunt_hunter_fixed, 0, 0, 1, CFGFLAG_SERVER, "Whether to fix the number hunters (1 to fix)")
 MACRO_CONFIG_INT(HuntHunterNumber, hunt_hunter_number, 1, 1, 0xFFFFFF, CFGFLAG_SERVER, "When fixing hunter number, the number of hunters")
-MACRO_CONFIG_INT(HuntHunterRatio, hunt_hunter_ratio, 5, 2, 0xFFFFFF, CFGFLAG_SERVER, "When not fixing hunter number, select one hunter among N players")
-MACRO_CONFIG_INT(HuntScoreHunterWin, hunt_score_hunter_win, 3, 0, 0xFFFFFF, CFGFLAG_SERVER, "Score for living hunter when hunters win")
-MACRO_CONFIG_INT(HuntScoreCivicWin, hunt_score_civic_win, 1, 0, 0xFFFFFF, CFGFLAG_SERVER, "Score for living civic when civics win")
-MACRO_CONFIG_INT(HuntScoreCivicKillHunter, hunt_score_civic_kill_hunter, 2, 0, 0xFFFFFF, CFGFLAG_SERVER, "Score for civic when he kills a hunter")
-MACRO_CONFIG_INT(HuntPowerup, hunt_powerup, 2, 1, 0xFFFFFF, CFGFLAG_SERVER, "The powerup ratio of hunter's weapon")
-MACRO_CONFIG_INT(HuntBroadcastHunterDeath, hunt_broadcast_hunter_death, 0, 0, 1, CFGFLAG_SERVER, "Broadcast hunter death")
-MACRO_CONFIG_INT(HuntGrenadeShotgunEffect, hunt_grenade_shotgun_effect, 1, 0, 1, CFGFLAG_SERVER, "Grenade shotgun effect")
+
+MACRO_CONFIG_INT(HuntHunterRatio, hunt_hunter_ratio, 5, 2, 0xFFFFFF, CFGFLAG_SERVER, "几个玩家里选取一个猎人（默认5,最小2,最大inf）")
+
+MACRO_CONFIG_INT(HunterWpPowerup, hunt_hunter_wppowerup, 2, 1, 0xFFFFFF, CFGFLAG_SERVER, "猎人武器增强比例（默认2,最小1,最大inf）")
+MACRO_CONFIG_INT(HunterWpHammerAllow, hunt_hunter_wphammer_allow, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许锤子（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(HunterWpHammerDmg, hunt_hunter_wphammer_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人锤子伤害（默认20,最小0,最大inf）")
+MACRO_CONFIG_INT(HunterWpGrenadeFwAllow, hunt_hunter_wpgrenade_fwallow, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许榴弹破片（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(HunterWpGrenadeFw, hunt_hunter_wpgrenade_fw, 14, 0, 0xFFFFFF, CFGFLAG_SERVER, "榴弹破片数量（默认14,最小0,最大inf）")
+MACRO_CONFIG_INT(HunterWpNinjaDmg, hunt_hunter_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人Ninja伤害（默认20,最小0,最大inf）")
+MACRO_CONFIG_INT(HuntBroadcastHunterDeath, hunt_broadcast_hunter_death, 0, 0, 1, CFGFLAG_SERVER, "是否向全体广播猎人死亡（默认0,最小0,最大1）")
+
+MACRO_CONFIG_INT(HuntCivicWpHammerAllow, hunt_civic_wphammer_allow, 0, 0, 1, CFGFLAG_SERVER, "平民（其实是所有人）是否允许锤子（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(HuntCivicWpHammerDmg, hunt_civic_wphammer_dmg, 3, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民锤子伤害（默认3,最小0,最大inf）")
+MACRO_CONFIG_INT(HuntCivicWpNinjaDmg, hunt_civic_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民Ninja伤害（默认13,最小0,最大inf）")
+
+MACRO_CONFIG_INT(HuntAnyChrWpNinjaAllow, hunt_anychr_wpninja_allow, 1, 0, 1, CFGFLAG_SERVER, "是否允许Ninja（默认1,最小0,最大1）")
+MACRO_CONFIG_INT(HuntAnyChrForceTeamTalk, hunt_anychr_force_team_talk, 1, 0, 1, CFGFLAG_SERVER, "强制馆茶者在一个频道里（默认1,最小0,最大1）")
+
+MACRO_CONFIG_INT(HuntRoundStartHealth, hunt_round_start_health, 10, 1, 0xFFFFFF, CFGFLAG_SERVER, "开局给的血量（默认10,最小1,最大inf）")
+MACRO_CONFIG_INT(HuntRoundStartArmor, hunt_round_start_armor, 0, 0, 0xFFFFFF, CFGFLAG_SERVER, "开局给的盾（默认0,最小0,最大inf）")
+
+MACRO_CONFIG_INT(HuntScoreHunterWin, hunt_score_hunter_win, 2, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人胜利给的分数（默认2,最小0,最大inf）")
+MACRO_CONFIG_INT(HuntScoreCivicWin, hunt_score_civic_win, 1, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民胜利给的分数（默认1,最小0,最大inf）")
+MACRO_CONFIG_INT(HuntScoreCivicKillHunter, hunt_score_civic_kill_hunter, 2, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民杀个猎给的分数（默认2,最小0,最大inf）")
+
+MACRO_CONFIG_INT(Huntnormalround, hunt_normalround, 1, 0, 1, CFGFLAG_SERVER, "是否正常开局 覆盖结算画面时间为1（默认1,最小0,最大1）")
 
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly

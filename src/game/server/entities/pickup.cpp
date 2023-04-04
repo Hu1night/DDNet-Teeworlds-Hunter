@@ -1,5 +1,6 @@
 /* (c) Magnus Auvinen. See licence.txt in the root of the distribution for more information. */
 /* If you are missing that file, acquire a complete release at teeworlds.com.                */
+#include <engine/shared/config.h>
 #include <game/generated/protocol.h>
 #include <game/server/gamecontext.h>
 #include "pickup.h"
@@ -87,18 +88,21 @@ void CPickup::Tick()
 			case POWERUP_NINJA:
 				{
 					// activate ninja on target player
-					pChr->GiveNinja();
 					RespawnTime = g_pData->m_aPickups[m_Type].m_Respawntime;
-
-					// loop through all players, setting their emotes
-					CCharacter *pC = static_cast<CCharacter *>(GameServer()->m_World.FindFirst(CGameWorld::ENTTYPE_CHARACTER));
-					for(; pC; pC = (CCharacter *)pC->TypeNext())
+					if(g_Config.m_HuntAnyChrWpNinjaAllow)
 					{
-						if (pC != pChr)
-							pC->SetEmote(EMOTE_SURPRISE, Server()->Tick() + Server()->TickSpeed());
-					}
+						pChr->GiveNinja();
 
-					pChr->SetEmote(EMOTE_ANGRY, Server()->Tick() + 1200 * Server()->TickSpeed() / 1000);
+						// loop through all players, setting their emotes
+						CCharacter *pC = static_cast<CCharacter *>(GameServer()->m_World.FindFirst(CGameWorld::ENTTYPE_CHARACTER));
+						for(; pC; pC = (CCharacter *)pC->TypeNext())
+						{
+							if (pC != pChr)
+								pC->SetEmote(EMOTE_SURPRISE, Server()->Tick() + Server()->TickSpeed());
+						}
+
+						pChr->SetEmote(EMOTE_ANGRY, Server()->Tick() + 1200 * Server()->TickSpeed() / 1000);
+					}
 					break;
 				}
 

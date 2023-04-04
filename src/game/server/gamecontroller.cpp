@@ -179,6 +179,7 @@ void IGameController::EndRound()
 	if(m_Warmup) // game can't end when we are running warmup
 		return;
 
+	GameServer()->CreateSoundGlobal(SOUND_CTF_CAPTURE);
 	GameServer()->m_World.m_Paused = true;
 	m_GameOverTick = Server()->Tick();
 	m_SuddenDeath = 0;
@@ -449,11 +450,23 @@ void IGameController::Tick()
 	if(m_GameOverTick != -1)
 	{
 		// game over.. wait for restart
-		if(Server()->Tick() > m_GameOverTick+Server()->TickSpeed()*6)
+		if(g_Config.m_Huntnormalround)
 		{
-			CycleMap();
-			StartRound();
-			m_RoundCount++;
+			if(Server()->Tick() > m_GameOverTick+Server()->TickSpeed()*g_Config.m_SvGameOverTime)
+			{
+				CycleMap();
+				StartRound();
+				m_RoundCount++;
+			}
+		}
+		else
+		{
+			if(Server()->Tick() > m_GameOverTick+Server()->TickSpeed()*1)
+			{
+				CycleMap();
+				StartRound();
+				m_RoundCount++;
+			}
 		}
 	}
 	else if(GameServer()->m_World.m_Paused && m_UnpauseTimer)
@@ -554,7 +567,7 @@ void IGameController::Tick()
 								if(GameServer()->m_apPlayers[j] && GameServer()->m_apPlayers[j]->GetTeam() == TEAM_SPECTATORS)
 									++Spectators;
 							if(Spectators >= g_Config.m_SvSpectatorSlots)
-								Server()->Kick(i, "Kicked for inactivity");
+								Server()->Kick(i, "因挂机被踢出");
 							else
 								GameServer()->m_apPlayers[i]->SetTeam(TEAM_SPECTATORS);
 						}
@@ -562,7 +575,7 @@ void IGameController::Tick()
 					case 2:
 						{
 							// kick the player
-							Server()->Kick(i, "Kicked for inactivity");
+							Server()->Kick(i, "因挂机被踢出");
 						}
 					}
 				}

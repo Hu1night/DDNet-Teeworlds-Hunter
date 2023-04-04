@@ -25,6 +25,7 @@ public:
 	virtual void DoWincheck();
 	virtual bool CanChangeTeam(CPlayer *pPlayer, int JoinTeam);
 	virtual void OnCharacterSpawn(class CCharacter *pChr);
+	virtual void Funchatsound();
 	virtual void PostReset();
 	// add more virtual functions here if you wish
 

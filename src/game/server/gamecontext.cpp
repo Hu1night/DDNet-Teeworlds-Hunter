@@ -235,7 +235,7 @@ void CGameContext::SendChat(int ChatterClientID, int Team, const char *pText)
 	else
 		str_format(aBuf, sizeof(aBuf), "*** %s", pText);
 	// disallow spectators talking with players
-	if(!m_pController->IsGameOver() && g_Config.m_HuntForceTeamTalk && 0 <= ChatterClientID && ChatterClientID < MAX_CLIENTS && !IsClientPlayer(ChatterClientID))
+	if(!m_pController->IsGameOver() && g_Config.m_HuntAnyChrForceTeamTalk && 0 <= ChatterClientID && ChatterClientID < MAX_CLIENTS && !IsClientPlayer(ChatterClientID))
 	{
 		Console()->Print(IConsole::OUTPUT_LEVEL_ADDINFO, "forcedteamchat", aBuf);
 		Team = TEAM_SPECTATORS;
@@ -1460,6 +1460,13 @@ void CGameContext::ConWhoIsHunter(IConsole::IResult *pResult, void *pUserData)
 		}
 }
 
+void CGameContext::ConFunChat(IConsole::IResult *pResult, void *pUserData)
+{
+	CGameContext *pSelf = (CGameContext *)pUserData;
+	pSelf->SendChat(-1, CGameContext::CHAT_ALL, "有趣的一轮开始了！爱坤Kunter对战Sid Meier's Civics！");
+	pSelf->SendChat(-1, CGameContext::CHAT_ALL, "你是锤子！有瞬杀Dio图和高伤暴民，答辩并把锤柄插入所有平民触发战败CG胜利！");
+}
+
 void CGameContext::ConchainSpecialMotdupdate(IConsole::IResult *pResult, void *pUserData, IConsole::FCommandCallback pfnCallback, void *pCallbackUserData)
 {
 	pfnCallback(pResult, pCallbackUserData);
@@ -1503,6 +1510,7 @@ void CGameContext::OnConsoleInit()
 	Console()->Chain("sv_motd", ConchainSpecialMotdupdate, this);
 
 	Console()->Register("who_is_hunter", "", CFGFLAG_SERVER, ConWhoIsHunter, this, "Who is hunter?");
+	Console()->Register("funchat", "", CFGFLAG_SERVER, ConFunChat, this, "For funnnnnnnnnn");
 }
 
 void CGameContext::OnInit(/*class IKernel *pKernel*/)
