@@ -1465,6 +1465,7 @@ void CGameContext::ConFunChat(IConsole::IResult *pResult, void *pUserData)
 	CGameContext *pSelf = (CGameContext *)pUserData;
 	pSelf->SendChat(-1, CGameContext::CHAT_ALL, "有趣的一轮开始了！爱坤Kunter对战Sid Meier's Civics！");
 	pSelf->SendChat(-1, CGameContext::CHAT_ALL, "你是锤子！有瞬杀Dio图和高伤暴民，答辩并把锤柄插入所有平民触发战败CG胜利！");
+	pSelf->CreateSoundGlobal(SOUND_MENU, -1);
 }
 
 void CGameContext::ConchainSpecialMotdupdate(IConsole::IResult *pResult, void *pUserData, IConsole::FCommandCallback pfnCallback, void *pCallbackUserData)
