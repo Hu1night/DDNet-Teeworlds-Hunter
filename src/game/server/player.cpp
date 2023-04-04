@@ -167,9 +167,9 @@ void CPlayer::OnDisconnect(const char *pReason)
 	{
 		char aBuf[512];
 		if(pReason && *pReason)
-			str_format(aBuf, sizeof(aBuf), "'%s' has left the game (%s)", Server()->ClientName(m_ClientID), pReason);
+			str_format(aBuf, sizeof(aBuf), "'%s'离开了游戏(%s)", Server()->ClientName(m_ClientID), pReason);
 		else
-			str_format(aBuf, sizeof(aBuf), "'%s' has left the game", Server()->ClientName(m_ClientID));
+			str_format(aBuf, sizeof(aBuf), "'%s'离开了游戏", Server()->ClientName(m_ClientID));
 		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 
 		str_format(aBuf, sizeof(aBuf), "leave player='%d:%s'", m_ClientID, Server()->ClientName(m_ClientID));
@@ -255,7 +255,7 @@ void CPlayer::SetTeam(int Team, bool DoChatMsg)
 	char aBuf[512];
 	if(DoChatMsg)
 	{
-		str_format(aBuf, sizeof(aBuf), "'%s' joined the %s", Server()->ClientName(m_ClientID), GameServer()->m_pController->GetTeamName(Team));
+		str_format(aBuf, sizeof(aBuf), "'%s'加入了%s", Server()->ClientName(m_ClientID), GameServer()->m_pController->GetTeamName(Team));
 		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 	}
 
@@ -306,5 +306,9 @@ void CPlayer::SetHunter(bool isHunter)
 	if(isHunter)
 	{
 		GameServer()->SendBroadcast("      这局你是Hunter! 有高伤武器和瞬杀锤子\n      分辨队友 噶了所有平民胜利!", m_ClientID);//猎人提示往右靠以更好提示身份
+	}else
+	{
+		// 以后这样放OK？
+		GameServer()->SendBroadcast("这局你是Civic! 噶了所有猎人胜利!                 ", m_ClientID);//平民提示往左靠以更好提示身份
 	}
 }

@@ -87,7 +87,6 @@ void CGameControllerMOD::Tick()
 			}
 			else
 			{
-				GameServer()->SendBroadcast("这局你是Civic! 噶了所有猎人胜利!                 ", -1);//平民提示往左靠以更好提示身份
 				m_Hunters = g_Config.m_HuntHunterFixed ? g_Config.m_HuntHunterNumber : ((m_Civics + g_Config.m_HuntHunterRatio - 1) / g_Config.m_HuntHunterRatio);
 					str_copy(aBuf, "Hunter是: ", sizeof(aBuf));
 					str_copy(m_aHuntersMessage, "Hunter是: ", sizeof(m_aHuntersMessage));
