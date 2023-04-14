@@ -53,4 +53,4 @@ jobs:
     - name: Build in release mode
       run: ./bam/bam server_release
     - name: Test release
-      run: ./build/x86_64/release/teeworlds_srv shutdown
+      run: ./build/x86_64/release/hunter_srv shutdown
