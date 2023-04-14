@@ -61,7 +61,7 @@ MACRO_CONFIG_INT(SvUnpauseTimer, sv_unpause_timer, 0, 0, 0, CFGFLAG_SERVER, "Num
 MACRO_CONFIG_STR(SvMotd, sv_motd, 900, "", CFGFLAG_SERVER, "Message of the day to display for the clients")
 MACRO_CONFIG_INT(SvTeamdamage, sv_teamdamage, 0, 0, 1, CFGFLAG_SERVER, "Team damage")
 MACRO_CONFIG_STR(SvMaprotation, sv_maprotation, 768, "", CFGFLAG_SERVER, "Maps to rotate between")
-MACRO_CONFIG_INT(SvRoundsPerMap, sv_rounds_per_map, 1, 1, 100, CFGFLAG_SERVER, "Number of rounds on each map before rotating")
+MACRO_CONFIG_INT(SvRoundsPerMap, sv_rounds_per_map, 1, 1, 114514, CFGFLAG_SERVER, "Number of rounds on each map before rotating")
 MACRO_CONFIG_INT(SvRoundSwap, sv_round_swap, 1, 0, 1, CFGFLAG_SERVER, "Swap teams between rounds")
 MACRO_CONFIG_INT(SvPowerups, sv_powerups, 1, 0, 1, CFGFLAG_SERVER, "Allow powerups like ninja")
 MACRO_CONFIG_INT(SvScorelimit, sv_scorelimit, 20, 0, 1000, CFGFLAG_SERVER, "Score limit (0 disables)")
@@ -93,20 +93,21 @@ MACRO_CONFIG_INT(HuntHunterNumber, hunt_hunter_number, 1, 1, 0xFFFFFF, CFGFLAG_S
 
 MACRO_CONFIG_INT(HuntHunterRatio, hunt_hunter_ratio, 5, 2, 0xFFFFFF, CFGFLAG_SERVER, "几个玩家里选取一个猎人（默认5,最小2,最大inf）")
 
-MACRO_CONFIG_INT(HunterWpPowerup, hunt_hunter_wppowerup, 2, 1, 0xFFFFFF, CFGFLAG_SERVER, "猎人武器增强比例（默认2,最小1,最大inf）")
-MACRO_CONFIG_INT(HunterWpHammerAllow, hunt_hunter_wphammer_allow, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许锤子（默认0,最小0,最大1）")
-MACRO_CONFIG_INT(HunterWpHammerDmg, hunt_hunter_wphammer_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人锤子伤害（默认20,最小0,最大inf）")
-MACRO_CONFIG_INT(HunterWpGrenadeFwAllow, hunt_hunter_wpgrenade_fwallow, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许榴弹破片（默认0,最小0,最大1）")
-MACRO_CONFIG_INT(HunterWpGrenadeFw, hunt_hunter_wpgrenade_fw, 14, 0, 0xFFFFFF, CFGFLAG_SERVER, "榴弹破片数量（默认14,最小0,最大inf）")
-MACRO_CONFIG_INT(HunterWpNinjaDmg, hunt_hunter_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人Ninja伤害（默认20,最小0,最大inf）")
+MACRO_CONFIG_INT(HuntWpPowerup, hunt_wppowerup, 2, 1, 0xFFFFFF, CFGFLAG_SERVER, "猎人武器增强比例（默认2,最小1,最大inf）")
+MACRO_CONFIG_INT(HuntWpHammerAllow, hunt_wphammer_allow, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许锤子（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(HuntWpHammerDmg, hunt_wphammer_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人锤子伤害（默认20,最小0,最大inf）")
+MACRO_CONFIG_INT(HuntWpGrenadeFwAllow, hunt_wpgrenade_fwallow, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许榴弹破片（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(HuntWpGrenadeFw, hunt_wpgrenade_fw, 14, 0, 0xFFFFFF, CFGFLAG_SERVER, "榴弹破片数量（默认14,最小0,最大inf）")
+MACRO_CONFIG_INT(HuntWpNinjaDmg, hunt_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人Ninja伤害（默认20,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntBroadcastHunterDeath, hunt_broadcast_hunter_death, 0, 0, 1, CFGFLAG_SERVER, "是否向全体广播猎人死亡（默认0,最小0,最大1）")
 
-MACRO_CONFIG_INT(HuntCivicWpHammerAllow, hunt_civic_wphammer_allow, 0, 0, 1, CFGFLAG_SERVER, "平民（其实是所有人）是否允许锤子（默认0,最小0,最大1）")
-MACRO_CONFIG_INT(HuntCivicWpHammerDmg, hunt_civic_wphammer_dmg, 3, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民锤子伤害（默认3,最小0,最大inf）")
-MACRO_CONFIG_INT(HuntCivicWpNinjaDmg, hunt_civic_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民Ninja伤害（默认13,最小0,最大inf）")
+MACRO_CONFIG_INT(CivWpHammerAllow, civ_wphammer_allow, 0, 0, 1, CFGFLAG_SERVER, "平民（其实是所有人）是否允许锤子（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(CivWpHammerDmg, civ_wphammer_dmg, 3, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民锤子伤害（默认3,最小0,最大inf）")
+MACRO_CONFIG_INT(CivWpNinjaDmg, civ_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民Ninja伤害（默认13,最小0,最大inf）")
 
-MACRO_CONFIG_INT(HuntAnyChrWpNinjaAllow, hunt_anychr_wpninja_allow, 1, 0, 1, CFGFLAG_SERVER, "是否允许Ninja（默认1,最小0,最大1）")
-MACRO_CONFIG_INT(HuntAnyChrForceTeamTalk, hunt_anychr_force_team_talk, 1, 0, 1, CFGFLAG_SERVER, "强制馆茶者在一个频道里（默认1,最小0,最大1）")
+MACRO_CONFIG_INT(AnyWpNinjaAllow, any_wpninja_allow, 1, 0, 1, CFGFLAG_SERVER, "是否允许Ninja（默认1,最小0,最大1）")
+MACRO_CONFIG_INT(AnyWpNinjaRespawnTime, any_wpninja_RespawnTime, 90, 0, 0xFFFFFF, CFGFLAG_SERVER, "Ninja重刷新时间（默认1,最小0,最大inf）")
+MACRO_CONFIG_INT(AnyForceTeamTalk, any_force_team_talk, 1, 0, 1, CFGFLAG_SERVER, "强制馆茶者在一个频道里（默认1,最小0,最大1）")
 
 MACRO_CONFIG_INT(HuntRoundStartHealth, hunt_round_start_health, 10, 1, 0xFFFFFF, CFGFLAG_SERVER, "开局给的血量（默认10,最小1,最大inf）")
 MACRO_CONFIG_INT(HuntRoundStartArmor, hunt_round_start_armor, 0, 0, 0xFFFFFF, CFGFLAG_SERVER, "开局给的盾（默认0,最小0,最大inf）")
@@ -115,7 +116,9 @@ MACRO_CONFIG_INT(HuntScoreHunterWin, hunt_score_hunter_win, 2, 0, 0xFFFFFF, CFGF
 MACRO_CONFIG_INT(HuntScoreCivicWin, hunt_score_civic_win, 1, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民胜利给的分数（默认1,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntScoreCivicKillHunter, hunt_score_civic_kill_hunter, 2, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民杀个猎给的分数（默认2,最小0,最大inf）")
 
-MACRO_CONFIG_INT(Huntnormalround, hunt_normalround, 1, 0, 1, CFGFLAG_SERVER, "是否正常开局 覆盖结算画面时间为1（默认1,最小0,最大1）")
+MACRO_CONFIG_INT(HuntRoundtype, hunt_roundtype, 1, 0, 1, CFGFLAG_SERVER, "回合类型 1不会显示开局chat 会覆盖结算画面时间为3（默认1,最小0,最大1）")
+
+MACRO_CONFIG_STR(Useless, useless, 114514, "uuu", CFGFLAG_SERVER, "没用的变量")
 
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly

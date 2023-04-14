@@ -65,7 +65,7 @@ class CGameContext : public IGameServer
 	static void ConVote(IConsole::IResult *pResult, void *pUserData);
 	static void ConchainSpecialMotdupdate(IConsole::IResult *pResult, void *pUserData, IConsole::FCommandCallback pfnCallback, void *pCallbackUserData);
 
-	static void ConWhoIsHunter(IConsole::IResult *pResult, void *pUserData);
+	static void ConEchoHunterInChat(IConsole::IResult *pResult, void *pUserData);
 	static void ConFunChat(IConsole::IResult *pResult, void *pUserData);
 
 	CGameContext(int Resetting);
@@ -135,7 +135,8 @@ public:
 		CHAT_ALL=-2,
 		CHAT_SPEC=-1,
 		CHAT_RED=0,
-		CHAT_BLUE=1
+		CHAT_BLUE=1,
+		CHAT_WHISPER_RECV = 3
 	};
 
 	// network
@@ -177,6 +178,13 @@ public:
 	virtual const char *GameType();
 	virtual const char *Version();
 	virtual const char *NetVersion();
+	
+	/* Hunter start */
+	void Whisper(int ClientID, char *pStr);
+	void WhisperID(int ClientID, int VictimID, const char *pMessage);
+	void Converse(int ClientID, const char *pStr);
+	void CensorMessage(char *pCensoredMessage, const char *pMessage, int Size);
+	/* Hunter end */
 };
 
 inline int CmaskAll() { return -1; }

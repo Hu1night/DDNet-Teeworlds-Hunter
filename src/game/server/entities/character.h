@@ -55,6 +55,9 @@ public:
 
 	bool IncreaseHealth(int Amount);
 	bool IncreaseArmor(int Amount);
+	
+	void SetHealth(int Amount);// Hunter
+	void SetArmor(int Amount);// Hunter
 
 	bool GiveWeapon(int Weapon, int Ammo);
 	void GiveNinja();

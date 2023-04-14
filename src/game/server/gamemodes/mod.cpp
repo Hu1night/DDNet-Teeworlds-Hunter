@@ -1,15 +1,7 @@
 /* (c) Magnus Auvinen. See licence.txt in the root of the distribution for more information. */
 /* If you are missing that file, acquire a complete release at teeworlds.com.                */
 
-/*********************************\
-*                                 *
-* HUNTER SERVER MOD               *
-*                                 *
-* By Bluelightzero                *
-*                                 *
-* http://github.com/bluelightzero *
-*                                 *
-\*********************************/
+//这是猎人杀Hunter模式! Github地址 https://github.com/Hu1night/DDNet-Teeworlds-Hunter
 
 #include <engine/shared/config.h>
 #include <game/server/player.h>
@@ -87,11 +79,12 @@ void CGameControllerMOD::Tick()
 			}
 			else
 			{
-				GameServer()->SendBroadcast("这局你是Civic! 噶了所有猎人胜利!                 ", -1);//平民提示往左靠以更好提示身份
 				m_Hunters = g_Config.m_HuntHunterFixed ? g_Config.m_HuntHunterNumber : ((m_Civics + g_Config.m_HuntHunterRatio - 1) / g_Config.m_HuntHunterRatio);
 					str_copy(aBuf, "Hunter是: ", sizeof(aBuf));
 					str_copy(m_aHuntersMessage, "Hunter是: ", sizeof(m_aHuntersMessage));
 
+				GameServer()->SendBroadcast("这局你是Civic! 噶了所有猎人胜利!                 \n猎人高伤榴弹有破片 有瞬杀锤子", -1);//平民提示往左靠以更好提示身份
+				GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_PL, -1);
 				for(int iHunter = 0; iHunter < m_Hunters; iHunter++)
 				{
 					int nextHunter = rand() % m_Civics;
@@ -124,15 +117,14 @@ void CGameControllerMOD::Tick()
 
 				// notify all
 
-				if(g_Config.m_Huntnormalround)
+				if(g_Config.m_HuntRoundtype)
 				{
-					GameServer()->SendChatTarget(-1, "—————欢迎来到Hunter猎人杀—————");
+					GameServer()->SendChatTarget(-1, "—————欢迎来到Hunter猎人杀—————");//额额额
 					str_format(aBuf, sizeof(aBuf), "本回合有 %d 个Hunter has been selected.", m_Hunters);
 					GameServer()->SendChatTarget(-1, aBuf);
 					GameServer()->SendChatTarget(-1, "秘密随机分配Civic和Hunter俩阵营 消灭对立阵营胜利 活人看不到死人消息 打字杀易被针对 猎人高伤榴弹有破片 有瞬杀锤子 其余武器双倍伤害");
 					GameServer()->SendChatTarget(-1, "分辨出对立玩家并消灭他们来取得胜利");
 					GameServer()->SendChatTarget(-1, "Be warned! Sudden Death.");
-					GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_PL);
 				}
 
 				for(int i = 0; i < MAX_CLIENTS; i++)
@@ -267,25 +259,21 @@ bool CGameControllerMOD::CanChangeTeam(CPlayer *pPlayer, int JoinTeam)
 	return pPlayer->GetCharacter() && pPlayer->GetCharacter()->IsAlive();
 }
 
-void CGameControllerMOD::Funchatsound()
-{
-	GameServer()->CreateSoundGlobal(SOUND_MENU);
-}
-
 void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 {
 	// default health
-	pChr->IncreaseHealth(g_Config.m_HuntRoundStartHealth);
-	pChr->IncreaseArmor(g_Config.m_HuntRoundStartArmor);
+	pChr->SetHealth(g_Config.m_HuntRoundStartHealth);
+	pChr->SetArmor(g_Config.m_HuntRoundStartArmor);
 
 	// give default weapons
-	if(g_Config.m_HuntCivicWpHammerAllow)
+	if(pChr->GetPlayer()->GetHunter())
 	{
-		pChr->GiveWeapon(WEAPON_HAMMER, -1);
+		if(g_Config.m_HuntWpHammerAllow)
+			pChr->GiveWeapon(WEAPON_HAMMER, -1);
 	}
-	else if(g_Config.m_HunterWpHammerAllow)
+	else
 	{
-		if(pChr->GetPlayer()->GetHunter())
+		if(g_Config.m_CivWpHammerAllow)
 			pChr->GiveWeapon(WEAPON_HAMMER, -1);
 	}
 	pChr->GiveWeapon(WEAPON_GUN, 10);

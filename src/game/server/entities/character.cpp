@@ -180,7 +180,7 @@ void CCharacter::HandleNinja()
 				if(m_NumObjectsHit < 10)
 					m_apHitObjects[m_NumObjectsHit++] = aEnts[i];
 
-				aEnts[i]->TakeDamage(vec2(0, -10.0f),m_pPlayer->GetHunter() ? g_Config.m_HunterWpNinjaDmg : 13.0, m_pPlayer->GetCID(), WEAPON_NINJA);
+				aEnts[i]->TakeDamage(vec2(0, -10.0f),m_pPlayer->GetHunter() ? g_Config.m_HuntWpNinjaDmg : g_Config.m_CivWpNinjaDmg, m_pPlayer->GetCID(), WEAPON_NINJA);
 			}
 		}
 
@@ -313,7 +313,7 @@ void CCharacter::FireWeapon()
 				else
 					Dir = vec2(0.f, -1.f);
 
-				pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(Dir + vec2(0.f, -1.1f)) * 10.0f, m_pPlayer->GetHunter() ? g_Config.m_HunterWpHammerDmg : g_Config.m_HuntCivicWpHammerDmg,
+				pTarget->TakeDamage(vec2(0.f, -1.f) + normalize(Dir + vec2(0.f, -1.1f)) * 10.0f, m_pPlayer->GetHunter() ? g_Config.m_HuntWpHammerDmg : g_Config.m_CivWpHammerDmg,
 					m_pPlayer->GetCID(), m_ActiveWeapon);
 
 				Hits++;
@@ -332,7 +332,7 @@ void CCharacter::FireWeapon()
 				ProjStartPos,
 				Direction,
 				(int)(Server()->TickSpeed()*GameServer()->Tuning()->m_GunLifetime),
-				m_pPlayer->GetHunter() ? g_Config.m_HunterWpPowerup : 1, 0, 0, -1, WEAPON_GUN);
+				m_pPlayer->GetHunter() ? g_Config.m_HuntWpPowerup : 1, 0, 0, -1, WEAPON_GUN);
 
 			GameServer()->CreateSound(m_Pos, SOUND_GUN_FIRE);
 		} break;
@@ -354,7 +354,7 @@ void CCharacter::FireWeapon()
 					ProjStartPos,
 					vec2(cosf(a), sinf(a))*Speed,
 					(int)(Server()->TickSpeed()*GameServer()->Tuning()->m_ShotgunLifetime),
-					m_pPlayer->GetHunter() ? g_Config.m_HunterWpPowerup : 1, 0, 0, -1, WEAPON_SHOTGUN);
+					m_pPlayer->GetHunter() ? g_Config.m_HuntWpPowerup : 1, 0, 0, -1, WEAPON_SHOTGUN);
 			}
 
 			GameServer()->CreateSound(m_Pos, SOUND_SHOTGUN_FIRE);
@@ -660,12 +660,11 @@ bool CCharacter::IncreaseArmor(int Amount)
 	m_Armor = clamp(m_Armor+Amount, 0, 10);
 	return true;
 }
-
 void CCharacter::Die(int Killer, int Weapon)
 {
 
 	// we got to wait 0.5 secs before respawning
-	m_pPlayer->m_RespawnTick = Server()->Tick()+Server()->TickSpeed()/20;
+	m_pPlayer->m_RespawnTick = Server()->Tick()+Server()->TickSpeed()/20;// Hunter
 	int ModeSpecial = GameServer()->m_pController->OnCharacterDeath(this, GameServer()->m_apPlayers[Killer], Weapon);
 
 	char aBuf[256];
@@ -855,7 +854,19 @@ void CCharacter::Snap(int SnappingClient)
 	pCharacter->m_PlayerFlags = GetPlayer()->m_PlayerFlags;
 }
 
+/* Hunter start */
 void CCharacter::SetActiveWeapon(int Weapon)
 {
-	m_LastWeapon = Weapon;//这个函数是抄infclassR(InfectionDust)的
+	m_QueuedWeapon = Weapon;//这个函数是抄infclassR(InfectionDust)的
 }
+
+void CCharacter::SetHealth(int Amount)
+{
+	m_Health = Amount;
+}
+
+void CCharacter::SetArmor(int Amount)
+{
+	m_Armor = Amount;
+}
+/* Hunter end */

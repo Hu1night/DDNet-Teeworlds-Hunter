@@ -88,8 +88,9 @@ void CPickup::Tick()
 			case POWERUP_NINJA:
 				{
 					// activate ninja on target player
-					RespawnTime = g_pData->m_aPickups[m_Type].m_Respawntime;
-					if(g_Config.m_HuntAnyChrWpNinjaAllow)
+					RespawnTime = g_Config.m_AnyWpNinjaRespawnTime;//g_pData->m_aPickups[m_Type].m_Respawntime;
+					/* Hunter start */
+					if(g_Config.m_AnyWpNinjaAllow)
 					{
 						pChr->GiveNinja();
 
@@ -103,6 +104,7 @@ void CPickup::Tick()
 
 						pChr->SetEmote(EMOTE_ANGRY, Server()->Tick() + 1200 * Server()->TickSpeed() / 1000);
 					}
+					/* Hunter start */
 					break;
 				}
 

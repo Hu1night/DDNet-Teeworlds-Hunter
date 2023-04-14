@@ -265,7 +265,7 @@ void CPlayer::SetTeam(int Team, bool DoChatMsg)
 	m_LastActionTick = Server()->Tick();
 	m_SpectatorID = SPEC_FREEVIEW;
 	// we got to wait 0.5 secs before respawning
-	m_RespawnTick = Server()->Tick()+Server()->TickSpeed()/20;
+	m_RespawnTick = Server()->Tick()+Server()->TickSpeed()/50;// Hunter
 	str_format(aBuf, sizeof(aBuf), "team_join player='%d:%s' m_Team=%d", m_ClientID, Server()->ClientName(m_ClientID), m_Team);
 	GameServer()->Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
 
@@ -305,6 +305,8 @@ void CPlayer::SetHunter(bool isHunter)
 	m_Hunter = isHunter;
 	if(isHunter)
 	{
-		GameServer()->SendBroadcast("      这局你是Hunter! 有高伤武器和瞬杀锤子\n      分辨队友 噶了所有平民胜利!", m_ClientID);//猎人提示往右靠以更好提示身份
+		GameServer()->SendBroadcast("      这局你是Hunter! 你有高伤武器和瞬杀锤子\n      猎人高伤榴弹有破片 其余武器双倍伤害\n      分辨出你的队友 噶了所有平民胜利!", m_ClientID);//猎人提示往右靠以更好提示身份
+		GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_EN, m_ClientID);
 	}
 }
+

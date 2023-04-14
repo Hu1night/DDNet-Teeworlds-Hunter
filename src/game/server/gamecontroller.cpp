@@ -450,7 +450,7 @@ void IGameController::Tick()
 	if(m_GameOverTick != -1)
 	{
 		// game over.. wait for restart
-		if(g_Config.m_Huntnormalround)
+		if(g_Config.m_HuntRoundtype)
 		{
 			if(Server()->Tick() > m_GameOverTick+Server()->TickSpeed()*g_Config.m_SvGameOverTime)
 			{
