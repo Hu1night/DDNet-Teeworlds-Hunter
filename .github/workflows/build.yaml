@@ -10,14 +10,11 @@ jobs:
         os: [ubuntu-latest]
         include:
         - os: ubuntu-latest
-          cmake-args: -G "Unix Makefiles"
-          build-args: --parallel
           package-file: hunter_srv
           env:
             CFLAGS: -Wdeclaration-after-statement -Werror
             CXXFLAGS: -Werror
         - os: windows-latest
-          cmake-args: -A x64
           package-file: teeworlds-*-win64.zip
           env:
             CFLAGS: /WX
@@ -35,13 +32,6 @@ jobs:
         repository: matricks/bam
         ref: 8cd08744c37666830d439ab54016c9d228c63b68
         path: ./bam
-
-    - name: Checkout zlib
-      if: contains(matrix.os, 'windows')
-      uses: actions/checkout@v2
-      with:
-        repository: madler/zlib
-        path: ./src
 
     - name: Prepare Linux
       if: contains(matrix.os, 'ubuntu')
