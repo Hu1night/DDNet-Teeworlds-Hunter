@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest]
         include:
         - os: ubuntu-latest
           package-file: hunter_srv
@@ -15,6 +15,7 @@ jobs:
             CFLAGS: -Wdeclaration-after-statement -Werror
             CXXFLAGS: -Werror
         - os: windows-latest
+          cmake-args: -A x64
           package-file: teeworlds-*-win64.zip
           env:
             CFLAGS: /WX
@@ -46,14 +47,22 @@ jobs:
         ./make_win64_msvc.bat
 
     - name: Build in release mode
+      if: contains(matrix.os, 'ubuntu')
       run: ./bam/bam server_release
+
+    - name: Build in release mode windows
+      env: contains(matrix.os, 'windows')
+      run: |
+        ${{ matrix.cmake-path }}cmake ${{ matrix.cmake-args }} -DCMAKE_BUILD_TYPE=Release -Werror=dev -DDOWNLOAD_GTEST=ON -DCMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE=. ..
+        ${{ matrix.cmake-path }}cmake --build . --config Release ${{ matrix.build-args }} --target everything
+
     - name: Test release
-      run: ./hunter_srv shutdown
+      run: ${{ matrix.package-file }} shutdown
 
     - name: Package
       run: |
         mkdir artifacts
-        mv ./hunter_srv artifacts
+        mv ${{ matrix.package-file }} artifacts
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v1
