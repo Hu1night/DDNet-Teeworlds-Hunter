@@ -47,11 +47,9 @@ jobs:
         ./make_win64_msvc.bat
 
     - name: Build in release mode
-      if: contains(matrix.os, 'ubuntu')
       run: ./bam/bam server_release
-
     - name: Test release
-      run: ${{ matrix.package-file }} shutdown
+      run: ./${{ matrix.package-file }} shutdown
 
     - name: Package
       run: |
