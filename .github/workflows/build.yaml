@@ -43,7 +43,7 @@ jobs:
     - name: Package
       run: |
         mkdir artifacts
-        mv ${{ matrix.package-file }} artifacts
+        mv ./hunter_srv artifacts
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v1
