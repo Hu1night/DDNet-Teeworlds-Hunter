@@ -16,13 +16,6 @@ jobs:
           env:
             CFLAGS: -Wdeclaration-after-statement -Werror
             CXXFLAGS: -Werror
-        - os: windows-latest
-          cmake-args: -A x64
-          package-file: teeworlds-*-win64.zip
-          env:
-            CFLAGS: /WX
-            CXXFLAGS: /WX
-            LDFLAGS: /WX
 
     steps:
     - uses: actions/checkout@v2
@@ -43,12 +36,6 @@ jobs:
         sudo apt-get install libfreetype6-dev libsdl2-dev -y
         cd bam
         ./make_unix.sh
-
-    - name: Prepare Windows
-      if: contains(matrix.os, 'windows')
-      run: |
-        cd bam
-        ./make_win64_msvc.bat
 
     - name: Build in release mode
       run: ./bam/bam server_release
