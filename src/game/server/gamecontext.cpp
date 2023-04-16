@@ -1799,30 +1799,65 @@ void CGameContext::WhisperID(int ClientID, int VictimID, const char *pMessage)
 		m_apPlayers[ClientID]->m_LastWhisperTo = VictimID;
 		m_apPlayers[ClientID]->m_LastChat = Server()->Tick();
 	}
-
-	char aCensoredMessage[256];
-	CensorMessage(aCensoredMessage, pMessage, sizeof(aCensoredMessage));
-
+	
 	char aBuf[256];
-
-	CNetMsg_Sv_Chat Msg;
-	Msg.m_Team = 2;
-	Msg.m_ClientID = VictimID;
-	Msg.m_pMessage = aCensoredMessage;
-
-	Server()->SendPackMsg(&Msg, MSGFLAG_VITAL | MSGFLAG_NORECORD, ClientID);
-
-	if(ClientID == VictimID)
+	
+	if(g_Config.m_AnyForceTeamTalk ? GetPlayerChar(VictimID) : 0)
 	{
-		return;
+		if(GetPlayerChar(ClientID) ? g_Config.m_WhisperLtL : g_Config.m_WhisperDtL)
+		{
+			char aCensoredMessage[256];
+			CensorMessage(aCensoredMessage, pMessage, sizeof(aCensoredMessage));
+
+			CNetMsg_Sv_Chat Msg;
+			Msg.m_Team = 2;
+			Msg.m_ClientID = VictimID;
+			Msg.m_pMessage = aCensoredMessage;
+
+			Server()->SendPackMsg(&Msg, MSGFLAG_VITAL | MSGFLAG_NORECORD, ClientID);
+
+			if(ClientID == VictimID)
+			{
+				return;
+			}
+
+			CNetMsg_Sv_Chat Msg2;
+			Msg2.m_Team = CHAT_WHISPER_RECV;
+			Msg2.m_ClientID = ClientID;
+			Msg2.m_pMessage = aCensoredMessage;
+
+			Server()->SendPackMsg(&Msg2, MSGFLAG_VITAL | MSGFLAG_NORECORD, VictimID);
+		}
+		else
+		{
+			str_format(aBuf, sizeof(aBuf), "小纸条只能烧给阴间");
+			SendChatTarget(ClientID, aBuf);
+		}
 	}
+	else
+	{
+		char aCensoredMessage[256];
+		CensorMessage(aCensoredMessage, pMessage, sizeof(aCensoredMessage));
 
-	CNetMsg_Sv_Chat Msg2;
-	Msg2.m_Team = CHAT_WHISPER_RECV;
-	Msg2.m_ClientID = ClientID;
-	Msg2.m_pMessage = aCensoredMessage;
+		CNetMsg_Sv_Chat Msg;
+		Msg.m_Team = 2;
+		Msg.m_ClientID = VictimID;
+		Msg.m_pMessage = aCensoredMessage;
 
-	Server()->SendPackMsg(&Msg2, MSGFLAG_VITAL | MSGFLAG_NORECORD, VictimID);
+		Server()->SendPackMsg(&Msg, MSGFLAG_VITAL | MSGFLAG_NORECORD, ClientID);
+
+		if(ClientID == VictimID)
+		{
+			return;
+		}
+
+		CNetMsg_Sv_Chat Msg2;
+		Msg2.m_Team = CHAT_WHISPER_RECV;
+		Msg2.m_ClientID = ClientID;
+		Msg2.m_pMessage = aCensoredMessage;
+
+		Server()->SendPackMsg(&Msg2, MSGFLAG_VITAL | MSGFLAG_NORECORD, VictimID);
+	}
 }
 
 void CGameContext::Converse(int ClientID, const char *pStr)

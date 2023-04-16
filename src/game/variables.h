@@ -96,18 +96,23 @@ MACRO_CONFIG_INT(HuntHunterRatio, hunt_hunter_ratio, 5, 2, 0xFFFFFF, CFGFLAG_SER
 MACRO_CONFIG_INT(HuntWpPowerup, hunt_wppowerup, 2, 1, 0xFFFFFF, CFGFLAG_SERVER, "猎人武器增强比例（默认2,最小1,最大inf）")
 MACRO_CONFIG_INT(HuntWpHammerAllow, hunt_wphammer_allow, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许锤子（默认0,最小0,最大1）")
 MACRO_CONFIG_INT(HuntWpHammerDmg, hunt_wphammer_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人锤子伤害（默认20,最小0,最大inf）")
-MACRO_CONFIG_INT(HuntWpGrenadeFwAllow, hunt_wpgrenade_fwallow, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许榴弹破片（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(HuntWpGrenadeFwAllow, hunt_wpgrenade_fwallow, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许榴弹破片（默认1,最小0,最大1）")
 MACRO_CONFIG_INT(HuntWpGrenadeFw, hunt_wpgrenade_fw, 14, 0, 0xFFFFFF, CFGFLAG_SERVER, "榴弹破片数量（默认14,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntWpNinjaDmg, hunt_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人Ninja伤害（默认20,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntBroadcastHunterDeath, hunt_broadcast_hunter_death, 0, 0, 1, CFGFLAG_SERVER, "是否向全体广播猎人死亡（默认0,最小0,最大1）")
+
+MACRO_CONFIG_INT(HuntRounstartShowHunter, hunt_round_start_show_hunter, 0, 0, 1, CFGFLAG_SERVER, "是否开局全体广播猎人（默认0,最小0,最大1）")
 
 MACRO_CONFIG_INT(CivWpHammerAllow, civ_wphammer_allow, 0, 0, 1, CFGFLAG_SERVER, "平民（其实是所有人）是否允许锤子（默认0,最小0,最大1）")
 MACRO_CONFIG_INT(CivWpHammerDmg, civ_wphammer_dmg, 3, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民锤子伤害（默认3,最小0,最大inf）")
 MACRO_CONFIG_INT(CivWpNinjaDmg, civ_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民Ninja伤害（默认13,最小0,最大inf）")
 
 MACRO_CONFIG_INT(AnyWpNinjaAllow, any_wpninja_allow, 1, 0, 1, CFGFLAG_SERVER, "是否允许Ninja（默认1,最小0,最大1）")
-MACRO_CONFIG_INT(AnyWpNinjaRespawnTime, any_wpninja_RespawnTime, 90, 0, 0xFFFFFF, CFGFLAG_SERVER, "Ninja重刷新时间（默认1,最小0,最大inf）")
+MACRO_CONFIG_INT(AnyWpNinjaRespawnTime, any_wpninja_respawntime, 90, 0, 0xFFFFFF, CFGFLAG_SERVER, "Ninja重刷新时间（默认90,最小0,最大inf）")
 MACRO_CONFIG_INT(AnyForceTeamTalk, any_force_team_talk, 1, 0, 1, CFGFLAG_SERVER, "强制馆茶者在一个频道里（默认1,最小0,最大1）")
+
+MACRO_CONFIG_INT(WhisperDtL, whisper_dead_to_alive, 0, 0, 1, CFGFLAG_SERVER, "允许死人对活人whisper（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(WhisperLtL, whisper_alive_to_alive, 1, 0, 1, CFGFLAG_SERVER, "允许活人对活人whisper（默认1,最小0,最大1）")
 
 MACRO_CONFIG_INT(HuntRoundStartHealth, hunt_round_start_health, 10, 1, 0xFFFFFF, CFGFLAG_SERVER, "开局给的血量（默认10,最小1,最大inf）")
 MACRO_CONFIG_INT(HuntRoundStartArmor, hunt_round_start_armor, 0, 0, 0xFFFFFF, CFGFLAG_SERVER, "开局给的盾（默认0,最小0,最大inf）")

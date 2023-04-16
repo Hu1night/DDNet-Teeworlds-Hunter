@@ -129,7 +129,13 @@ void CGameControllerMOD::Tick()
 
 				for(int i = 0; i < MAX_CLIENTS; i++)
 					if(GameServer()->m_apPlayers[i] && GameServer()->m_apPlayers[i]->GetTeam() == TEAM_SPECTATORS)
+					{
 						GameServer()->SendChatTarget(GameServer()->m_apPlayers[i]->GetCID(), m_aHuntersMessage);
+					}
+					else if(g_Config.m_HuntRounstartShowHunter)//垃圾代码:/
+					{
+						GameServer()->SendChatTarget(GameServer()->m_apPlayers[i]->GetCID(), m_aHuntersMessage);
+					}
 			}
 		}
 	}
