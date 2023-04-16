@@ -39,3 +39,14 @@ jobs:
       run: ./bam/bam server_release
     - name: Test release
       run: ./hunter_srv shutdown
+
+    - name: Package
+      run: |
+        mkdir artifacts
+        mv ${{ matrix.package-file }} artifacts
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: teeworlds-${{ matrix.os }}
+        path: artifacts
