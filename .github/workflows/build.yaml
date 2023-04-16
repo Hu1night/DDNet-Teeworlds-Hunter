@@ -50,12 +50,6 @@ jobs:
       if: contains(matrix.os, 'ubuntu')
       run: ./bam/bam server_release
 
-    - name: Build in release mode windows
-      if: contains(matrix.os, 'ubuntu')
-      run: |
-        ${{ matrix.cmake-path }}cmake ${{ matrix.cmake-args }} -DCMAKE_BUILD_TYPE=Release -Werror=dev -DDOWNLOAD_GTEST=ON -DCMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE=. ..
-        ${{ matrix.cmake-path }}cmake --build . --config Release ${{ matrix.build-args }} --target everything
-
     - name: Test release
       run: ${{ matrix.package-file }} shutdown
 
