@@ -86,7 +86,7 @@ MACRO_CONFIG_INT(SvVoteKickBantime, sv_vote_kick_bantime, 5, 0, 1440, CFGFLAG_SE
 
 //以下是Hunter设置
 
-MACRO_CONFIG_INT(SvGameOverTime, sv_gameovertime, 6, 1, 20, CFGFLAG_SERVER, "结算画面显示时间（默认6,最小1,最大20）")
+MACRO_CONFIG_INT(SvGameOverTime, svmod_gameovertime, 6, 1, 20, CFGFLAG_SERVER, "结算画面显示时间（默认6,最小1,最大20）")
 
 MACRO_CONFIG_INT(HuntHunterFixed, hunt_hunter_fixed, 0, 0, 1, CFGFLAG_SERVER, "Whether to fix the number hunters (1 to fix)")
 MACRO_CONFIG_INT(HuntHunterNumber, hunt_hunter_number, 1, 1, 0xFFFFFF, CFGFLAG_SERVER, "When fixing hunter number, the number of hunters")
@@ -111,8 +111,8 @@ MACRO_CONFIG_INT(AnyWpNinjaAllow, any_wpninja_allow, 1, 0, 1, CFGFLAG_SERVER, "�
 MACRO_CONFIG_INT(AnyWpNinjaRespawnTime, any_wpninja_respawntime, 90, 0, 0xFFFFFF, CFGFLAG_SERVER, "Ninja重刷新时间（默认90,最小0,最大inf）")
 MACRO_CONFIG_INT(AnyForceTeamTalk, any_force_team_talk, 1, 0, 1, CFGFLAG_SERVER, "强制馆茶者在一个频道里（默认1,最小0,最大1）")
 
-MACRO_CONFIG_INT(WhisperDtL, whisper_dead_to_alive, 0, 0, 1, CFGFLAG_SERVER, "允许死人对活人whisper（默认0,最小0,最大1）")
-MACRO_CONFIG_INT(WhisperLtL, whisper_alive_to_alive, 1, 0, 1, CFGFLAG_SERVER, "允许活人对活人whisper（默认1,最小0,最大1）")
+MACRO_CONFIG_INT(WhisperDtL, svmod_whisper_dead_to_alive, 0, 0, 1, CFGFLAG_SERVER, "允许死人对活人whisper（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(WhisperLtL, svmod_whisper_alive_to_alive, 1, 0, 1, CFGFLAG_SERVER, "允许活人对活人whisper（默认1,最小0,最大1）")
 
 MACRO_CONFIG_INT(HuntRoundStartHealth, hunt_round_start_health, 10, 1, 0xFFFFFF, CFGFLAG_SERVER, "开局给的血量（默认10,最小1,最大inf）")
 MACRO_CONFIG_INT(HuntRoundStartArmor, hunt_round_start_armor, 0, 0, 0xFFFFFF, CFGFLAG_SERVER, "开局给的盾（默认0,最小0,最大inf）")
@@ -122,8 +122,6 @@ MACRO_CONFIG_INT(HuntScoreCivicWin, hunt_score_civic_win, 1, 0, 0xFFFFFF, CFGFLA
 MACRO_CONFIG_INT(HuntScoreCivicKillHunter, hunt_score_civic_kill_hunter, 2, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民杀个猎给的分数（默认2,最小0,最大inf）")
 
 MACRO_CONFIG_INT(HuntRoundtype, hunt_roundtype, 1, 0, 1, CFGFLAG_SERVER, "回合类型 1不会显示开局chat 会覆盖结算画面时间为3（默认1,最小0,最大1）")
-
-MACRO_CONFIG_STR(Useless, useless, 114514, "uuu", CFGFLAG_SERVER, "没用的变量")
 
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly
