@@ -13,7 +13,7 @@ CGameControllerMOD::CGameControllerMOD(class CGameContext *pGameServer)
 {
 	// Exchange this to a string that identifies your game mode.
 	// DM, TDM and CTF are reserved for teeworlds original modes.
-	m_pGameType = "hunter";
+	m_pGameType = "HunterN";
 
 	//m_GameFlags = GAMEFLAG_TEAMS; // GAMEFLAG_TEAMS makes it a two-team gamemode
 }
@@ -83,8 +83,6 @@ void CGameControllerMOD::Tick()
 					str_copy(aBuf, "Hunter是: ", sizeof(aBuf));
 					str_copy(m_aHuntersMessage, "Hunter是: ", sizeof(m_aHuntersMessage));
 
-				GameServer()->SendBroadcast("这局你是Civic! 噶了所有猎人胜利!                 \n猎人高伤榴弹有破片 有瞬杀锤子", -1);//平民提示往左靠以更好提示身份
-				GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_PL, -1);
 				for(int iHunter = 0; iHunter < m_Hunters; iHunter++)
 				{
 					int nextHunter = rand() % m_Civics;
@@ -119,23 +117,24 @@ void CGameControllerMOD::Tick()
 
 				if(g_Config.m_HuntRoundtype)
 				{
-					GameServer()->SendChatTarget(-1, "—————欢迎来到Hunter猎人杀—————");//额额额
+					GameServer()->SendChatTarget(-1, "—————欢迎来到Hunter猎人杀—————");
 					str_format(aBuf, sizeof(aBuf), "本回合有 %d 个Hunter has been selected.", m_Hunters);
 					GameServer()->SendChatTarget(-1, aBuf);
-					GameServer()->SendChatTarget(-1, "秘密随机分配Civic和Hunter俩阵营 消灭对立阵营胜利 活人看不到死人消息 打字杀易被针对 猎人高伤榴弹有破片 有瞬杀锤子 其余武器双倍伤害");
-					GameServer()->SendChatTarget(-1, "分辨出对立玩家并消灭他们来取得胜利");
+					GameServer()->SendChatTarget(-1, "规则：每回合秘密抽选猎人，猎人双倍伤害，有瞬杀锤子和破片榴弹       猎人对战平民，活人看不到死人消息，打字杀易被针对");
+					GameServer()->SendChatTarget(-1, "分辨出你的队友并消灭敌人来取得胜利！");
 					GameServer()->SendChatTarget(-1, "Be warned! Sudden Death.");
 				}
 
-				for(int i = 0; i < MAX_CLIENTS; i++)
-					if(GameServer()->m_apPlayers[i] && GameServer()->m_apPlayers[i]->GetTeam() == TEAM_SPECTATORS)
-					{
-						GameServer()->SendChatTarget(GameServer()->m_apPlayers[i]->GetCID(), m_aHuntersMessage);
-					}
-					else if(g_Config.m_HuntRounstartShowHunter)//垃圾代码:/
-					{
-						GameServer()->SendChatTarget(GameServer()->m_apPlayers[i]->GetCID(), m_aHuntersMessage);
-					}
+				if(g_Config.m_ShowHunterList)
+				{
+					GameServer()->SendChatTarget(-1, m_aHuntersMessage);
+				}
+				else
+				{
+					for(int i = 0; i < MAX_CLIENTS; i++)
+						if(GameServer()->m_apPlayers[i] && GameServer()->m_apPlayers[i]->GetTeam() == TEAM_SPECTATORS)
+							GameServer()->SendChatTarget(GameServer()->m_apPlayers[i]->GetCID(), m_aHuntersMessage);
+				}
 			}
 		}
 	}
@@ -248,6 +247,7 @@ void CGameControllerMOD::DoWincheck()
 				GameServer()->m_apPlayers[i]->m_Score += GameServer()->m_apPlayers[i]->m_HiddenScore;
 				GameServer()->m_apPlayers[i]->m_HiddenScore = 0;
 			}
+		GameServer()->SendChatTarget(-1, m_aHuntersMessage);
 		EndRound();
 
 		no_win:;
@@ -267,21 +267,25 @@ bool CGameControllerMOD::CanChangeTeam(CPlayer *pPlayer, int JoinTeam)
 
 void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 {
-	// default health
-	pChr->SetHealth(g_Config.m_HuntRoundStartHealth);
-	pChr->SetArmor(g_Config.m_HuntRoundStartArmor);
-
-	// give default weapons
+	char aBuf[512];
 	if(pChr->GetPlayer()->GetHunter())
 	{
+		pChr->SetHealth(g_Config.m_HuntRoundStartHealth, 0);// default health
+		pChr->SetArmor(g_Config.m_HuntRoundStartArmor, 0);
 		if(g_Config.m_HuntWpHammerAllow)
-			pChr->GiveWeapon(WEAPON_HAMMER, -1);
+			pChr->GiveWeapon(WEAPON_HAMMER, -1);// give default weapons
+		str_format(aBuf, sizeof(aBuf), "      这局你是猎人Hunter！本回合共有%d个猎人!\n      猎人双倍伤害,有瞬杀锤子和破片榴弹\n      分辨出你的队友,噶了所有平民胜利!", m_Hunters);//猎人提示往右靠以更好提示身份
+		GameServer()->SendBroadcast(aBuf, pChr->GetPlayer()->GetCID());
+		GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_EN, pChr->GetPlayer()->GetCID());
 	}
 	else
 	{
+		pChr->SetHealth(g_Config.m_CivRoundStartHealth, 0);// default health
+		pChr->SetArmor(g_Config.m_CivRoundStartArmor, 0);
 		if(g_Config.m_CivWpHammerAllow)
 			pChr->GiveWeapon(WEAPON_HAMMER, -1);
+		GameServer()->SendBroadcast("这局你是平民Civic！噶了所有猎人胜利!                 \n猎人双倍伤害,有瞬杀锤子和破片榴弹", pChr->GetPlayer()->GetCID());//平民提示往左靠以更好提示身份
+		GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_PL, pChr->GetPlayer()->GetCID());
 	}
 	pChr->GiveWeapon(WEAPON_GUN, 10);
-	pChr->SetActiveWeapon(WEAPON_GUN);
 }

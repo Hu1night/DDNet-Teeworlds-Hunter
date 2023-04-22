@@ -181,6 +181,7 @@ public:
 	
 	/* Hunter start */
 	void Whisper(int ClientID, char *pStr);
+	void WhisperCheck(int ClientID, int VictimID, const char *pMessage);
 	void WhisperID(int ClientID, int VictimID, const char *pMessage);
 	void Converse(int ClientID, const char *pStr);
 	void CensorMessage(char *pCensoredMessage, const char *pMessage, int Size);

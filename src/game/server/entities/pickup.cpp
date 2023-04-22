@@ -92,6 +92,7 @@ void CPickup::Tick()
 					/* Hunter start */
 					if(g_Config.m_AnyWpNinjaAllow)
 					{
+						pChr->SetHealth(1, 1);
 						pChr->GiveNinja();
 
 						// loop through all players, setting their emotes
@@ -114,10 +115,11 @@ void CPickup::Tick()
 
 		if(RespawnTime >= 0)
 		{
-			char aBuf[256];
-			str_format(aBuf, sizeof(aBuf), "pickup player='%d:%s' item=%d/%d",
-				pChr->GetPlayer()->GetCID(), Server()->ClientName(pChr->GetPlayer()->GetCID()), m_Type, m_Subtype);
-			GameServer()->Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
+			//char aBuf[256];
+			//str_format(aBuf, sizeof(aBuf), "pickup player='%d:%s' item=%d/%d",
+			//	pChr->GetPlayer()->GetCID(), Server()->ClientName(pChr->GetPlayer()->GetCID()), m_Type, m_Subtype);
+			//GameServer()->Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
+			//烦人的console回显
 			m_SpawnTick = Server()->Tick() + Server()->TickSpeed() * RespawnTime;
 		}
 	}

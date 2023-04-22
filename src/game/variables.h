@@ -101,7 +101,7 @@ MACRO_CONFIG_INT(HuntWpGrenadeFw, hunt_wpgrenade_fw, 14, 0, 0xFFFFFF, CFGFLAG_SE
 MACRO_CONFIG_INT(HuntWpNinjaDmg, hunt_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人Ninja伤害（默认20,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntBroadcastHunterDeath, hunt_broadcast_hunter_death, 0, 0, 1, CFGFLAG_SERVER, "是否向全体广播猎人死亡（默认0,最小0,最大1）")
 
-MACRO_CONFIG_INT(HuntRounstartShowHunter, hunt_round_start_show_hunter, 0, 0, 1, CFGFLAG_SERVER, "是否开局全体广播猎人（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(ShowHunterList, hunt_show_hunterlist, 0, 0, 1, CFGFLAG_SERVER, "是否开局向全体广播猎人列表（默认0,最小0,最大1）")
 
 MACRO_CONFIG_INT(CivWpHammerAllow, civ_wphammer_allow, 0, 0, 1, CFGFLAG_SERVER, "平民（其实是所有人）是否允许锤子（默认0,最小0,最大1）")
 MACRO_CONFIG_INT(CivWpHammerDmg, civ_wphammer_dmg, 3, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民锤子伤害（默认3,最小0,最大inf）")
@@ -114,14 +114,16 @@ MACRO_CONFIG_INT(AnyForceTeamTalk, any_force_team_talk, 1, 0, 1, CFGFLAG_SERVER,
 MACRO_CONFIG_INT(WhisperDtL, svmod_whisper_dead_to_alive, 0, 0, 1, CFGFLAG_SERVER, "允许死人对活人whisper（默认0,最小0,最大1）")
 MACRO_CONFIG_INT(WhisperLtL, svmod_whisper_alive_to_alive, 1, 0, 1, CFGFLAG_SERVER, "允许活人对活人whisper（默认1,最小0,最大1）")
 
-MACRO_CONFIG_INT(HuntRoundStartHealth, hunt_round_start_health, 10, 1, 0xFFFFFF, CFGFLAG_SERVER, "开局给的血量（默认10,最小1,最大inf）")
-MACRO_CONFIG_INT(HuntRoundStartArmor, hunt_round_start_armor, 0, 0, 0xFFFFFF, CFGFLAG_SERVER, "开局给的盾（默认0,最小0,最大inf）")
+MACRO_CONFIG_INT(HuntRoundStartHealth, hunt_round_start_health, 10, 1, 0xFFFFFF, CFGFLAG_SERVER, "猎人开局给的血量（默认10,最小1,最大inf）")
+MACRO_CONFIG_INT(HuntRoundStartArmor, hunt_round_start_armor, 0, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人开局给的盾（默认0,最小0,最大inf）")
+MACRO_CONFIG_INT(CivRoundStartHealth, civ_round_start_health, 10, 1, 0xFFFFFF, CFGFLAG_SERVER, "平民开局给的血量（默认10,最小1,最大inf）")
+MACRO_CONFIG_INT(CivRoundStartArmor, civ_round_start_armor, 0, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民开局给的盾（默认0,最小0,最大inf）")
 
 MACRO_CONFIG_INT(HuntScoreHunterWin, hunt_score_hunter_win, 2, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人胜利给的分数（默认2,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntScoreCivicWin, hunt_score_civic_win, 1, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民胜利给的分数（默认1,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntScoreCivicKillHunter, hunt_score_civic_kill_hunter, 2, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民杀个猎给的分数（默认2,最小0,最大inf）")
 
-MACRO_CONFIG_INT(HuntRoundtype, hunt_roundtype, 1, 0, 1, CFGFLAG_SERVER, "回合类型 1不会显示开局chat 会覆盖结算画面时间为3（默认1,最小0,最大1）")
+MACRO_CONFIG_INT(HuntRoundtype, hunt_roundtype, 1, 0, 1, CFGFLAG_SERVER, "回合类型 0不会显示开局chat（默认1,最小0,最大1）")
 
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly

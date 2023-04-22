@@ -249,11 +249,7 @@ void IGameController::CycleMap()
 		return;
 
 	if(m_RoundCount < g_Config.m_SvRoundsPerMap-1)
-	{
-		if(g_Config.m_SvRoundSwap)
-			GameServer()->SwapTeams();
 		return;
-	}
 
 	// handle maprotation
 	const char *pMapRotation = g_Config.m_SvMaprotation;
@@ -450,23 +446,12 @@ void IGameController::Tick()
 	if(m_GameOverTick != -1)
 	{
 		// game over.. wait for restart
-		if(g_Config.m_HuntRoundtype)
+		if(Server()->Tick() > m_GameOverTick+Server()->TickSpeed()*g_Config.m_SvGameOverTime)
 		{
-			if(Server()->Tick() > m_GameOverTick+Server()->TickSpeed()*g_Config.m_SvGameOverTime)
-			{
+			if(g_Config.m_HuntRoundtype)
 				CycleMap();
-				StartRound();
-				m_RoundCount++;
-			}
-		}
-		else
-		{
-			if(Server()->Tick() > m_GameOverTick+Server()->TickSpeed()*3)
-			{
-				CycleMap();
-				StartRound();
-				m_RoundCount++;
-			}
+			StartRound();
+			m_RoundCount++;
 		}
 	}
 	else if(GameServer()->m_World.m_Paused && m_UnpauseTimer)

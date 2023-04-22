@@ -855,18 +855,13 @@ void CCharacter::Snap(int SnappingClient)
 }
 
 /* Hunter start */
-void CCharacter::SetActiveWeapon(int Weapon)
+void CCharacter::SetHealth(int Amount, int Increase)
 {
-	m_QueuedWeapon = Weapon;//这个函数是抄infclassR(InfectionDust)的
+	m_Health = Increase ? m_Health+Amount : Amount;
 }
 
-void CCharacter::SetHealth(int Amount)
+void CCharacter::SetArmor(int Amount, int Increase)
 {
-	m_Health = Amount;
-}
-
-void CCharacter::SetArmor(int Amount)
-{
-	m_Armor = Amount;
+		m_Armor = Increase ? m_Armor+Amount : Amount;	
 }
 /* Hunter end */

@@ -56,8 +56,8 @@ public:
 	bool IncreaseHealth(int Amount);
 	bool IncreaseArmor(int Amount);
 	
-	void SetHealth(int Amount);// Hunter
-	void SetArmor(int Amount);// Hunter
+	void SetHealth(int Amount, int Increase);// Hunter
+	void SetArmor(int Amount, int Increase);// Hunter
 
 	bool GiveWeapon(int Weapon, int Ammo);
 	void GiveNinja();
@@ -66,7 +66,6 @@ public:
 
 	bool IsAlive() const { return m_Alive; }
 	class CPlayer *GetPlayer() { return m_pPlayer; }
-	void SetActiveWeapon(int Weapon);
 
 private:
 	// player controlling this character

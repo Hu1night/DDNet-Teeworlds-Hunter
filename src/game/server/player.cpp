@@ -303,10 +303,5 @@ void CPlayer::TryRespawn()
 void CPlayer::SetHunter(bool isHunter)
 {
 	m_Hunter = isHunter;
-	if(isHunter)
-	{
-		GameServer()->SendBroadcast("      这局你是Hunter! 你有高伤武器和瞬杀锤子\n      猎人高伤榴弹有破片 其余武器双倍伤害\n      分辨出你的队友 噶了所有平民胜利!", m_ClientID);//猎人提示往右靠以更好提示身份
-		GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_EN, m_ClientID);
-	}
 }
 

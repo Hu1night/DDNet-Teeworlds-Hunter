@@ -550,6 +550,9 @@ void CGameContext::OnClientEnter(int ClientID)
 	Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
 
 	m_VoteUpdate = true;
+	
+	SendChatTarget(ClientID, "—————这里是Hunter猎人杀！—————");
+	SendChatTarget(ClientID, "规则：每回合秘密抽选猎人，猎人双倍伤害，有瞬杀锤子和破片榴弹       猎人对战平民，活人看不到死人消息，打字杀易被针对");
 }
 
 void CGameContext::OnClientConnected(int ClientID)
@@ -697,9 +700,32 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 					str_copy(aWhisperMsg, pMsg->m_pMessage + 10, 256);
 					Converse(pPlayer->GetCID(), aWhisperMsg);
 				}
+				/*if(str_comp_nocase_num(pMsg->m_pMessage + 1, "w", 2) == 0)
+				{
+					SendChatTarget(ClientID, "/w私聊指令（按Tab可以补全/查找人名）用法：/w 玩家名 消息内容");
+				}
+				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "whisper", 8) == 0)
+				{
+					SendChatTarget(ClientID, "/whisper私聊指令（按Tab可以补全/查找人名）用法：/whisper 玩家名 消息内容");
+				}
+				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "c", 2) == 0)
+				{
+					SendChatTarget(ClientID, "/c私聊指令（与私聊过的人聊天）用法：/c 消息内容");
+				}
+				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "converse", 9) == 0)
+				{
+					SendChatTarget(ClientID, "/converse私聊指令（与私聊过的人聊天）用法：/converse 消息内容");
+				}
+				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "help", 2) == 0)
+				{
+					SendChatTarget(ClientID, "指令列表：");
+					SendChatTarget(ClientID, "私聊指令/w");
+				}*/
 				else
 				{
-				SendChatTarget(ClientID, "没有此命令");
+				char aBuf[128];
+				str_format(aBuf, sizeof(aBuf), "没有此命令：%d", pMsg->m_pMessage);
+				SendChatTarget(ClientID, aBuf);
 				}
 			}
 			else
@@ -1783,7 +1809,26 @@ void CGameContext::Whisper(int ClientID, char *pStr)
 		return;
 	}
 
-	WhisperID(ClientID, Victim, pMessage);
+	WhisperCheck(ClientID, Victim, pMessage);
+}
+
+void CGameContext::WhisperCheck(int ClientID, int VictimID, const char *pMessage)
+{
+	if(g_Config.m_AnyForceTeamTalk ? GetPlayerChar(VictimID) : 0)
+	{
+		if(GetPlayerChar(ClientID) ? g_Config.m_WhisperLtL : g_Config.m_WhisperDtL)
+		{
+			WhisperID(ClientID, VictimID, pMessage);
+		}
+		else
+		{
+			SendChatTarget(ClientID, "小纸条只能烧给阴间");
+		}
+	}
+	else
+	{
+		WhisperID(ClientID, VictimID, pMessage);
+	}
 }
 
 void CGameContext::WhisperID(int ClientID, int VictimID, const char *pMessage)
@@ -1799,65 +1844,28 @@ void CGameContext::WhisperID(int ClientID, int VictimID, const char *pMessage)
 		m_apPlayers[ClientID]->m_LastWhisperTo = VictimID;
 		m_apPlayers[ClientID]->m_LastChat = Server()->Tick();
 	}
-	
-	char aBuf[256];
-	
-	if(g_Config.m_AnyForceTeamTalk ? GetPlayerChar(VictimID) : 0)
+
+	char aCensoredMessage[256];
+	CensorMessage(aCensoredMessage, pMessage, sizeof(aCensoredMessage));
+
+	CNetMsg_Sv_Chat Msg;
+	Msg.m_Team = 2;
+	Msg.m_ClientID = VictimID;
+	Msg.m_pMessage = aCensoredMessage;
+
+	Server()->SendPackMsg(&Msg, MSGFLAG_VITAL | MSGFLAG_NORECORD, ClientID);
+
+	if(ClientID == VictimID)
 	{
-		if(GetPlayerChar(ClientID) ? g_Config.m_WhisperLtL : g_Config.m_WhisperDtL)
-		{
-			char aCensoredMessage[256];
-			CensorMessage(aCensoredMessage, pMessage, sizeof(aCensoredMessage));
-
-			CNetMsg_Sv_Chat Msg;
-			Msg.m_Team = 2;
-			Msg.m_ClientID = VictimID;
-			Msg.m_pMessage = aCensoredMessage;
-
-			Server()->SendPackMsg(&Msg, MSGFLAG_VITAL | MSGFLAG_NORECORD, ClientID);
-
-			if(ClientID == VictimID)
-			{
-				return;
-			}
-
-			CNetMsg_Sv_Chat Msg2;
-			Msg2.m_Team = CHAT_WHISPER_RECV;
-			Msg2.m_ClientID = ClientID;
-			Msg2.m_pMessage = aCensoredMessage;
-
-			Server()->SendPackMsg(&Msg2, MSGFLAG_VITAL | MSGFLAG_NORECORD, VictimID);
-		}
-		else
-		{
-			str_format(aBuf, sizeof(aBuf), "小纸条只能烧给阴间");
-			SendChatTarget(ClientID, aBuf);
-		}
+		return;
 	}
-	else
-	{
-		char aCensoredMessage[256];
-		CensorMessage(aCensoredMessage, pMessage, sizeof(aCensoredMessage));
 
-		CNetMsg_Sv_Chat Msg;
-		Msg.m_Team = 2;
-		Msg.m_ClientID = VictimID;
-		Msg.m_pMessage = aCensoredMessage;
+	CNetMsg_Sv_Chat Msg2;
+	Msg2.m_Team = CHAT_WHISPER_RECV;
+	Msg2.m_ClientID = ClientID;
+	Msg2.m_pMessage = aCensoredMessage;
 
-		Server()->SendPackMsg(&Msg, MSGFLAG_VITAL | MSGFLAG_NORECORD, ClientID);
-
-		if(ClientID == VictimID)
-		{
-			return;
-		}
-
-		CNetMsg_Sv_Chat Msg2;
-		Msg2.m_Team = CHAT_WHISPER_RECV;
-		Msg2.m_ClientID = ClientID;
-		Msg2.m_pMessage = aCensoredMessage;
-
-		Server()->SendPackMsg(&Msg2, MSGFLAG_VITAL | MSGFLAG_NORECORD, VictimID);
-	}
+	Server()->SendPackMsg(&Msg2, MSGFLAG_VITAL | MSGFLAG_NORECORD, VictimID);
 }
 
 void CGameContext::Converse(int ClientID, const char *pStr)
@@ -1872,7 +1880,7 @@ void CGameContext::Converse(int ClientID, const char *pStr)
 	}
 	else
 	{
-		WhisperID(ClientID, pPlayer->m_LastWhisperTo, pStr);
+		WhisperCheck(ClientID, pPlayer->m_LastWhisperTo, pStr);
 	}
 }
 
