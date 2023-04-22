@@ -391,8 +391,6 @@ chash("src/game/generated/nethash.cpp"
   "src/game/tuning.h"
   "src/game/gamecore.cpp"
 )
-generate_source("src/game/generated/client_data.cpp" "client_content_source")
-generate_source("src/game/generated/client_data.h" "client_content_header")
 generate_source("src/game/generated/protocol.cpp" "network_source")
 generate_source("src/game/generated/protocol.h" "network_header")
 generate_source("src/game/generated/server_data.cpp" "server_content_source")
@@ -420,7 +418,6 @@ set_glob(BASE GLOB_RECURSE src/base
   vmath.h
 )
 set_glob(ENGINE_INTERFACE GLOB src/engine
-  client.h
   config.h
   console.h
   demo.h
@@ -475,7 +472,6 @@ set_glob(ENGINE_SHARED GLOB src/engine/shared
   netban.h
   network.cpp
   network.h
-  network_client.cpp
   network_conn.cpp
   network_console.cpp
   network_console_conn.cpp
@@ -553,14 +549,8 @@ set_glob(GAME_SERVER GLOB_RECURSE src/game/server
   gamecontext.h
   gamecontroller.cpp
   gamecontroller.h
-  gamemodes/ctf.cpp
-  gamemodes/ctf.h
-  gamemodes/dm.cpp
-  gamemodes/dm.h
   gamemodes/mod.cpp
   gamemodes/mod.h
-  gamemodes/tdm.cpp
-  gamemodes/tdm.h
   gameworld.cpp
   gameworld.h
   player.cpp
@@ -772,7 +762,6 @@ set(CPACK_SOURCE_FILES
   configure.lua
   data/
   datasrc/
-  docs/
   license.txt
   objs/
   other/

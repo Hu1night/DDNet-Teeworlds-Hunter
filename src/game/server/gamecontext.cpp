@@ -9,9 +9,6 @@
 #include <game/version.h>
 #include <game/collision.h>
 #include <game/gamecore.h>
-#include "gamemodes/dm.h"
-#include "gamemodes/tdm.h"
-#include "gamemodes/ctf.h"
 #include "gamemodes/mod.h"
 
 enum
@@ -365,29 +362,8 @@ void CGameContext::AbortVoteKickOnDisconnect(int ClientID)
 }
 
 
-void CGameContext::CheckPureTuning()
-{
-	// might not be created yet during start up
-	if(!m_pController)
-		return;
-
-	if(	str_comp(m_pController->m_pGameType, "DM")==0 ||
-		str_comp(m_pController->m_pGameType, "TDM")==0 ||
-		str_comp(m_pController->m_pGameType, "CTF")==0)
-	{
-		CTuningParams p;
-		if(mem_comp(&p, &m_Tuning, sizeof(p)) != 0)
-		{
-			Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "server", "resetting tuning due to pure server");
-			m_Tuning = p;
-		}
-	}
-}
-
 void CGameContext::SendTuningParams(int ClientID)
 {
-	CheckPureTuning();
-
 	CMsgPacker Msg(NETMSGTYPE_SV_TUNEPARAMS);
 	int *pParams = (int *)&m_Tuning;
 	for(unsigned i = 0; i < sizeof(m_Tuning)/sizeof(int); i++)
@@ -413,9 +389,6 @@ void CGameContext::SwapTeams()
 
 void CGameContext::OnTick()
 {
-	// check tuning
-	CheckPureTuning();
-
 	// copy tuning
 	m_World.m_Core.m_Tuning = m_Tuning;
 	m_World.Tick();
@@ -1598,32 +1571,12 @@ void CGameContext::OnInit(/*class IKernel *pKernel*/)
 	//world = new GAMEWORLD;
 	//players = new CPlayer[MAX_CLIENTS];
 
-	// select gametype
-	if(str_comp(g_Config.m_SvGametype, "mod") == 0)
-		m_pController = new CGameControllerMOD(this);
-	else if(str_comp(g_Config.m_SvGametype, "ctf") == 0)
-		m_pController = new CGameControllerCTF(this);
-	else if(str_comp(g_Config.m_SvGametype, "tdm") == 0)
-		m_pController = new CGameControllerTDM(this);
-	else
-		m_pController = new CGameControllerDM(this);
-
-	// setup core world
-	//for(int i = 0; i < MAX_CLIENTS; i++)
-	//	game.players[i].core.world = &game.world.core;
+	// force gametype
+	m_pController = new CGameControllerMOD(this);
 
 	// create all entities from the game layer
 	CMapItemLayerTilemap *pTileMap = m_Layers.GameLayer();
 	CTile *pTiles = (CTile *)Kernel()->RequestInterface<IMap>()->GetData(pTileMap->m_Data);
-
-
-
-
-	/*
-	num_spawn_points[0] = 0;
-	num_spawn_points[1] = 0;
-	num_spawn_points[2] = 0;
-	*/
 
 	for(int y = 0; y < pTileMap->m_Height; y++)
 	{
@@ -1638,8 +1591,6 @@ void CGameContext::OnInit(/*class IKernel *pKernel*/)
 			}
 		}
 	}
-
-	//game.world.insert_entity(game.Controller);
 
 #ifdef CONF_DEBUG
 	if(g_Config.m_DbgDummies)
