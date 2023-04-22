@@ -14,7 +14,7 @@ function Script(name)
 	if family == "windows" then
 		return str_replace(name, "/", "\\")
 	end
-	return "python " .. name
+	return "python3 " .. name
 end
 
 function CHash(output, ...)
@@ -178,7 +178,8 @@ function build(settings)
 	end
 
 	-- build the small libraries
-
+	md5 = Compile(settings, Collect("src/engine/external/md5/*.c"))
+	
 	-- build game components
 	engine_settings = settings:Copy()
 	server_settings = engine_settings:Copy()
@@ -203,7 +204,7 @@ function build(settings)
 
 	-- build server
 	server_exe = Link(server_settings, "hunter_srv", engine, server,
-		game_shared, game_server, zlib, server_link_other)
+		game_shared, game_server, zlib, server_link_other, md5)
 
 	serverlaunch = {}
 	if platform == "macosx" then
