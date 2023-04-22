@@ -152,7 +152,7 @@ public:
 	char m_aCurrentMap[64];
 	unsigned m_CurrentMapCrc;
 	unsigned char *m_pCurrentMapData;
-	int m_CurrentMapSize;
+	unsigned int m_CurrentMapSize;
 
 	CDemoRecorder m_DemoRecorder;
 	CRegister m_Register;
