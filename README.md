@@ -18,8 +18,8 @@ Teeworlds Hunter猎人杀模式 但小幅更改版qwq
 
 如何构建? Building
 --------------
-你可以用CMake和bam0.4构建 源码里的服务端使用bam0.4
-我觉得你看[Teeworlds的教程](https://github.com/teeworlds/teeworlds)会更有用 
+你可以用CMake和Bam构建.
+详情参考[Teeworlds原版储存库](https://github.com/teeworlds/teeworlds)中的编译方法
 
 以下是原作者的readme
 -------------
