@@ -1,6 +1,5 @@
 bam
 .bam
-config.lua
 __pycache__
 *.pyc
 objs
