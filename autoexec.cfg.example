@@ -22,7 +22,7 @@ sv_register 1
 # 服务器端口
 sv_port 8303
 # 地图循环设置 sv_rounds_per_map多少回合换地图 sv_gameovertime每局结算画面显示时间
-sv_maprotation "hunter1,hunter2,hunter3,dm2,hunter4,dm7"
+sv_maprotation "hunter1,hunter2,hunter3,hunter4,huntern5,dm7"
 sv_rounds_per_map 4
 sv_gameovertime 6
 # 挂机踢人设置 第一项是进行的操作,值为0则丢旁观,为1或2则踢出服务器 time为挂机判断时间

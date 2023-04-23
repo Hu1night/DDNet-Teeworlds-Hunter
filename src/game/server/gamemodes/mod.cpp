@@ -65,7 +65,7 @@ void CGameControllerMOD::Tick()
 			{
 				if(Server()->Tick() % (Server()->TickSpeed() * 4) == 0)
 				{
-					str_format(aBuf, sizeof(aBuf), "这里是猎人杀PVP\n分Civic和Hunter两个阵营\n消灭对立阵营胜利\n至少需要 %d 玩家才能开始", LeastPlayers);
+					str_format(aBuf, sizeof(aBuf), "这里是猎人杀PVP\n每回合秘密抽选猎人\n少数猎人对战多数平民\n至少需要 %d 玩家才能开始", LeastPlayers);
 					GameServer()->SendBroadcast(aBuf, -1);
 					if(g_Config.m_SvTimelimit > 0)
 						m_RoundStartTick = Server()->Tick();
@@ -81,7 +81,7 @@ void CGameControllerMOD::Tick()
 			{
 				m_Hunters = g_Config.m_HuntHunterFixed ? g_Config.m_HuntHunterNumber : ((m_Civics + g_Config.m_HuntHunterRatio - 1) / g_Config.m_HuntHunterRatio);
 					str_copy(aBuf, "Hunter是: ", sizeof(aBuf));
-					str_copy(m_aHuntersMessage, "Hunter是: ", sizeof(m_aHuntersMessage));
+					str_copy(m_aHuntersMessage, "这一回合的Hunter是: ", sizeof(m_aHuntersMessage));
 
 				for(int iHunter = 0; iHunter < m_Hunters; iHunter++)
 				{

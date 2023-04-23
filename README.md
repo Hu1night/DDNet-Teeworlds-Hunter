@@ -1,24 +1,29 @@
-Teeworlds Hunter猎人杀模式 但小幅更改版qwq
+Teeworlds HunterN猎人杀
 =====================
 我只负责往屎山加屎 修BUG请提交代码qwq<br />
-如果你有好的地图 也可以提交到我的QQ
 
-秘密随机分配Civic和Hunter俩阵营 消灭对立阵营胜利 活人看不到死人消息 打字杀易被针对 猎人高伤榴弹有破片 有瞬杀锤子 其余武器双倍伤害
+规则：每回合秘密抽选猎人，猎人对战平民，猎人双倍伤害，有瞬杀锤子和破片榴弹，活人看不到死人消息
 
 比此前社区服开的Hunter有以下内容的差异：
 -----------------------
-另一套中文翻译(因为我拿到的是英文的);<br />
-平民Ninja(忍者刀)攻击造成13伤害;<br />
-猎人Ninja(忍者刀)攻击造成20伤害;<br />
-猎人榴弹满伤从26改为20(这东西还是非常op);<br />
-游戏开局旗声提示;<br />
-开局平民身份提示;<br />
-开局设置手枪为活动武器;<br />
-还有我自己写的autoexec.cfg
+###### 更改或加入以下游戏内容：
+更改：猎人榴弹满伤从26改为20(破片从20改14)<br />
+更改：使ninja适配Hunter(猎ninja20伤,平民ninja13伤)<br />
+更改：Ninja(忍者刀)生成时间从90s改70s(重生时间仍是90s)<br />
+加入：开局平民文字提示<br />
+加入：开局身份音效提示<br />
+加入：指令if(从[InfectionDust](https://github.com/InfectionDust/teeworlds-infclassR/)移植)和"没有此命令"提示<br />
+加入：whisper&converse悄悄话质量(有阴阳两隔检测)<br />
+加入：回合结束显示猎人列表<br />
+加入：还没完善的Funround<br />
+加入：一堆没用的rcon命令<br />
+更改：几乎完整的中文翻译<br />
 
+###### 加入了以下地图：
+smallbomb、huntern5
 如何构建? Building
 --------------
-你可以用CMake和Bam构建.
+你可以用CMake和[Bam](https://github.com/matricks/bam)构建.
 详情参考[Teeworlds原版储存库](https://github.com/teeworlds/teeworlds)中的编译方法
 
 以下是原作者的readme
