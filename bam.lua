@@ -24,7 +24,7 @@ function Script(name)
 	if family == "windows" then
 		return str_replace(name, "/", "\\")
 	end
-	return "python3 " .. name
+	return "python " .. name
 end
 
 function CHash(output, ...)
