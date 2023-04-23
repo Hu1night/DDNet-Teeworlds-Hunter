@@ -3,7 +3,6 @@ bam
 __pycache__
 *.pyc
 objs
-src/game/generated
 SDL.dll
 freetype.dll
 autoexec.cfg
