@@ -1,4 +1,5 @@
-sv_gametype mod
+# 此文件供参考，如要使用请去掉文件名结尾的 “ .example ” 并对部分设置做修改
+
 sv_tournament_mode 1
 # ———————以上为重要选项 更改会出BUG和issue———————
 # 分数限制 在Hunter里无用
