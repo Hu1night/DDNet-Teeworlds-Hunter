@@ -251,18 +251,18 @@ function build(settings)
 	game_editor = Compile(settings, Collect("src/game/editor/*.cpp"))
 
 	-- build tools (TODO: fix this so we don't get double _d_d stuff)
-	tools_src = Collect("src/tools/*.cpp", "src/tools/*.c")
+	-- tools_src = Collect("src/tools/*.cpp", "src/tools/*.c")
 
 	server_osxlaunch = {}
 	if platform == "macosx" then
 		server_osxlaunch = Compile(launcher_settings, "src/osxlaunch/server.m")
 	end
 
-	tools = {}
-	for i,v in ipairs(tools_src) do
-		toolname = PathFilename(PathBase(v))
-		tools[i] = Link(settings, toolname, Compile(settings, v), engine, md5, zlib, pnglite)
-	end
+	-- tools = {}
+	-- for i,v in ipairs(tools_src) do
+	-- 	toolname = PathFilename(PathBase(v))
+	-- 	tools[i] = Link(settings, toolname, Compile(settings, v), engine, md5, zlib, pnglite)
+	-- end
 
 	-- build client, server, version server and master server
 	client_exe = Link(client_settings, "teeworlds", game_shared, game_client,
@@ -290,9 +290,9 @@ function build(settings)
 
 	v = PseudoTarget("versionserver".."_"..settings.config_name, versionserver_exe)
 	m = PseudoTarget("masterserver".."_"..settings.config_name, masterserver_exe)
-	t = PseudoTarget("tools".."_"..settings.config_name, tools)
+	-- 	t = PseudoTarget("tools".."_"..settings.config_name, tools)
 
-	all = PseudoTarget(settings.config_name, c, s, v, m, t)
+	all = PseudoTarget(settings.config_name, c, s, v, m)
 	return all
 end
 

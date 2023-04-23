@@ -1,4 +1,3 @@
-
 function loadfile_(filename, env)
 	local file
 	if _VERSION == "Lua 5.1" then
@@ -511,4 +510,3 @@ function OptLibrary(name, header, desc)
 	o.desc = desc
 	return o
 end
-

@@ -557,4 +557,3 @@ void *CNetObjHandler::SecureUnpackMsg(int Type, CUnpacker *pUnpacker)
 	m_pMsgFailedOn = "";
 	return m_aMsgData;
 };
-

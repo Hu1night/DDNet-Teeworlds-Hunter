@@ -17,7 +17,7 @@ static CDataSound x1925[] = {
 static CDataSound x1941[] = {
 	/* x1941[0] */ {  0,  "audio/wp_hammer_swing-01.wv", },
 	/* x1941[1] */ {  0,  "audio/wp_hammer_swing-02.wv", },
-	/* x1941[2] */ {  0,  "audio/wp_hammer_swing-03.wv", },
+	/* x1941[2] */ {  0,  "SPRITE_PART_SLICEaudio/wp_hammer_swing-03.wv", },
 };
 static CDataSound x1957[] = {
 	/* x1957[0] */ {  0,  "audio/wp_hammer_hit-01.wv", },
