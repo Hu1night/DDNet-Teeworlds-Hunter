@@ -6,7 +6,7 @@ Teeworlds HunterN猎人杀
 
 比此前社区服开的Hunter有以下内容的差异：
 -----------------------
-###### 更改或加入以下游戏内容：
+## 更改或加入以下游戏内容：
 更改：猎人榴弹满伤从26改为20(破片从20改14)<br />
 更改：使ninja适配Hunter(猎ninja20伤,平民ninja13伤)<br />
 更改：Ninja(忍者刀)生成时间从90s改70s(重生时间仍是90s)<br />
@@ -19,8 +19,9 @@ Teeworlds HunterN猎人杀
 加入：一堆没用的rcon命令<br />
 更改：几乎完整的中文翻译<br />
 
-###### 加入了以下地图：
+## 加入了以下地图：
 smallbomb、huntern5
+
 如何构建? Building
 --------------
 你可以用CMake和[Bam](https://github.com/matricks/bam)构建.
