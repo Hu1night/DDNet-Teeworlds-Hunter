@@ -550,9 +550,6 @@ void CGameContext::OnClientEnter(int ClientID)
 	Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
 
 	m_VoteUpdate = true;
-	
-	SendChatTarget(ClientID, "—————这里是Hunter猎人杀！—————");
-	SendChatTarget(ClientID, "规则：每回合秘密抽选猎人，猎人双倍伤害，有瞬杀锤子和破片榴弹       猎人对战平民，活人看不到死人消息，打字杀易被针对");
 }
 
 void CGameContext::OnClientConnected(int ClientID)
@@ -700,31 +697,37 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 					str_copy(aWhisperMsg, pMsg->m_pMessage + 10, 256);
 					Converse(pPlayer->GetCID(), aWhisperMsg);
 				}
-				/*if(str_comp_nocase_num(pMsg->m_pMessage + 1, "w", 2) == 0)
+				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "info", 4) == 0)
+				{
+					SendChatTarget(ClientID, "这是HunterN模式 by Hu1night");
+					SendChatTarget(ClientID, "服务器版本：0.2b2");
+					SendChatTarget(ClientID, "Github地址：https://github.com/Hu1night/DDNet-Teeworlds-Hunter");
+				}
+				/*else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "w", 1) == 0)
 				{
 					SendChatTarget(ClientID, "/w私聊指令（按Tab可以补全/查找人名）用法：/w 玩家名 消息内容");
 				}
-				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "whisper", 8) == 0)
+				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "whisper", 7) == 0)
 				{
 					SendChatTarget(ClientID, "/whisper私聊指令（按Tab可以补全/查找人名）用法：/whisper 玩家名 消息内容");
 				}
-				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "c", 2) == 0)
+				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "c", 1) == 0)
 				{
 					SendChatTarget(ClientID, "/c私聊指令（与私聊过的人聊天）用法：/c 消息内容");
 				}
-				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "converse", 9) == 0)
+				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "converse", 8) == 0)
 				{
 					SendChatTarget(ClientID, "/converse私聊指令（与私聊过的人聊天）用法：/converse 消息内容");
 				}
-				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "help", 2) == 0)
+				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "help", 4) == 0)
 				{
 					SendChatTarget(ClientID, "指令列表：");
 					SendChatTarget(ClientID, "私聊指令/w");
 				}*/
 				else
 				{
-				char aBuf[128];
-				str_format(aBuf, sizeof(aBuf), "没有此命令：%d", pMsg->m_pMessage);
+				char aBuf[512];
+				str_format(aBuf, sizeof(aBuf), "没有此命令：%s", pMsg->m_pMessage);
 				SendChatTarget(ClientID, aBuf);
 				}
 			}

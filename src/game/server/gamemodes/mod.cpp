@@ -117,10 +117,10 @@ void CGameControllerMOD::Tick()
 
 				if(g_Config.m_HuntRoundtype)
 				{
-					GameServer()->SendChatTarget(-1, "—————欢迎来到Hunter猎人杀—————");
+					GameServer()->SendChatTarget(-1, "——————欢迎来到Hunter猎人杀——————");
 					str_format(aBuf, sizeof(aBuf), "本回合有 %d 个Hunter has been selected.", m_Hunters);
 					GameServer()->SendChatTarget(-1, aBuf);
-					GameServer()->SendChatTarget(-1, "规则：每回合秘密抽选猎人，猎人双倍伤害，有瞬杀锤子和破片榴弹       猎人对战平民，活人看不到死人消息，打字杀易被针对");
+					GameServer()->SendChatTarget(-1, "规则：每回合秘密抽选猎人，猎人双倍伤害，有瞬杀锤子和破片榴弹          猎人对战平民，活人看不到死人消息，打字杀易被针对");
 					GameServer()->SendChatTarget(-1, "分辨出你的队友并消灭敌人来取得胜利！");
 					GameServer()->SendChatTarget(-1, "Be warned! Sudden Death.");
 				}
@@ -274,7 +274,7 @@ void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 		pChr->SetArmor(g_Config.m_HuntRoundStartArmor, 0);
 		if(g_Config.m_HuntWpHammerAllow)
 			pChr->GiveWeapon(WEAPON_HAMMER, -1);// give default weapons
-		str_format(aBuf, sizeof(aBuf), "      这局你是猎人Hunter！本回合共有%d个猎人!\n      猎人双倍伤害,有瞬杀锤子和破片榴弹\n      分辨出你的队友,噶了所有平民胜利!", m_Hunters);//猎人提示往右靠以更好提示身份
+		str_format(aBuf, sizeof(aBuf), "      这局你是猎人！本回合共有%d个猎人!\n      猎人双倍伤害 有瞬杀锤子和破片榴弹\n      分辨出你的队友 噶了所有平民胜利!", m_Hunters);//猎人提示往右靠以更好提示身份
 		GameServer()->SendBroadcast(aBuf, pChr->GetPlayer()->GetCID());
 		GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_EN, pChr->GetPlayer()->GetCID());
 	}
@@ -284,7 +284,7 @@ void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 		pChr->SetArmor(g_Config.m_CivRoundStartArmor, 0);
 		if(g_Config.m_CivWpHammerAllow)
 			pChr->GiveWeapon(WEAPON_HAMMER, -1);
-		GameServer()->SendBroadcast("这局你是平民Civic！噶了所有猎人胜利!                 \n猎人双倍伤害,有瞬杀锤子和破片榴弹", pChr->GetPlayer()->GetCID());//平民提示往左靠以更好提示身份
+		GameServer()->SendBroadcast("这局你是平民！噶了所有猎人胜利!                 \n猎人双倍伤害 有瞬杀锤子和破片榴弹", pChr->GetPlayer()->GetCID());//平民提示往左靠以更好提示身份
 		GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_PL, pChr->GetPlayer()->GetCID());
 	}
 	pChr->GiveWeapon(WEAPON_GUN, 10);
