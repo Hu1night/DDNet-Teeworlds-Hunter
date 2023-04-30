@@ -33,11 +33,14 @@ sv_vote_spectate 1
 sv_vote_kick 1
 sv_vote_kick_min 3
 sv_vote_kick_bantime 1
+
 # 以下是Hunter特有的cfg配置
-# ！死 人 低 语 ！谨慎设置 ！值为1则关闭低语 值为0就会有死人BB战局
+# ！死 人 低 语 ！谨慎设置 ！值为1则关闭低语 值为0就会有死人BB战局 以及Whisper设置 是否允许死人对活人私聊和活人对活人私聊
 any_force_team_talk 1
+#svmod_whisper_dead_to_alive 1
+#svmod_whisper_dead_to_alive 1
 # 玩家猎人比 数值为4则每4玩家一个猎 即4人1猎 5人2猎 9人3猎
-hunt_hunter_ratio 4
+hunt_hunter_ratio 5
 # 得分更改 让平民打死猎相对更吃分
 #hunt_score_civic_win 1
 #hunt_score_civic_kill_hunter 2
