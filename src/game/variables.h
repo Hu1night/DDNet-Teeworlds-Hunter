@@ -121,7 +121,7 @@ MACRO_CONFIG_INT(HuntRoundStartArmor, hunt_round_start_armor, 0, 0, 0xFFFFFF, CF
 MACRO_CONFIG_INT(CivRoundStartHealth, civ_round_start_health, 10, 1, 0xFFFFFF, CFGFLAG_SERVER, "平民开局给的血量（默认10,最小1,最大inf）")
 MACRO_CONFIG_INT(CivRoundStartArmor, civ_round_start_armor, 0, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民开局给的盾（默认0,最小0,最大inf）")
 
-MACRO_CONFIG_INT(AnyWpAmmoRegen, any_wpammo_regan, 1, 0, 1, CFGFLAG_SERVER, "子弹回复样式（默认1,最小0,最大1）")
+MACRO_CONFIG_INT(AnyWpAmmoRegen, any_wpammo_regan, 0, 0, 1, CFGFLAG_SERVER, "子弹回复样式（默认0,最小0,最大1）")
 MACRO_CONFIG_INT(AnyWpNinjaRespawnTime, any_wpninja_respawntime, 90, 0, 0xFFFFFF, CFGFLAG_SERVER, "Ninja重刷新时间（默认90,最小0,最大inf）")
 
 MACRO_CONFIG_INT(AnyForceTeamTalk, any_force_team_talk, 1, 0, 1, CFGFLAG_SERVER, "强制馆茶者在一个频道里（默认1,最小0,最大1）")
