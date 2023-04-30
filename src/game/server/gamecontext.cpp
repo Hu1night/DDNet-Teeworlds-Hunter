@@ -674,6 +674,8 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 				{
 					SendChatTarget(ClientID, "这是HunterN模式 by Hu1night");
 					SendChatTarget(ClientID, "服务器版本：0.2b2");
+					SendChatTarget(ClientID, "规则：每回合秘密抽选猎人，猎人对战平民，猎人双倍伤害，有瞬杀锤子和破片榴弹，活人看不到死人消息，打字杀易被针对");
+					SendChatTarget(ClientID, "Rule:Random players will be seceretly selected to be hunter. Hunter vs Everyone else. Hunter is stronger.");
 					SendChatTarget(ClientID, "Github地址：https://github.com/Hu1night/DDNet-Teeworlds-Hunter");
 				}
 				/*else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "w", 1) == 0)

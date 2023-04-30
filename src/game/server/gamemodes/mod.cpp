@@ -13,7 +13,7 @@ CGameControllerMOD::CGameControllerMOD(class CGameContext *pGameServer)
 {
 	// Exchange this to a string that identifies your game mode.
 	// DM, TDM and CTF are reserved for teeworlds original modes.
-	m_pGameType = "HunterN";
+	m_pGameType = "hunterN";
 
 	//m_GameFlags = GAMEFLAG_TEAMS; // GAMEFLAG_TEAMS makes it a two-team gamemode
 }
@@ -66,7 +66,7 @@ void CGameControllerMOD::Tick()
 				if(Server()->Tick() % (Server()->TickSpeed() * 4) == 0)
 				{
 					str_format(aBuf, sizeof(aBuf), "这里是猎人杀PVP\n每回合秘密抽选猎人\n少数猎人对战多数平民\n至少需要 %d 玩家才能开始", LeastPlayers);
-					GameServer()->SendBroadcast(aBuf, -1);
+					GameServer()->SendBroadcast(aBuf, -1);	
 					if(g_Config.m_SvTimelimit > 0)
 						m_RoundStartTick = Server()->Tick();
 				}
@@ -95,10 +95,6 @@ void CGameControllerMOD::Tick()
 								m_Civics--;
 								GameServer()->m_apPlayers[i]->SetHunter(true);
 
-								// give him hammer in case of infinite mode
-								if(GameServer()->m_apPlayers[i]->GetCharacter())
-									GameServer()->m_apPlayers[i]->GetCharacter()->GiveWeapon(WEAPON_HAMMER, -1);
-
 								// generate info message
 								const char* ClientName = Server()->ClientName(GameServer()->m_apPlayers[i]->GetCID());
 								str_append(m_aHuntersMessage, ClientName, sizeof(m_aHuntersMessage));
@@ -117,7 +113,7 @@ void CGameControllerMOD::Tick()
 
 				if(g_Config.m_HuntRoundtype)
 				{
-					GameServer()->SendChatTarget(-1, "——————欢迎来到Hunter猎人杀——————");
+					GameServer()->SendChatTarget(-1, "——————欢迎来到HunterN猎人杀——————");
 					str_format(aBuf, sizeof(aBuf), "本回合有 %d 个Hunter has been selected.", m_Hunters);
 					GameServer()->SendChatTarget(-1, aBuf);
 					GameServer()->SendChatTarget(-1, "规则：每回合秘密抽选猎人，猎人双倍伤害，有瞬杀锤子和破片榴弹          猎人对战平民，活人看不到死人消息，打字杀易被针对");
@@ -272,8 +268,14 @@ void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 	{
 		pChr->SetHealth(g_Config.m_HuntRoundStartHealth, 0);// default health
 		pChr->SetArmor(g_Config.m_HuntRoundStartArmor, 0);
-		if(g_Config.m_HuntWpHammerAllow)
+		if(g_Config.m_HuntWpHammerGive)
 			pChr->GiveWeapon(WEAPON_HAMMER, -1);// give default weapons
+		if(g_Config.m_HuntWpShotgunGive)
+			pChr->GiveWeapon(WEAPON_SHOTGUN, 10);// give default weapons
+		if(g_Config.m_HuntWpGrenadeGive)
+			pChr->GiveWeapon(WEAPON_GRENADE, 10);// give default weapons
+		if(g_Config.m_HuntWpRifleGive)
+			pChr->GiveWeapon(WEAPON_RIFLE, 10);// give default weapons
 		str_format(aBuf, sizeof(aBuf), "      这局你是猎人！本回合共有%d个猎人!\n      猎人双倍伤害 有瞬杀锤子和破片榴弹\n      分辨出你的队友 噶了所有平民胜利!", m_Hunters);//猎人提示往右靠以更好提示身份
 		GameServer()->SendBroadcast(aBuf, pChr->GetPlayer()->GetCID());
 		GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_EN, pChr->GetPlayer()->GetCID());
@@ -282,10 +284,20 @@ void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 	{
 		pChr->SetHealth(g_Config.m_CivRoundStartHealth, 0);// default health
 		pChr->SetArmor(g_Config.m_CivRoundStartArmor, 0);
-		if(g_Config.m_CivWpHammerAllow)
+		if(g_Config.m_CivWpHammerGive)
 			pChr->GiveWeapon(WEAPON_HAMMER, -1);
-		GameServer()->SendBroadcast("这局你是平民！噶了所有猎人胜利!                 \n猎人双倍伤害 有瞬杀锤子和破片榴弹", pChr->GetPlayer()->GetCID());//平民提示往左靠以更好提示身份
-		GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_PL, pChr->GetPlayer()->GetCID());
+		if(g_Config.m_CivWpShotgunGive)
+			pChr->GiveWeapon(WEAPON_SHOTGUN, 10);// give default weapons
+		if(g_Config.m_CivWpGrenadeGive)
+			pChr->GiveWeapon(WEAPON_GRENADE, 10);// give default weapons
+		if(g_Config.m_CivWpRifleGive)
+			pChr->GiveWeapon(WEAPON_RIFLE, 10);// give default weapons
+		
+		if(m_Hunters)
+		{
+			GameServer()->SendBroadcast("这局你是平民！噶了所有猎人胜利!                 \n猎人双倍伤害 有瞬杀锤子和破片榴弹", pChr->GetPlayer()->GetCID());//平民提示往左靠以更好提示身份
+			GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_PL, pChr->GetPlayer()->GetCID());
+		}
 	}
 	pChr->GiveWeapon(WEAPON_GUN, 10);
 }
