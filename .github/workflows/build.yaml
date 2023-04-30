@@ -10,6 +10,8 @@ jobs:
         os: [ubuntu-latest, windows-2019]
         include:
         - os: ubuntu-latest
+          cmake-args: -G "Unix Makefiles"
+          build-args: --parallel
           package-file: hunter_srv
           env:
             CFLAGS: -Wdeclaration-after-statement -Werror
@@ -48,6 +50,39 @@ jobs:
 
     - name: Build in release mode
       run: ./bam/bam server_release
+
+    - name: Test release
+      run: ./${{ matrix.package-file }} shutdown
+
+    - name: Package
+      run: |
+        mkdir artifacts
+        mv ${{ matrix.package-file }} artifacts
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: hunter-${{ matrix.os }}
+        path: artifacts
+
+  build-cmake:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    - name: Prepare Linux
+      if: contains(matrix.os, 'ubuntu')
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install pkg-config cmake -y
+
+    - name: Build in release mode
+      env: ${{ matrix.env }}
+      run: |
+        ${{ matrix.cmake-path }}cmake ${{ matrix.cmake-args }} -DCMAKE_BUILD_TYPE=Release -Werror=dev -DDOWNLOAD_GTEST=ON -DCMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE=. ..
+        ${{ matrix.cmake-path }}cmake --build . --config Release ${{ matrix.build-args }} --target everything
+
     - name: Test release
       run: ./${{ matrix.package-file }} shutdown
 
