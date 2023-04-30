@@ -10,14 +10,11 @@ jobs:
         os: [ubuntu-latest, windows-2019]
         include:
         - os: ubuntu-latest
-          cmake-args: -G "Unix Makefiles"
-          build-args: --parallel
           package-file: hunter_srv
           env:
             CFLAGS: -Wdeclaration-after-statement -Werror
             CXXFLAGS: -Werror
         - os: windows-2019
-          cmake-args: -A x64
           package-file: hunter_srv.exe
           env:
             CFLAGS: /WX
@@ -62,7 +59,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: hunter-${{ matrix.os }}
+        name: hunter-${{ matrix.os }}-build-bam
         path: artifacts
 
   build-cmake:
@@ -84,8 +81,8 @@ jobs:
 
     - name: Build in release mode
       run: |
-        ${{ matrix.cmake-path }}cmake ${{ matrix.cmake-args }} -DCMAKE_BUILD_TYPE=Release -Werror=dev -DDOWNLOAD_GTEST=ON -DCMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE=. ..
-        ${{ matrix.cmake-path }}cmake --build . --config Release ${{ matrix.build-args }} --target everything
+        cmake -DCMAKE_BUILD_TYPE=Release
+        make
 
     - name: Test release
       run: ./${{ matrix.package-file }} shutdown
@@ -98,5 +95,5 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: hunter-${{ matrix.os }}
+        name: hunter-${{ matrix.os }}-build-cmake
         path: artifacts

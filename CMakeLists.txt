@@ -421,10 +421,7 @@ set_glob(ENGINE_INTERFACE GLOB src/engine
   config.h
   console.h
   demo.h
-  editor.h
   engine.h
-  friends.h
-  graphics.h
   input.h
   kernel.h
   keys.h
@@ -432,10 +429,7 @@ set_glob(ENGINE_INTERFACE GLOB src/engine
   masterserver.h
   message.h
   server.h
-  serverbrowser.h
-  sound.h
   storage.h
-  textrender.h
 )
 set_glob(ENGINE_SHARED GLOB src/engine/shared
   compression.cpp
