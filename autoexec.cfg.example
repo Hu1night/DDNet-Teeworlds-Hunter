@@ -39,9 +39,9 @@ any_force_team_talk 1
 # 玩家猎人比 数值为4则每4玩家一个猎 即4人1猎 5人2猎 9人3猎
 hunt_hunter_ratio 4
 # 得分更改 让平民打死猎相对更吃分
-hunt_score_civic_win 1
-hunt_score_civic_kill_hunter 2
-hunt_score_hunter_win 2
+#hunt_score_civic_win 1
+#hunt_score_civic_kill_hunter 2
+#hunt_score_hunter_win 2
 # 以下为投票 可自由更改 把前面的#号删掉
 add_vote 请在autoexec.cfg配置服务端投票 "say 请在autoexec.cfg配置服务端;broadcast 请在autoexec.cfg配置服务端;sv_motd 请在autoexec.cfg配置服务端"
 add_vote 换图ChangeMap：hunter1 "hunt_roundtype 1;change_map hunter1"
