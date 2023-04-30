@@ -419,7 +419,7 @@ void CCharacter::HandleWeapons()
 	// ammo regen
 	int AmmoRegenTime = g_pData->m_Weapons.m_aId[m_ActiveWeapon].m_Ammoregentime;
 	if(g_Config.m_AnyWpAmmoRegen){
-		int AmmoRegenTime = 500;
+		AmmoRegenTime = 500;
 	}
 	if(AmmoRegenTime)
 	{
