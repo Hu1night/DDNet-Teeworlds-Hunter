@@ -673,7 +673,7 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "info", 4) == 0)
 				{
 					SendChatTarget(ClientID, "这是HunterN模式 by Hu1night");
-					SendChatTarget(ClientID, "服务器版本：0.2b2");
+					SendChatTarget(ClientID, "服务器版本：0.2b3");
 					SendChatTarget(ClientID, "规则：每回合秘密抽选猎人，猎人对战平民，猎人双倍伤害，有瞬杀锤子和破片榴弹，活人看不到死人消息，打字杀易被针对");
 					SendChatTarget(ClientID, "Rule:Random players will be seceretly selected to be hunter. Hunter vs Everyone else. Hunter is stronger.");
 					SendChatTarget(ClientID, "Github地址：https://github.com/Hu1night/DDNet-Teeworlds-Hunter");
@@ -1492,13 +1492,14 @@ void CGameContext::ConEchoHunterInChat(IConsole::IResult *pResult, void *pUserDa
 
 	char aBuf[128];
 
-	pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "game", "hunters:");
+	str_format(aBuf, sizeof(aBuf), "本局猎人Hunter是：");
 	for(int i = 0; i < MAX_CLIENTS; i++)
-		if(pSelf->m_apPlayers[i] && pSelf->m_apPlayers[i]->GetHunter())
-		{
-			str_format(aBuf, sizeof(aBuf), "  %d:%s", pSelf->m_apPlayers[i]->GetCID(), pSelf->Server()->ClientName(pSelf->m_apPlayers[i]->GetCID()));
-			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "game", aBuf);
+		if(pSelf->m_apPlayers[i] && pSelf->m_apPlayers[i]->GetHunter()){
+			const char* ClientName = pSelf->Server()->ClientName(pSelf->m_apPlayers[i]->GetCID());
+			str_append(aBuf, ClientName, sizeof(aBuf));
+			str_append(aBuf, ", ", sizeof(aBuf));
 		}
+	pSelf->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 }
 
 void CGameContext::ConFunChat(IConsole::IResult *pResult, void *pUserData)
@@ -1551,9 +1552,10 @@ void CGameContext::OnConsoleInit()
 	Console()->Register("vote", "r", CFGFLAG_SERVER, ConVote, this, "Force a vote to yes/no");
 
 	Console()->Chain("sv_motd", ConchainSpecialMotdupdate, this);
-
+/* Hunter start */
 	Console()->Register("echo_hunter_inchat", "", CFGFLAG_SERVER, ConEchoHunterInChat, this, "Who is hunter?");
-	Console()->Register("funchat", "", CFGFLAG_SERVER, ConFunChat, this, "For funnnnnnnnnn");
+	Console()->Register("funchat", "", CFGFLAG_SERVER, ConFunChat, this, "For fun");
+/* Hunter end */
 }
 
 void CGameContext::OnInit(/*class IKernel *pKernel*/)
@@ -1844,5 +1846,4 @@ void CGameContext::CensorMessage(char *pCensoredMessage, const char *pMessage, i
 {
 	str_copy(pCensoredMessage, pMessage, Size);
 }
-
 /* Hunter end */

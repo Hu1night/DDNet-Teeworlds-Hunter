@@ -63,7 +63,7 @@ void CGameControllerMOD::Tick()
 			int LeastPlayers = g_Config.m_HuntHunterFixed ? (g_Config.m_HuntHunterNumber + 1) : 2;
 			if(m_Civics < LeastPlayers)
 			{
-				if(Server()->Tick() % (Server()->TickSpeed() * 4) == 0)
+				if(Server()->Tick() % (Server()->TickSpeed() * 2) == 0)
 				{
 					str_format(aBuf, sizeof(aBuf), "这里是猎人杀PVP\n每回合秘密抽选猎人\n少数猎人对战多数平民\n至少需要 %d 玩家才能开始", LeastPlayers);
 					GameServer()->SendBroadcast(aBuf, -1);	
