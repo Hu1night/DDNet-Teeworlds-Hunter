@@ -94,17 +94,14 @@ jobs:
     - name: Build in release mode
       run: |
         cmake -DCMAKE_BUILD_TYPE=Release
-        cmake --build . --config Release
+        cmake --build ./ --config Release
 
-    - name: Test release（Ubuntu）
-      if: contains(matrix.os, 'ubuntu')
-      run: ${{ matrix.package-file }} shutdown
-
-    - name: Test release（Windows）
+    - name: Move release
       if: contains(matrix.os, 'windows')
-      run: |
-        mv ./Release/${{ matrix.package-file }} ./
-        ${{ matrix.package-file }} shutdown
+      run: mv ./release/${{ matrix.package-file }} ./
+
+    - name: Test release
+      run: ./${{ matrix.package-file }} shutdown
 
     - name: Package
       run: |
