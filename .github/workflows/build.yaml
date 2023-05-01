@@ -94,7 +94,7 @@ jobs:
     - name: Build in release mode
       run: |
         cmake -DCMAKE_BUILD_TYPE=Release
-        cmake --build . --config Release
+        cmake --build ./ --config Release
 
     - name: Test release
       run: ./${{ matrix.package-file }} shutdown
