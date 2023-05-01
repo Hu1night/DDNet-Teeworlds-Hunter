@@ -93,16 +93,19 @@ jobs:
 
     - name: Build in release mode
       run: |
+        mkdir release
+        cd release
         cmake -DCMAKE_BUILD_TYPE=Release
-        cmake --build ./ --config Release
+        cmake --build . --config Release
 
     - name: Test release
-      run: ./${{ matrix.package-file }} shutdown
+      run: |
+        ./release/${{ matrix.package-file }} shutdown
 
     - name: Package
       run: |
         mkdir artifacts
-        mv ${{ matrix.package-file }} artifacts
+        mv ./release/${{ matrix.package-file }} artifacts
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v1
