@@ -556,7 +556,7 @@ set(GAME_GENERATED_SERVER
 )
 set(SERVER_SRC ${ENGINE_SERVER} ${GAME_SERVER} ${GAME_GENERATED_SERVER})
 if(TARGET_OS STREQUAL "windows")
-  set(SERVER_ICON "other/icons/${SERVER_EXECUTABLE}.rc")
+  set(SERVER_ICON "other/icons/teeworlds_srv.rc")
 else()
   set(SERVER_ICON)
 endif()
