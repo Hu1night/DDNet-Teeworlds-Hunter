@@ -109,7 +109,7 @@ MACRO_CONFIG_INT(HuntBroadcastHunterDeath, hunt_broadcast_hunter_death, 0, 0, 1,
 MACRO_CONFIG_INT(ShowHunterList, hunt_show_hunterlist, 0, 0, 1, CFGFLAG_SERVER, "是否开局向全体广播猎人列表（默认0,最小0,最大1）")
 
 MACRO_CONFIG_INT(CivWpHammerDmg, civ_wphammer_dmg, 3, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民锤子伤害（默认3,最小0,最大inf）")
-MACRO_CONFIG_INT(CivWpNinjaDmg, civ_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民Ninja伤害（默认13,最小0,最大inf）")
+MACRO_CONFIG_INT(CivWpNinjaDmg, civ_wpninja_dmg, 13, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民Ninja伤害（默认13,最小0,最大inf）")
 
 MACRO_CONFIG_INT(CivWpHammerGive, civ_wphammer_give, 0, 0, 1, CFGFLAG_SERVER, "平民是否给予锤子（默认0,最小0,最大1）")
 MACRO_CONFIG_INT(CivWpShotgunGive, civ_wpshotgun_give, 0, 0, 1, CFGFLAG_SERVER, "平民开局是否给予霰弹（默认0,最小0,最大1）")
@@ -121,7 +121,8 @@ MACRO_CONFIG_INT(HuntRoundStartArmor, hunt_round_start_armor, 0, 0, 0xFFFFFF, CF
 MACRO_CONFIG_INT(CivRoundStartHealth, civ_round_start_health, 10, 1, 0xFFFFFF, CFGFLAG_SERVER, "平民开局给的血量（默认10,最小1,最大inf）")
 MACRO_CONFIG_INT(CivRoundStartArmor, civ_round_start_armor, 0, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民开局给的盾（默认0,最小0,最大inf）")
 
-MACRO_CONFIG_INT(AnyWpAmmoRegen, any_wpammo_regan, 0, 0, 1, CFGFLAG_SERVER, "全武器弹药回复（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(AnyWpAmmoRegen, any_wpammo_regan, 0, 0, 1, CFGFLAG_SERVER, "启用武器弹药回复（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(AnyWpAmmoRegenTime, any_wpammo_regan_time, 500, 20, 0xFFFFFF, CFGFLAG_SERVER, "武器弹药回复时间 单位ms（默认500,最小20,最大inf）")
 MACRO_CONFIG_INT(AnyWpNinjaRespawnTime, any_wpninja_respawntime, 90, 0, 0xFFFFFF, CFGFLAG_SERVER, "Ninja重刷新时间（默认90,最小0,最大inf）")
 
 MACRO_CONFIG_INT(AnyForceTeamTalk, any_force_team_talk, 1, 0, 1, CFGFLAG_SERVER, "强制馆茶者在一个频道里（默认1,最小0,最大1）")
