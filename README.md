@@ -10,6 +10,7 @@ Teeworlds HunterN猎人杀
 更改：猎人榴弹满伤从26改为20(破片从20改14)<br />
 更改：使ninja适配Hunter(猎ninja20伤,平民ninja13伤)<br />
 更改：Ninja(忍者刀)生成时间从90s改70s(重生时间仍是90s)<br />
+更改：每次捡起ninja会额外给予1心 可以超出血量上限 可以叠加<br />
 加入：开局平民文字提示<br />
 加入：开局身份音效提示<br />
 加入：指令if(从[InfectionDust](https://github.com/InfectionDust/teeworlds-infclassR/)移植)和"没有此命令"提示<br />
