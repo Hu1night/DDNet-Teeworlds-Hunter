@@ -22,12 +22,12 @@ jobs:
             LDFLAGS: /WX
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: true
 
     - name: Checkout bam
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: matricks/bam
         ref: 8cd08744c37666830d439ab54016c9d228c63b68
@@ -57,7 +57,7 @@ jobs:
         mv ${{ matrix.package-file }} artifacts
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v3
       with:
         name: hunter-${{ matrix.os }}-build-bam
         path: artifacts
@@ -81,7 +81,7 @@ jobs:
             LDFLAGS: /WX
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: true
 
@@ -93,12 +93,8 @@ jobs:
 
     - name: Build in release mode
       run: |
-        cmake -DCMAKE_BUILD_TYPE=Release
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=.
         cmake --build ./ --config Release
-
-    - name: Move release
-      if: contains(matrix.os, 'windows')
-      run: mv ./release/${{ matrix.package-file }} ./
 
     - name: Test release
       run: ./${{ matrix.package-file }} shutdown
@@ -109,7 +105,7 @@ jobs:
         mv ${{ matrix.package-file }} artifacts
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v3
       with:
         name: hunter-${{ matrix.os }}-build-cmake
         path: artifacts
