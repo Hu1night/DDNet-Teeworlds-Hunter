@@ -96,6 +96,10 @@ jobs:
         cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=./
         cmake --build ./ --config Release
 
+    - name: Move release
+      if: contains(matrix.os, 'windows')
+      run: mv ./release/${{ matrix.package-file }} ./
+
     - name: Test release
       run: ./${{ matrix.package-file }} shutdown
 
