@@ -1413,7 +1413,7 @@ int CServer::Run()
 	for(int i = 0; i < MAX_CLIENTS; ++i)
 	{
 		if(m_aClients[i].m_State != CClient::STATE_EMPTY)
-			m_NetServer.Drop(i, "Server shutdown");
+			m_NetServer.Drop(i, "服务器关闭或重启");
 
 		m_Econ.Shutdown();
 	}

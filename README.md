@@ -1,13 +1,13 @@
 Teeworlds HunterN猎人杀
 =====================
-基于Teeworlds 0.6.5<br />
+基于Hunter模式(Teeworlds 0.6.5)<br />
 我只负责往屎山加屎 修BUG请提交代码qwq<br />
 
-规则：每回合秘密抽选猎人，猎人对战平民，猎人双倍伤害，有瞬杀锤子和破片榴弹，活人看不到死人消息
+模式规则：一命DM死斗但每回合秘密抽选猎人，其他人(即平民)对战猎人，猎人双倍伤害，有瞬杀锤子(平民无锤)和破片榴弹(对自己无伤)，活人看不到死人消息，猎人死亡通知其他猎人，开局仅知道自己身份
 
-更改或加入以下游戏内容：
+与原Hunter模式的区别：
 -----------------------
-更改：猎人榴弹满伤从26改为20(破片从20改14)<br />
+更改：猎人榴弹满伤从26改为24(破片从20改18)<br />
 更改：使ninja适配Hunter(猎ninja20伤,平民ninja13伤)<br />
 更改：Ninja(忍者刀)生成时间从90s改70s(重生时间仍是90s)<br />
 更改：每次捡起ninja会额外给予1心 可以超出血量上限 可以叠加<br />
@@ -21,17 +21,27 @@ Teeworlds HunterN猎人杀
 更改：几乎完整的中文翻译<br />
 
 加入了以下地图：
------------------------
-smallbomb、huntern5
+smallbomb、huntern5、huntern_doomsday、huntern_qianye
 
-如何构建? Building
+在Ubuntu上使用bam构建
 --------------
-你可以用CMake和[Bam](https://github.com/matricks/bam)构建.
-详情参考[Teeworlds原版储存库](https://github.com/teeworlds/teeworlds)中的编译方法
+1.确保bam及相关组件已安装<br />
+    sudo apt update<br />
+    sudo apt install build-essential bam python3<br />
+2.到本地项目编译<br />
+    bam server_release
 
-想要获取构建? 
+在Ubuntu上使用CMake构建
 --------------
-你可以从这个项目的[Github Action](https://github.com/Hu1night/DDNet-Teeworlds-Hunter/actions/workflows/build.yaml)获取较新的构建
+1.确保CMake及相关组件已安装<br />
+    sudo apt update<br />
+    sudo apt install build-essential cmake python3<br />
+2.到本地项目编译<br />
+    cmake .
+    make -j16
+
+在其他系统上的构建请参阅[Teeworlds储存库](https://github.com/teeworlds/teeworlds)
+--------------
 
 以下是原作者的readme
 -------------

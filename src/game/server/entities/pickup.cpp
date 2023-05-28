@@ -92,7 +92,7 @@ void CPickup::Tick()
 					/* Hunter start */
 					if(g_Config.m_AnyWpNinjaAllow)
 					{
-						pChr->SetHealth(1, 1);
+						pChr->SetHealth(1, 1);//每次捡起ninja额外给予1心 可以超出血量上限 可以叠加
 						pChr->GiveNinja();
 
 						// loop through all players, setting their emotes

@@ -1,7 +1,7 @@
 /* (c) Magnus Auvinen. See licence.txt in the root of the distribution for more information. */
 /* If you are missing that file, acquire a complete release at teeworlds.com.                */
 
-//这是猎人杀Hunter模式! Github地址 https://github.com/Hu1night/DDNet-Teeworlds-Hunter
+//这是猎人杀HunterN模式! Github地址 https://github.com/Hu1night/DDNet-Teeworlds-Hunter
 
 #include <engine/shared/config.h>
 #include <game/server/player.h>
@@ -116,9 +116,9 @@ void CGameControllerMOD::Tick()
 					GameServer()->SendChatTarget(-1, "——————欢迎来到HunterN猎人杀——————");
 					str_format(aBuf, sizeof(aBuf), "本回合有 %d 个Hunter has been selected.", m_Hunters);
 					GameServer()->SendChatTarget(-1, aBuf);
-					GameServer()->SendChatTarget(-1, "规则：每回合秘密抽选猎人，猎人双倍伤害，有瞬杀锤子和破片榴弹          猎人对战平民，活人看不到死人消息，打字杀易被针对");
-					GameServer()->SendChatTarget(-1, "分辨出你的队友并消灭敌人来取得胜利！");
-					GameServer()->SendChatTarget(-1, "Be warned! Sudden Death.");
+					GameServer()->SendChatTarget(-1, "规则：每回合秘密抽选猎人 猎人对战平民 活人看不到死人消息");
+					GameServer()->SendChatTarget(-1, "       猎人双倍伤害 有瞬杀锤子(平民无锤)和破片榴弹(对自己无伤)");
+					GameServer()->SendChatTarget(-1, "分辨队友并消灭敌人取得胜利！Be warned! Sudden Death.");
 				}
 
 				if(g_Config.m_ShowHunterList)
@@ -205,23 +205,17 @@ void CGameControllerMOD::DoWincheck()
 {
 	const char *pWinMessage;
 
-	char aBuf[128];
-
 	if(m_GameOverTick == -1 && !m_Warmup && !GameServer()->m_World.m_ResetRequested)
 	{
-		if(m_Hunters < 0 || m_Civics < 0 || m_CivicDeathes < 0 || m_HunterDeathes < 0 || (m_Hunters && m_Civics == 0 && m_CivicDeathes <= 0))
-		{
-			str_format(aBuf, sizeof(aBuf), "BUG! m_Hunters %d m_Civics %d m_CivicDeathes %d m_HunterDeathes %d", m_Hunters, m_Civics, m_CivicDeathes, m_HunterDeathes);
-			pWinMessage = aBuf;
-		}
-		// only hunters left
-		else if(m_Hunters && m_Civics == 0)
+		if(m_Hunters && m_Civics == 0)
 		{
 			pWinMessage = "Hunters胜利!";
 		}
 		// timeout or hunters died out
-		else if((g_Config.m_SvTimelimit > 0 && (Server()->Tick()-m_RoundStartTick) >= g_Config.m_SvTimelimit*Server()->TickSpeed()*60) || (m_Hunters == 0 && m_Civics && m_HunterDeathes))
+		else if((g_Config.m_SvTimelimit > 0 && (Server()->Tick()-m_RoundStartTick) >= g_Config.m_SvTimelimit*Server()->TickSpeed()*60) || (m_Hunters == 0 && m_Civics && m_HunterDeathes)){
+			GameServer()->SendChatTarget(-1, m_aHuntersMessage);//如果平民死光也不用显示猎人列表了 因为死的时候已经显示一遍了
 			pWinMessage = "Civics胜利!";
+		}
 		// no one left
 		else if(m_Hunters == 0 && m_Civics == 0 && m_HunterDeathes)
 			pWinMessage = "两人幸终!";
@@ -243,7 +237,6 @@ void CGameControllerMOD::DoWincheck()
 				GameServer()->m_apPlayers[i]->m_Score += GameServer()->m_apPlayers[i]->m_HiddenScore;
 				GameServer()->m_apPlayers[i]->m_HiddenScore = 0;
 			}
-		GameServer()->SendChatTarget(-1, m_aHuntersMessage);
 		EndRound();
 
 		no_win:;
@@ -276,8 +269,10 @@ void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 			pChr->GiveWeapon(WEAPON_GRENADE, 10);// give default weapons
 		if(g_Config.m_HuntWpRifleGive)
 			pChr->GiveWeapon(WEAPON_RIFLE, 10);// give default weapons
+
 		str_format(aBuf, sizeof(aBuf), "      这局你是猎人！本回合共有%d个猎人!\n      猎人双倍伤害 有瞬杀锤子和破片榴弹\n      分辨出你的队友 噶了所有平民胜利!", m_Hunters);//猎人提示往右靠以更好提示身份
 		GameServer()->SendBroadcast(aBuf, pChr->GetPlayer()->GetCID());
+
 		GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_EN, pChr->GetPlayer()->GetCID());
 	}
 	else
@@ -292,12 +287,10 @@ void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 			pChr->GiveWeapon(WEAPON_GRENADE, 10);// give default weapons
 		if(g_Config.m_CivWpRifleGive)
 			pChr->GiveWeapon(WEAPON_RIFLE, 10);// give default weapons
-		
-		if(m_Hunters)
-		{
-			GameServer()->SendBroadcast("这局你是平民！噶了所有猎人胜利!                 \n猎人双倍伤害 有瞬杀锤子和破片榴弹", pChr->GetPlayer()->GetCID());//平民提示往左靠以更好提示身份
-			GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_PL, pChr->GetPlayer()->GetCID());
-		}
+
+		GameServer()->SendBroadcast("这局你是平民！噶了所有猎人胜利!                 \n猎人双倍伤害 有瞬杀锤子和破片榴弹", pChr->GetPlayer()->GetCID());//平民提示往左靠以更好提示身份
+
+		GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_PL, pChr->GetPlayer()->GetCID());
 	}
 	pChr->GiveWeapon(WEAPON_GUN, 10);
 }

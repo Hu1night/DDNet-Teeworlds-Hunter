@@ -98,7 +98,7 @@ MACRO_CONFIG_INT(HuntWpHammerDmg, hunt_wphammer_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SE
 MACRO_CONFIG_INT(HuntWpNinjaDmg, hunt_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人Ninja伤害（默认20,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntWpPowerup, hunt_wppowerup, 2, 1, 0xFFFFFF, CFGFLAG_SERVER, "猎人武器增强比例（默认2,最小1,最大inf）")
 MACRO_CONFIG_INT(HuntWpGrenadeFwAllow, hunt_wpgrenade_fwallow, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许榴弹破片（默认1,最小0,最大1）")
-MACRO_CONFIG_INT(HuntWpGrenadeFw, hunt_wpgrenade_fw, 14, 0, 0xFFFFFF, CFGFLAG_SERVER, "榴弹破片数量（默认14,最小0,最大inf）")
+MACRO_CONFIG_INT(HuntWpGrenadeFw, hunt_wpgrenade_fw, 18, 0, 0xFFFFFF, CFGFLAG_SERVER, "榴弹破片数量（默认14,最小0,最大inf）")
 
 MACRO_CONFIG_INT(HuntWpHammerGive, hunt_wphammer_give, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许锤子（默认0,最小0,最大1）")
 MACRO_CONFIG_INT(HuntWpShotgunGive, hunt_wpshotgun_give, 0, 0, 1, CFGFLAG_SERVER, "猎人开局是否给予霰弹（默认0,最小0,最大1）")

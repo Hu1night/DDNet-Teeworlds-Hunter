@@ -67,6 +67,7 @@ class CGameContext : public IGameServer
 
 	/* Hunter start */
 	static void ConEchoHunterInChat(IConsole::IResult *pResult, void *pUserData);
+	static void ConEchoHunterInCon(IConsole::IResult *pResult, void *pUserData);
 	static void ConFunChat(IConsole::IResult *pResult, void *pUserData);
 	/* Hunter end */
 
@@ -125,6 +126,7 @@ public:
 	// helper functions
 	void CreateDamageInd(vec2 Pos, float AngleMod, int Amount);
 	void CreateExplosion(vec2 Pos, int Owner, int Weapon, bool NoDamage);
+	void CreateSmoke(vec2 Pos);
 	void CreateHammerHit(vec2 Pos);
 	void CreatePlayerSpawn(vec2 Pos);
 	void CreateDeath(vec2 Pos, int Who);

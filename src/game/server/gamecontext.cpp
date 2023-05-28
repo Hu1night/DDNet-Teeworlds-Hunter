@@ -145,17 +145,11 @@ void CGameContext::CreateExplosion(vec2 Pos, int Owner, int Weapon, bool NoDamag
 	}
 }
 
-/*
-void create_smoke(vec2 Pos)
+void CGameContext::CreateSmoke(vec2 Pos)
 {
 	// create the event
-	EV_EXPLOSION *pEvent = (EV_EXPLOSION *)events.create(EVENT_SMOKE, sizeof(EV_EXPLOSION));
-	if(pEvent)
-	{
-		pEvent->x = (int)Pos.x;
-		pEvent->y = (int)Pos.y;
-	}
-}*/
+	CNetEvent_Explosion *pEvent = (CNetEvent_Explosion *)m_Events.Create(NETEVENTTYPE_EXPLOSION, sizeof(CNetEvent_Explosion));
+}
 
 void CGameContext::CreatePlayerSpawn(vec2 Pos)
 {
@@ -519,6 +513,12 @@ void CGameContext::OnClientEnter(int ClientID)
 	str_format(aBuf, sizeof(aBuf), "'%s'连接并加入了%s", Server()->ClientName(ClientID), m_pController->GetTeamName(m_apPlayers[ClientID]->GetTeam()));
 	SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 
+	if(m_apPlayers[ClientID] && m_apPlayers[ClientID]->GetTeam() != TEAM_SPECTATORS)
+	{
+		SendChatTarget(ClientID, "——————欢迎来到HunterN猎人杀——————");
+		SendChatTarget(ClientID, "规则：每回合秘密抽选猎人 猎人对战平民 活人看不到死人消息");
+		SendChatTarget(ClientID, "       猎人双倍伤害 有瞬杀锤子(平民无锤)和破片榴弹(对自己无伤)");
+	}
 	str_format(aBuf, sizeof(aBuf), "team_join player='%d:%s' team=%d", ClientID, Server()->ClientName(ClientID), m_apPlayers[ClientID]->GetTeam());
 	Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
 
@@ -1485,7 +1485,7 @@ void CGameContext::ConVote(IConsole::IResult *pResult, void *pUserData)
 	pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "server", aBuf);
 }
 
-
+/* Hunter start */
 void CGameContext::ConEchoHunterInChat(IConsole::IResult *pResult, void *pUserData)
 {
 	CGameContext *pSelf = (CGameContext *)pUserData;
@@ -1500,6 +1500,21 @@ void CGameContext::ConEchoHunterInChat(IConsole::IResult *pResult, void *pUserDa
 			str_append(aBuf, ", ", sizeof(aBuf));
 		}
 	pSelf->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
+}
+
+void CGameContext::ConEchoHunterInCon(IConsole::IResult *pResult, void *pUserData)
+{
+	CGameContext *pSelf = (CGameContext *)pUserData;
+
+	char aBuf[128];
+	
+	pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "game", "hunters:");
+	for(int i = 0; i < MAX_CLIENTS; i++)
+		if(pSelf->m_apPlayers[i] && pSelf->m_apPlayers[i]->GetHunter())
+		{
+			str_format(aBuf, sizeof(aBuf), "  %d:%s", pSelf->m_apPlayers[i]->GetCID(), pSelf->Server()->ClientName(pSelf->m_apPlayers[i]->GetCID()));
+			pSelf->Console()->Print(IConsole::OUTPUT_LEVEL_STANDARD, "game", aBuf);
+		}
 }
 
 void CGameContext::ConFunChat(IConsole::IResult *pResult, void *pUserData)

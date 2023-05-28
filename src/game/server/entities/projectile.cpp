@@ -85,6 +85,11 @@ void CProjectile::Tick()
 				GameServer()->CreateExplosion(CurPos+vec2(-50,-50), m_Owner, m_Weapon, false);
 				*/
 
+				GameServer()->CreateSmoke(CurPos+vec2(50,50));
+				GameServer()->CreateSmoke(CurPos+vec2(50,-50));
+				GameServer()->CreateSmoke(CurPos+vec2(-50,50));
+				GameServer()->CreateSmoke(CurPos+vec2(-50,-50));
+
 				CMsgPacker Msg(NETMSGTYPE_SV_EXTRAPROJECTILE);
 
 				for(int i=0;i<g_Config.m_HuntWpGrenadeFw;i++)
