@@ -522,7 +522,7 @@ void CGameContext::OnClientEnter(int ClientID)
 	{
 		SendChatTarget(ClientID, "——————欢迎来到HunterN猎人杀——————");
 		SendChatTarget(ClientID, "规则：每回合秘密抽选猎人 猎人对战平民 活人看不到死人消息");
-		SendChatTarget(ClientID, "       猎人双倍伤害 有瞬杀锤子(平民无锤)和破片榴弹(对自己无伤)");
+		SendChatTarget(ClientID, "      猎人双倍伤害 有瞬杀锤子(平民无锤)和破片榴弹(对自己无伤)");
 	}
 	str_format(aBuf, sizeof(aBuf), "team_join player='%d:%s' team=%d", ClientID, Server()->ClientName(ClientID), m_apPlayers[ClientID]->GetTeam());
 	Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
@@ -678,9 +678,9 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "info", 4) == 0)
 				{
 					SendChatTarget(ClientID, "这是HunterN模式 by Hu1night");
-					SendChatTarget(ClientID, "服务器版本：0.2b3");
-					SendChatTarget(ClientID, "规则：每回合秘密抽选猎人，猎人对战平民，猎人双倍伤害，有瞬杀锤子和破片榴弹，活人看不到死人消息，打字杀易被针对");
-					SendChatTarget(ClientID, "Rule:Random players will be seceretly selected to be hunter. Hunter vs Everyone else. Hunter is stronger.");
+					SendChatTarget(ClientID, "服务器版本：0.2b4");
+					SendChatTarget(ClientID, "规则：但每回合秘密抽选猎人，其他人(即平民)对战猎人，猎人双倍伤害，有瞬杀锤子(平民无锤)和破片榴弹(对自己无伤)，活人看不到死人消息，猎人死亡通知其他猎人，开局仅知道自己身份");
+					SendChatTarget(ClientID, "Rule:Random players will be seceretly selected to be hunter. Hunter vs Civic. Hunter is stronger.");
 					SendChatTarget(ClientID, "Github地址：https://github.com/Hu1night/DDNet-Teeworlds-Hunter");
 				}
 				/*else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "w", 1) == 0)

@@ -32,19 +32,23 @@ smallbomb、huntern5、huntern_doomsday、huntern_qianye
 在Ubuntu上使用bam构建
 --------------
 1.确保bam及相关组件已安装<br />
-    sudo apt update<br />
-    sudo apt install build-essential bam python3<br />
+```sudo apt update
+sudo apt install build-essential bam python3
+```
 2.到本地项目编译<br />
-    bam server_release
+```bam server_release
+```
 
 在Ubuntu上使用CMake构建
 --------------
 1.确保CMake及相关组件已安装<br />
-    sudo apt update<br />
-    sudo apt install build-essential cmake python3<br />
+```sudo apt update
+sudo apt install build-essential cmake python3
+```
 2.到本地项目编译<br />
-    cmake .
-    make -j16
+```cmake .
+make -j16
+```
 
 在其他系统上的构建请参阅[Teeworlds储存库](https://github.com/teeworlds/teeworlds)
 --------------
