@@ -149,6 +149,11 @@ void CGameContext::CreateSmoke(vec2 Pos)
 {
 	// create the event
 	CNetEvent_Explosion *pEvent = (CNetEvent_Explosion *)m_Events.Create(NETEVENTTYPE_EXPLOSION, sizeof(CNetEvent_Explosion));
+	if(pEvent)
+	{
+		pEvent->m_X = (int)Pos.x;
+		pEvent->m_Y = (int)Pos.y;
+	}
 }
 
 void CGameContext::CreatePlayerSpawn(vec2 Pos)

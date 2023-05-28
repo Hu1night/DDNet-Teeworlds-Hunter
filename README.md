@@ -23,6 +23,12 @@ Teeworlds HunterN猎人杀
 加入了以下地图：
 smallbomb、huntern5、huntern_doomsday、huntern_qianye
 
+如何使用
+--------------
+1.下载最新的[Release](https://github.com/Hu1night/DDNet-Teeworlds-Hunter/releases)或开发版构建([项目Action](https://github.com/Hu1night/DDNet-Teeworlds-Hunter/actions/workflows/build.yaml)),也可从源码构建<br />
+2.开服前根据需求更改autoexec.cfg(如服务器名字,F2控制台密码,投票等)<br />
+3.运行hunter_srv.exe(Windows系统)或hunter_srv(Linux系统)开服
+
 在Ubuntu上使用bam构建
 --------------
 1.确保bam及相关组件已安装<br />
