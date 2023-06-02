@@ -17,3 +17,6 @@ CPackConfig.cmake
 CPackSourceConfig.cmake
 CTestTestfile.cmake
 hunter_srv
+*.vcxproj
+*.filters
+teeworlds.sln
