@@ -79,6 +79,8 @@ void CGameControllerMOD::Tick()
 			}
 			else
 			{
+				Server()->DemoRecorder_HandleAutoStart();
+				
 				m_Hunters = g_Config.m_HuntHunterFixed ? g_Config.m_HuntHunterNumber : ((m_Civics + g_Config.m_HuntHunterRatio - 1) / g_Config.m_HuntHunterRatio);
 					str_copy(aBuf, "Hunter是: ", sizeof(aBuf));
 					str_copy(m_aHuntersMessage, "这一回合的Hunter是: ", sizeof(m_aHuntersMessage));
@@ -117,7 +119,7 @@ void CGameControllerMOD::Tick()
 					str_format(aBuf, sizeof(aBuf), "本回合有 %d 个Hunter has been selected.", m_Hunters);
 					GameServer()->SendChatTarget(-1, aBuf);
 					GameServer()->SendChatTarget(-1, "规则：每回合秘密抽选猎人 猎人对战平民 活人看不到死人消息");
-					GameServer()->SendChatTarget(-1, "       猎人双倍伤害 有瞬杀锤子(平民无锤)和破片榴弹(对自己无伤)");
+					GameServer()->SendChatTarget(-1, "      猎人双倍伤害 有瞬杀锤子(平民无锤)和破片榴弹(对自己无伤)");
 					GameServer()->SendChatTarget(-1, "分辨队友并消灭敌人取得胜利！Be warned! Sudden Death.");
 				}
 
@@ -261,16 +263,11 @@ void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 	{
 		pChr->SetHealth(g_Config.m_HuntRoundStartHealth, 0);// default health
 		pChr->SetArmor(g_Config.m_HuntRoundStartArmor, 0);
+
 		if(g_Config.m_HuntWpHammerGive)
 			pChr->GiveWeapon(WEAPON_HAMMER, -1);// give default weapons
-		if(g_Config.m_HuntWpShotgunGive)
-			pChr->GiveWeapon(WEAPON_SHOTGUN, 10);// give default weapons
-		if(g_Config.m_HuntWpGrenadeGive)
-			pChr->GiveWeapon(WEAPON_GRENADE, 10);// give default weapons
-		if(g_Config.m_HuntWpRifleGive)
-			pChr->GiveWeapon(WEAPON_RIFLE, 10);// give default weapons
 
-		str_format(aBuf, sizeof(aBuf), "      这局你是猎人！本回合共有%d个猎人!\n      猎人双倍伤害 有瞬杀锤子和破片榴弹\n      分辨出你的队友 噶了所有平民胜利!", m_Hunters);//猎人提示往右靠以更好提示身份
+		str_format(aBuf, sizeof(aBuf), "      这局你是猎人Hunter！本回合共有%d个猎人!\n      猎人双倍伤害 有瞬杀锤子和破片榴弹\n      分辨出你的队友 噶了所有平民胜利!", m_Hunters);//猎人提示往右靠以更好提示身份
 		GameServer()->SendBroadcast(aBuf, pChr->GetPlayer()->GetCID());
 
 		GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_EN, pChr->GetPlayer()->GetCID());
@@ -279,16 +276,11 @@ void CGameControllerMOD::OnCharacterSpawn(class CCharacter *pChr)
 	{
 		pChr->SetHealth(g_Config.m_CivRoundStartHealth, 0);// default health
 		pChr->SetArmor(g_Config.m_CivRoundStartArmor, 0);
+
 		if(g_Config.m_CivWpHammerGive)
 			pChr->GiveWeapon(WEAPON_HAMMER, -1);
-		if(g_Config.m_CivWpShotgunGive)
-			pChr->GiveWeapon(WEAPON_SHOTGUN, 10);// give default weapons
-		if(g_Config.m_CivWpGrenadeGive)
-			pChr->GiveWeapon(WEAPON_GRENADE, 10);// give default weapons
-		if(g_Config.m_CivWpRifleGive)
-			pChr->GiveWeapon(WEAPON_RIFLE, 10);// give default weapons
 
-		GameServer()->SendBroadcast("这局你是平民！噶了所有猎人胜利!                 \n猎人双倍伤害 有瞬杀锤子和破片榴弹", pChr->GetPlayer()->GetCID());//平民提示往左靠以更好提示身份
+		GameServer()->SendBroadcast("这局你是平民Civic！噶了所有猎人胜利!                 \n猎人双倍伤害 有瞬杀锤子和破片榴弹", pChr->GetPlayer()->GetCID());//平民提示往左靠以更好提示身份
 
 		GameServer()->CreateSoundGlobal(SOUND_CTF_GRAB_PL, pChr->GetPlayer()->GetCID());
 	}

@@ -253,7 +253,7 @@ void CNetBan::MakeBanInfo(const CBan<T> *pBan, char *pBuf, unsigned BuffSize, in
 	// build type based part
 	char aBuf[256];
 	if(Type == MSGTYPE_PLAYER)
-		str_copy(aBuf, "You have been banned", sizeof(aBuf));
+		str_copy(aBuf, "你已被封禁", sizeof(aBuf));
 	else
 	{
 		char aTemp[256];
@@ -274,13 +274,10 @@ void CNetBan::MakeBanInfo(const CBan<T> *pBan, char *pBuf, unsigned BuffSize, in
 	if(pBan->m_Info.m_Expires != CBanInfo::EXPIRES_NEVER)
 	{
 		int Mins = ((pBan->m_Info.m_Expires-time_timestamp()) + 59) / 60;
-		if(Mins <= 1)
-			str_format(pBuf, BuffSize, "%s for 1 minute (%s)", aBuf, pBan->m_Info.m_aReason);
-		else
-			str_format(pBuf, BuffSize, "%s for %d minutes (%s)", aBuf, Mins, pBan->m_Info.m_aReason);
+		str_format(pBuf, BuffSize, "%s %d 分钟 (%s)", aBuf, Mins, pBan->m_Info.m_aReason);
 	}
 	else
-		str_format(pBuf, BuffSize, "%s for life (%s)", aBuf, pBan->m_Info.m_aReason);
+		str_format(pBuf, BuffSize, "%s (%s)", aBuf, pBan->m_Info.m_aReason);
 }
 
 template<class T>

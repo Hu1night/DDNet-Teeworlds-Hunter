@@ -65,6 +65,8 @@ static MEMSTATS memory_stats = {0};
 
 static NETSOCKET invalid_socket = {NETTYPE_INVALID, -1, -1};
 
+struct tm* con_time;// Hunter
+
 void dbg_logger(DBG_LOGGER logger)
 {
 	loggers[num_loggers++] = logger;
@@ -91,9 +93,15 @@ void dbg_msg(const char *sys, const char *fmt, ...)
 	char *msg;
 	int i, len;
 
-	str_format(str, sizeof(str), "[%08x][%s]: ", (int)time(0), sys);
+	time_t Time;
+    time(&Time);
+    con_time = localtime(&Time);
+
+	/* Hunter start */
+	str_format(str, sizeof(str), "[%d-%d-%d %d:%d:%d][%s]: ", 1900 + con_time->tm_year, con_time->tm_mon + 1, con_time->tm_mday, con_time->tm_hour, con_time->tm_min, con_time->tm_sec, sys);
 	len = strlen(str);
 	msg = (char *)str + len;
+	/* Hunter end */
 
 	va_start(args, fmt);
 #if defined(CONF_FAMILY_WINDOWS)

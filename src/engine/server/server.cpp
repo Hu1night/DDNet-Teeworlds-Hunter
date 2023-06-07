@@ -1492,6 +1492,11 @@ bool CServer::DemoRecorder_IsRecording()
 	return m_DemoRecorder.IsRecording();
 }
 
+void CServer::DemoRecorder_StopRecord()// Hunter
+{
+	m_DemoRecorder.Stop();
+}
+
 void CServer::ConRecord(IConsole::IResult *pResult, void *pUser)
 {
 	CServer* pServer = (CServer *)pUser;

@@ -251,7 +251,7 @@ void CCharacter::FireWeapon()
 	vec2 Direction = normalize(vec2(m_LatestInput.m_TargetX, m_LatestInput.m_TargetY));
 
 	bool FullAuto = false;
-	if(m_ActiveWeapon == WEAPON_GRENADE || m_ActiveWeapon == WEAPON_SHOTGUN || m_ActiveWeapon == WEAPON_RIFLE)
+	if(g_Config.m_AnyWpAllFullAuto || m_ActiveWeapon == WEAPON_GRENADE || m_ActiveWeapon == WEAPON_SHOTGUN || m_ActiveWeapon == WEAPON_RIFLE)
 		FullAuto = true;
 
 
@@ -318,10 +318,12 @@ void CCharacter::FireWeapon()
 
 				Hits++;
 			}
+			
+			m_ReloadTimer = GameServer()->Tuning()->m_HammerFireDelay * Server()->TickSpeed() / 1000;// Hunter
 
 			// if we Hit anything, we have to wait for the reload
 			if(Hits)
-				m_ReloadTimer = Server()->TickSpeed()/3;
+				m_ReloadTimer = GameServer()->Tuning()->m_HammerHitFireDelay * Server()->TickSpeed() / 1000;// Hunter
 
 		} break;
 
@@ -335,6 +337,9 @@ void CCharacter::FireWeapon()
 				m_pPlayer->GetHunter() ? g_Config.m_HuntWpPowerup : 1, 0, 0, -1, WEAPON_GUN);
 
 			GameServer()->CreateSound(m_Pos, SOUND_GUN_FIRE);
+			
+			m_ReloadTimer = GameServer()->Tuning()->m_GunFireDelay * Server()->TickSpeed() / 1000;// Hunter
+			
 		} break;
 
 		case WEAPON_SHOTGUN:
@@ -358,6 +363,9 @@ void CCharacter::FireWeapon()
 			}
 
 			GameServer()->CreateSound(m_Pos, SOUND_SHOTGUN_FIRE);
+			
+			m_ReloadTimer = GameServer()->Tuning()->m_ShotgunFireDelay * Server()->TickSpeed() / 1000;// Hunter
+			
 		} break;
 
 		case WEAPON_GRENADE:
@@ -370,12 +378,18 @@ void CCharacter::FireWeapon()
 				1, true, 0, SOUND_GRENADE_EXPLODE, WEAPON_GRENADE);
 
 			GameServer()->CreateSound(m_Pos, SOUND_GRENADE_FIRE);
+			
+			m_ReloadTimer = GameServer()->Tuning()->m_GrenadeFireDelay * Server()->TickSpeed() / 1000;// Hunter
+			
 		} break;
 
 		case WEAPON_RIFLE:
 		{
 			new CLaser(GameWorld(), m_Pos, Direction, GameServer()->Tuning()->m_LaserReach, m_pPlayer->GetCID());
 			GameServer()->CreateSound(m_Pos, SOUND_RIFLE_FIRE);
+			
+			m_ReloadTimer = GameServer()->Tuning()->m_LaserFireDelay * Server()->TickSpeed() / 1000;// Hunter
+			
 		} break;
 
 		case WEAPON_NINJA:
@@ -388,6 +402,9 @@ void CCharacter::FireWeapon()
 			m_Ninja.m_OldVelAmount = length(m_Core.m_Vel);
 
 			GameServer()->CreateSound(m_Pos, SOUND_NINJA_FIRE);
+			
+			m_ReloadTimer = GameServer()->Tuning()->m_NinjaFireDelay * Server()->TickSpeed() / 1000;// Hunter
+			
 		} break;
 
 	}
@@ -396,9 +413,6 @@ void CCharacter::FireWeapon()
 
 	if(m_aWeapons[m_ActiveWeapon].m_Ammo > 0) // -1 == unlimited
 		m_aWeapons[m_ActiveWeapon].m_Ammo--;
-
-	if(!m_ReloadTimer)
-		m_ReloadTimer = g_pData->m_Weapons.m_aId[m_ActiveWeapon].m_Firedelay * Server()->TickSpeed() / 1000;
 }
 
 void CCharacter::HandleWeapons()
@@ -419,7 +433,7 @@ void CCharacter::HandleWeapons()
 	// ammo regen
 	int AmmoRegenTime = g_pData->m_Weapons.m_aId[m_ActiveWeapon].m_Ammoregentime;
 	if(g_Config.m_AnyWpAmmoRegen){
-		AmmoRegenTime = g_Config.m_AnyWpAmmoRegenTime;
+		AmmoRegenTime = g_Config.m_AnyWpAmmoRegen;
 	}
 	if(AmmoRegenTime)
 	{

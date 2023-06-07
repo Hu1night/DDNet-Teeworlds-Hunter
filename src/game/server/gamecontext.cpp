@@ -233,7 +233,7 @@ void CGameContext::SendChat(int ChatterClientID, int Team, const char *pText)
 	// disallow spectators talking with players
 	if(!m_pController->IsGameOver() && g_Config.m_AnyForceTeamTalk && 0 <= ChatterClientID && ChatterClientID < MAX_CLIENTS && !IsClientPlayer(ChatterClientID))
 	{
-		Console()->Print(IConsole::OUTPUT_LEVEL_ADDINFO, "forcedteamchat", aBuf);
+		Console()->Print(IConsole::OUTPUT_LEVEL_ADDINFO, "specchat", aBuf);
 		Team = TEAM_SPECTATORS;
 	}
 	else
@@ -679,31 +679,10 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 				{
 					SendChatTarget(ClientID, "这是HunterN模式 by Hu1night");
 					SendChatTarget(ClientID, "服务器版本：0.2b4");
+					SendChatTarget(ClientID, "Github地址：https://github.com/Hu1night/DDNet-Teeworlds-Hunter");
 					SendChatTarget(ClientID, "规则：但每回合秘密抽选猎人，其他人(即平民)对战猎人，猎人双倍伤害，有瞬杀锤子(平民无锤)和破片榴弹(对自己无伤)，活人看不到死人消息，猎人死亡通知其他猎人，开局仅知道自己身份");
 					SendChatTarget(ClientID, "Rule:Random players will be seceretly selected to be hunter. Hunter vs Civic. Hunter is stronger.");
-					SendChatTarget(ClientID, "Github地址：https://github.com/Hu1night/DDNet-Teeworlds-Hunter");
 				}
-				/*else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "w", 1) == 0)
-				{
-					SendChatTarget(ClientID, "/w私聊指令（按Tab可以补全/查找人名）用法：/w 玩家名 消息内容");
-				}
-				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "whisper", 7) == 0)
-				{
-					SendChatTarget(ClientID, "/whisper私聊指令（按Tab可以补全/查找人名）用法：/whisper 玩家名 消息内容");
-				}
-				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "c", 1) == 0)
-				{
-					SendChatTarget(ClientID, "/c私聊指令（与私聊过的人聊天）用法：/c 消息内容");
-				}
-				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "converse", 8) == 0)
-				{
-					SendChatTarget(ClientID, "/converse私聊指令（与私聊过的人聊天）用法：/converse 消息内容");
-				}
-				else if(str_comp_nocase_num(pMsg->m_pMessage + 1, "help", 4) == 0)
-				{
-					SendChatTarget(ClientID, "指令列表：");
-					SendChatTarget(ClientID, "私聊指令/w");
-				}*/
 				else
 				{
 				char aBuf[512];
@@ -732,7 +711,7 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 
 			if(m_VoteCloseTime)
 			{
-				SendChatTarget(ClientID, "等待当前投票完毕才能发起新投票.");
+				SendChatTarget(ClientID, "等待当前投票结束才能发起新的投票.");
 				return;
 			}
 
@@ -833,7 +812,7 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 			{
 				if(!g_Config.m_SvVoteSpectate)
 				{
-					SendChatTarget(ClientID, "Server does not allow voting to move players to spectators");
+					SendChatTarget(ClientID, "服务器不允许投票把玩家移动到观察者");
 					return;
 				}
 
@@ -919,7 +898,7 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 					pPlayer->m_TeamChangeTick = Server()->Tick();
 				}
 				else
-					SendBroadcast("下一回合你会加入游戏", ClientID);
+					SendBroadcast("下一回合你会加入游戏\nYou will join the game the next round", ClientID);
 			}
 			else
 			{
@@ -1794,7 +1773,7 @@ void CGameContext::WhisperCheck(int ClientID, int VictimID, const char *pMessage
 {
 	if(g_Config.m_AnyForceTeamTalk ? GetPlayerChar(VictimID) : 0)
 	{
-		if(GetPlayerChar(ClientID) ? g_Config.m_WhisperLtL : g_Config.m_WhisperDtL)
+		if(GetPlayerChar(ClientID) ? g_Config.m_WhisperAlive : g_Config.m_WhisperDead)
 		{
 			WhisperID(ClientID, VictimID, pMessage);
 		}

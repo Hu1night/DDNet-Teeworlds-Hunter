@@ -171,6 +171,7 @@ public:
 
 	void DemoRecorder_HandleAutoStart();
 	bool DemoRecorder_IsRecording();
+	void DemoRecorder_StopRecord();// Hunter
 
 	//int Tick()
 	int64 TickStartTime(int Tick);

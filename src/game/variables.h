@@ -86,7 +86,7 @@ MACRO_CONFIG_INT(SvVoteKickBantime, sv_vote_kick_bantime, 5, 0, 1440, CFGFLAG_SE
 
 //以下是Hunter设置
 
-MACRO_CONFIG_INT(SvGameOverTime, svmod_gameovertime, 6, 1, 20, CFGFLAG_SERVER, "结算画面显示时间（默认6,最小1,最大20）")
+MACRO_CONFIG_INT(SvGameOverTime, sv_gameovertime, 6, 1, 20, CFGFLAG_SERVER, "结算画面显示时间（默认6,最小1,最大20）")
 
 MACRO_CONFIG_INT(HuntHunterFixed, hunt_hunter_fixed, 0, 0, 1, CFGFLAG_SERVER, "是否选取固定猎人数量（默认0,最小0,最大1）")
 MACRO_CONFIG_INT(HuntHunterNumber, hunt_hunter_number, 1, 1, 0xFFFFFF, CFGFLAG_SERVER, "固定猎人数量为（默认1,最小1,最大inf）")
@@ -94,40 +94,32 @@ MACRO_CONFIG_INT(HuntHunterRatio, hunt_hunter_ratio, 5, 2, 0xFFFFFF, CFGFLAG_SER
 
 MACRO_CONFIG_INT(AnyWpNinjaAllow, any_wpninja_allow, 1, 0, 1, CFGFLAG_SERVER, "是否允许Ninja（默认1,最小0,最大1）")
 
+MACRO_CONFIG_INT(HuntWpHammerGive, hunt_wphammer_give, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许锤子（默认0,最小0,最大1）")
 MACRO_CONFIG_INT(HuntWpHammerDmg, hunt_wphammer_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人锤子伤害（默认20,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntWpNinjaDmg, hunt_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人Ninja伤害（默认20,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntWpPowerup, hunt_wppowerup, 2, 1, 0xFFFFFF, CFGFLAG_SERVER, "猎人武器增强比例（默认2,最小1,最大inf）")
 MACRO_CONFIG_INT(HuntWpGrenadeFwAllow, hunt_wpgrenade_fwallow, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许榴弹破片（默认1,最小0,最大1）")
 MACRO_CONFIG_INT(HuntWpGrenadeFw, hunt_wpgrenade_fw, 18, 0, 0xFFFFFF, CFGFLAG_SERVER, "榴弹破片数量（默认18,最小0,最大inf）")
 
-MACRO_CONFIG_INT(HuntWpHammerGive, hunt_wphammer_give, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许锤子（默认0,最小0,最大1）")
-MACRO_CONFIG_INT(HuntWpShotgunGive, hunt_wpshotgun_give, 0, 0, 1, CFGFLAG_SERVER, "猎人开局是否给予霰弹（默认0,最小0,最大1）")
-MACRO_CONFIG_INT(HuntWpGrenadeGive, hunt_wpgrenade_give, 0, 0, 1, CFGFLAG_SERVER, "猎人开局是否给予榴弹（默认0,最小0,最大1）")
-MACRO_CONFIG_INT(HuntWpRifleGive, hunt_wprifle_give, 0, 0, 1, CFGFLAG_SERVER, "猎人开局是否给予激光（默认0,最小0,最大1）")
-
 MACRO_CONFIG_INT(HuntBroadcastHunterDeath, hunt_broadcast_hunter_death, 0, 0, 1, CFGFLAG_SERVER, "是否向全体广播猎人死亡（默认0,最小0,最大1）")
 MACRO_CONFIG_INT(ShowHunterList, hunt_show_hunterlist, 0, 0, 1, CFGFLAG_SERVER, "是否开局向全体广播猎人列表（默认0,最小0,最大1）")
 
+MACRO_CONFIG_INT(CivWpHammerGive, civ_wphammer_give, 0, 0, 1, CFGFLAG_SERVER, "平民是否给予锤子（默认0,最小0,最大1）")
 MACRO_CONFIG_INT(CivWpHammerDmg, civ_wphammer_dmg, 3, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民锤子伤害（默认3,最小0,最大inf）")
 MACRO_CONFIG_INT(CivWpNinjaDmg, civ_wpninja_dmg, 13, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民Ninja伤害（默认13,最小0,最大inf）")
-
-MACRO_CONFIG_INT(CivWpHammerGive, civ_wphammer_give, 0, 0, 1, CFGFLAG_SERVER, "平民是否给予锤子（默认0,最小0,最大1）")
-MACRO_CONFIG_INT(CivWpShotgunGive, civ_wpshotgun_give, 0, 0, 1, CFGFLAG_SERVER, "平民开局是否给予霰弹（默认0,最小0,最大1）")
-MACRO_CONFIG_INT(CivWpGrenadeGive, civ_wpgrenade_give, 0, 0, 1, CFGFLAG_SERVER, "平民开局是否给予榴弹（默认0,最小0,最大1）")
-MACRO_CONFIG_INT(CivWpRifleGive, civ_wprifle_give, 0, 0, 1, CFGFLAG_SERVER, "平民开局是否给予激光（默认0,最小0,最大1）")
 
 MACRO_CONFIG_INT(HuntRoundStartHealth, hunt_round_start_health, 10, 1, 0xFFFFFF, CFGFLAG_SERVER, "猎人开局给的血量（默认10,最小1,最大inf）")
 MACRO_CONFIG_INT(HuntRoundStartArmor, hunt_round_start_armor, 0, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人开局给的盾（默认0,最小0,最大inf）")
 MACRO_CONFIG_INT(CivRoundStartHealth, civ_round_start_health, 10, 1, 0xFFFFFF, CFGFLAG_SERVER, "平民开局给的血量（默认10,最小1,最大inf）")
 MACRO_CONFIG_INT(CivRoundStartArmor, civ_round_start_armor, 0, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民开局给的盾（默认0,最小0,最大inf）")
 
-MACRO_CONFIG_INT(AnyWpAmmoRegen, any_wpammo_regan, 0, 0, 1, CFGFLAG_SERVER, "启用武器弹药回复（默认0,最小0,最大1）")
-MACRO_CONFIG_INT(AnyWpAmmoRegenTime, any_wpammo_regan_time, 500, 20, 0xFFFFFF, CFGFLAG_SERVER, "武器弹药回复时间 单位ms（默认500,最小20,最大inf）")
+MACRO_CONFIG_INT(AnyWpAllFullAuto, any_wpall_fullauto, 0, 0, 1, CFGFLAG_SERVER, "所有武器是否全自动（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(AnyWpAmmoRegen, any_wpammo_regan, 0, 0, 0xFFFFFF, CFGFLAG_SERVER, "武器弹药回复时间覆盖 单位ms（默认0(即不覆盖),最小0,最大inf）")
 MACRO_CONFIG_INT(AnyWpNinjaRespawnTime, any_wpninja_respawntime, 90, 0, 0xFFFFFF, CFGFLAG_SERVER, "Ninja重刷新时间（默认90,最小0,最大inf）")
 
 MACRO_CONFIG_INT(AnyForceTeamTalk, any_force_team_talk, 1, 0, 1, CFGFLAG_SERVER, "强制观察者在一个频道里（默认1,最小0,最大1）")
-MACRO_CONFIG_INT(WhisperDtL, svmod_whisper_dead_to_alive, 0, 0, 1, CFGFLAG_SERVER, "允许死人对活人whisper（默认0,最小0,最大1）")
-MACRO_CONFIG_INT(WhisperLtL, svmod_whisper_alive_to_alive, 1, 0, 1, CFGFLAG_SERVER, "允许活人对活人whisper（默认1,最小0,最大1）")
+MACRO_CONFIG_INT(WhisperDead, sv_whisper_dead, 0, 0, 1, CFGFLAG_SERVER, "允许死人对活人whisper（默认0,最小0,最大1）")
+MACRO_CONFIG_INT(WhisperAlive, sv_whisper_alive, 1, 0, 1, CFGFLAG_SERVER, "允许活人对活人whisper（默认1,最小0,最大1）")
 
 MACRO_CONFIG_INT(HuntScoreHunterWin, hunt_score_hunter_win, 2, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人胜利给的分数（默认2,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntScoreCivicWin, hunt_score_civic_win, 1, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民胜利给的分数（默认1,最小0,最大inf）")

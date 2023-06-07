@@ -21,7 +21,7 @@ Teeworlds HunterN猎人杀
 更改：几乎完整的中文翻译<br />
 
 加入了以下地图：
-smallbomb、huntern5、huntern_doomsday、huntern_qianye
+smallbomb、huntern5(by Hu1night)、huntern_doomsday(by 火锅Dio)、huntern_qianye(by Lazyfox & Hu1night)
 
 如何使用
 --------------
@@ -32,21 +32,25 @@ smallbomb、huntern5、huntern_doomsday、huntern_qianye
 在Ubuntu上使用bam构建
 --------------
 1.确保bam及相关组件已安装<br />
-```sudo apt update
+```
+sudo apt update
 sudo apt install build-essential bam python3
 ```
 2.到本地项目编译<br />
-```bam server_release
+```
+bam server_release
 ```
 
 在Ubuntu上使用CMake构建
 --------------
 1.确保CMake及相关组件已安装<br />
-```sudo apt update
+```
+sudo apt update
 sudo apt install build-essential cmake python3
 ```
 2.到本地项目编译<br />
-```cmake .
+```
+cmake .
 make -j16
 ```
 
