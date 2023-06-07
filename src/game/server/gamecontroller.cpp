@@ -248,7 +248,7 @@ void IGameController::CycleMap()
 	if(!str_length(g_Config.m_SvMaprotation))
 		return;
 
-	if(m_RoundCount < g_Config.m_SvRoundsPerMap-1)
+	if(m_RoundCount < (g_Config.m_SvRoundtype ? 114514 : g_Config.m_SvRoundsPerMap)-1)
 		return;
 
 	// handle maprotation
@@ -449,8 +449,7 @@ void IGameController::Tick()
 		if(Server()->Tick() > m_GameOverTick+Server()->TickSpeed()*g_Config.m_SvGameOverTime)
 		{
 			Server()->DemoRecorder_StopRecord();// Hunter
-			if(g_Config.m_HuntRoundtype)
-				CycleMap();
+			CycleMap();
 			StartRound();
 			m_RoundCount++;
 		}

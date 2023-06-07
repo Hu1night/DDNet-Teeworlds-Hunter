@@ -113,10 +113,16 @@ void CGameControllerMOD::Tick()
 
 				// notify all
 
-				if(g_Config.m_HuntRoundtype)
+				if(g_Config.m_SvRoundtype)
+				{
+					str_format(aBuf, sizeof(aBuf), "有趣的一轮开始了！%d 个爱坤Kunter对战Sid Meier's Civics！", m_Hunters);
+					GameServer()->SendChatTarget(-1, aBuf);
+					GameServer()->SendChatTarget(-1, "你是锤子！有瞬杀Dio图和高伤暴民，答辩并把锤柄插入所有平民触发战败CG胜利！");
+				}
+				else
 				{
 					GameServer()->SendChatTarget(-1, "——————欢迎来到HunterN猎人杀——————");
-					str_format(aBuf, sizeof(aBuf), "本回合有 %d 个Hunter has been selected.", m_Hunters);
+					str_format(aBuf, sizeof(aBuf), "本回合有 %d 个猎人Hunter has been selected.", m_Hunters);
 					GameServer()->SendChatTarget(-1, aBuf);
 					GameServer()->SendChatTarget(-1, "规则：每回合秘密抽选猎人 猎人对战平民 活人看不到死人消息");
 					GameServer()->SendChatTarget(-1, "      猎人双倍伤害 有瞬杀锤子(平民无锤)和破片榴弹(对自己无伤)");

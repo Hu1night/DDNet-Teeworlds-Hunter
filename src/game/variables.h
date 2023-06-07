@@ -125,7 +125,7 @@ MACRO_CONFIG_INT(HuntScoreHunterWin, hunt_score_hunter_win, 2, 0, 0xFFFFFF, CFGF
 MACRO_CONFIG_INT(HuntScoreCivicWin, hunt_score_civic_win, 1, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民胜利给的分数（默认1,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntScoreCivicKillHunter, hunt_score_civic_kill_hunter, 2, 0, 0xFFFFFF, CFGFLAG_SERVER, "平民杀个猎给的分数（默认2,最小0,最大inf）")
 
-MACRO_CONFIG_INT(HuntRoundtype, hunt_roundtype, 1, 0, 1, CFGFLAG_SERVER, "回合类型 0不会显示开局chat（默认1,最小0,最大1）")
+MACRO_CONFIG_INT(SvRoundtype, sv_roundtype, 0, 0, 1, CFGFLAG_SERVER, "回合类型 影响开局chat提示（默认0,最小0,最大1）")
 
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly
