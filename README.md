@@ -3,7 +3,19 @@ Teeworlds HunterN猎人杀
 基于Hunter模式(Teeworlds 0.6.5)<br />
 我只负责往屎山加屎 修BUG请提交代码qwq<br />
 
-模式规则：一命DM死斗但每回合秘密抽选猎人，其他人(即平民)对战猎人，猎人双倍伤害，有瞬杀锤子(平民无锤)和破片榴弹(对自己无伤)，活人看不到死人消息，猎人死亡通知其他猎人，开局仅知道自己身份
+模式规则：<br />
+1.每回合都会秘密随机选择猎人。猎人必须消灭所有平民。<br />
+2.猎人造成双倍伤害，有一把瞬杀锤和碎片榴弹，而平民没有锤子，只能使用常规武器。<br />
+3.活着的玩家看不到死去玩家的信息。<br />
+4.如果猎人死亡，将通知其他猎人。<br />
+5.在游戏开始时，玩家只知道自己的身份。
+
+Rules:<br />
+1.Each round will secretly randomly select Hunter(s). Hunter(s) must eliminate all the Civilians.<br />
+2.The Hunter deals double damage and has an instant-kill hammer and fragmentation grenades, while Civilians have no hammer and can only use regular weapons.<br />
+3.The living players cannot see messages from dead players.<br />
+4.If the Hunter dies, the other Hunters will be notified.<br />
+5.At the beginning of the game, players only know their own identity.
 
 与原Hunter模式的区别：
 -----------------------
@@ -13,19 +25,19 @@ Teeworlds HunterN猎人杀
 更改：每次捡起ninja会额外给予1心 可以超出血量上限 可以叠加<br />
 加入：开局平民文字提示<br />
 加入：开局身份音效提示<br />
-加入：指令if(从[InfectionDust](https://github.com/InfectionDust/teeworlds-infclassR/)移植)和"没有此命令"提示<br />
+加入：指令if和"没有此命令"提示<br />
 加入：whisper&converse悄悄话指令(有阴阳两隔检测)<br />
 加入：回合结束显示猎人列表<br />
 加入：还没完善的Funround<br />
 加入：一堆没用的rcon命令<br />
 更改：几乎完整的中文翻译<br />
 
-加入了以下地图：
+加入了以下地图(按时间排序 作者按贡献排序)：
 smallbomb、huntern5(by Hu1night)、huntern_doomsday(by 火锅Dio)、huntern_qianye(by Lazyfox & Hu1night)
 
 如何使用
 --------------
-1.下载最新的[Release](https://github.com/Hu1night/DDNet-Teeworlds-Hunter/releases)或开发版构建([项目Action](https://github.com/Hu1night/DDNet-Teeworlds-Hunter/actions/workflows/build.yaml)),也可从源码构建<br />
+1.下载最新的[Release](https://github.com/Hu1night/DDNet-Teeworlds-Hunter/releases)或开发版构建(登录Github并在[项目Action](https://github.com/Hu1night/DDNet-Teeworlds-Hunter/actions/workflows/build.yaml)下载),也可从源码构建<br />
 2.开服前根据需求更改autoexec.cfg(如服务器名字,F2控制台密码,投票等)<br />
 3.运行hunter_srv.exe(Windows系统)或hunter_srv(Linux系统)开服
 

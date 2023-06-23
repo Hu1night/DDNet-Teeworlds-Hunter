@@ -28,7 +28,7 @@ void CGameControllerMOD::PostReset()
 	for(int i = 0; i < MAX_CLIENTS; i++)
 		if(GameServer()->m_apPlayers[i])
 		{
-			GameServer()->m_apPlayers[i]->SetHunter(false);
+			GameServer()->m_apPlayers[i]->SetClass(0);
 			if(GameServer()->m_apPlayers[i]->GetTeam() == TEAM_SPECTATORS && GameServer()->m_apPlayers[i]->m_WantTeam != TEAM_SPECTATORS)
 			{
 				GameServer()->m_apPlayers[i]->SetTeamDirect(GameServer()->m_pController->ClampTeam(GameServer()->m_apPlayers[i]->m_WantTeam));
@@ -95,7 +95,7 @@ void CGameControllerMOD::Tick()
 							if(nextHunter == 0)
 							{
 								m_Civics--;
-								GameServer()->m_apPlayers[i]->SetHunter(true);
+								GameServer()->m_apPlayers[i]->SetClass(true);
 
 								// generate info message
 								const char* ClientName = Server()->ClientName(GameServer()->m_apPlayers[i]->GetCID());

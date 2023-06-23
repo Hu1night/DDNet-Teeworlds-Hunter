@@ -98,8 +98,8 @@ MACRO_CONFIG_INT(HuntWpHammerGive, hunt_wphammer_give, 1, 0, 1, CFGFLAG_SERVER, 
 MACRO_CONFIG_INT(HuntWpHammerDmg, hunt_wphammer_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人锤子伤害（默认20,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntWpNinjaDmg, hunt_wpninja_dmg, 20, 0, 0xFFFFFF, CFGFLAG_SERVER, "猎人Ninja伤害（默认20,最小0,最大inf）")
 MACRO_CONFIG_INT(HuntWpPowerup, hunt_wppowerup, 2, 1, 0xFFFFFF, CFGFLAG_SERVER, "猎人武器增强比例（默认2,最小1,最大inf）")
-MACRO_CONFIG_INT(HuntWpGrenadeFwAllow, hunt_wpgrenade_fwallow, 1, 0, 1, CFGFLAG_SERVER, "猎人是否允许榴弹破片（默认1,最小0,最大1）")
-MACRO_CONFIG_INT(HuntWpGrenadeFw, hunt_wpgrenade_fw, 18, 0, 0xFFFFFF, CFGFLAG_SERVER, "榴弹破片数量（默认18,最小0,最大inf）")
+MACRO_CONFIG_INT(HuntWpGrenadeFrag, hunt_wpgrenade_frag, 18, 0, 0xFFFFFF, CFGFLAG_SERVER, "榴弹破片数量（默认18,最小0,最大inf）")
+MACRO_CONFIG_INT(HuntWpGrenadeFragDmg, hunt_wpgrenade_frag_dmg, 1, 0, 0xFFFFFF, CFGFLAG_SERVER, "榴弹破片伤害（默认1,最小0,最大inf）")
 
 MACRO_CONFIG_INT(HuntBroadcastHunterDeath, hunt_broadcast_hunter_death, 0, 0, 1, CFGFLAG_SERVER, "是否向全体广播猎人死亡（默认0,最小0,最大1）")
 MACRO_CONFIG_INT(ShowHunterList, hunt_show_hunterlist, 0, 0, 1, CFGFLAG_SERVER, "是否开局向全体广播猎人列表（默认0,最小0,最大1）")

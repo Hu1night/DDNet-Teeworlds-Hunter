@@ -681,7 +681,7 @@ void CCharacter::Die(int Killer, int Weapon)
 {
 
 	// we got to wait 0.5 secs before respawning
-	m_pPlayer->m_RespawnTick = Server()->Tick()+Server()->TickSpeed()/20;// Hunter
+	m_pPlayer->m_RespawnTick = Server()->Tick()+Server()->TickSpeed()/2;
 	int ModeSpecial = GameServer()->m_pController->OnCharacterDeath(this, GameServer()->m_apPlayers[Killer], Weapon);
 
 	char aBuf[256];
@@ -727,7 +727,7 @@ bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon)
 	// m_pPlayer only inflicts half damage on self
 	// hunter do not get any damage
 	if(From == m_pPlayer->GetCID())
-		Dmg = m_pPlayer->GetHunter() ? 0 : max(1, Dmg/2);
+		Dmg = m_pPlayer->GetHunter() ? 0 : max(1, Dmg/2);// Hunter
 
 	m_DamageTaken++;
 
@@ -869,8 +869,33 @@ void CCharacter::Snap(int SnappingClient)
 	}
 
 	pCharacter->m_PlayerFlags = GetPlayer()->m_PlayerFlags;
-}
 
+	/* Hunter start *
+	int ID = m_pPlayer->GetCID();
+	
+	CNetObj_DDNetCharacter *pDDNetCharacter = Server()->SnapNewItem<CNetObj_DDNetCharacter>(ID);
+	if(!pDDNetCharacter)
+		return;
+	
+	pDDNetCharacter->m_Flags = 0;
+	if(m_aWeapons[WEAPON_HAMMER].m_Got)
+		pDDNetCharacter->m_Flags |= CHARACTERFLAG_WEAPON_HAMMER;
+	if(m_aWeapons[WEAPON_GUN].m_Got)
+		pDDNetCharacter->m_Flags |= CHARACTERFLAG_WEAPON_GUN;
+	if(m_aWeapons[WEAPON_SHOTGUN].m_Got)
+		pDDNetCharacter->m_Flags |= CHARACTERFLAG_WEAPON_SHOTGUN;
+	if(m_aWeapons[WEAPON_GRENADE].m_Got)
+		pDDNetCharacter->m_Flags |= CHARACTERFLAG_WEAPON_GRENADE;
+	if(m_aWeapons[WEAPON_RIFLE].m_Got)
+		pDDNetCharacter->m_Flags |= CHARACTERFLAG_WEAPON_LASER;
+	if(m_ActiveWeapon == WEAPON_NINJA)
+		pDDNetCharacter->m_Flags |= CHARACTERFLAG_WEAPON_NINJA;
+	
+	pDDNetCharacter->m_Jumps = 5;
+	pDDNetCharacter->m_JumpedTotal = m_Jumped;
+	pDDNetCharacter->m_NinjaActivationTick = m_Ninja.m_ActivationTick;
+	* Hunter end */
+}
 /* Hunter start */
 void CCharacter::SetHealth(int Amount, int Increase)
 {
@@ -879,6 +904,6 @@ void CCharacter::SetHealth(int Amount, int Increase)
 
 void CCharacter::SetArmor(int Amount, int Increase)
 {
-		m_Armor = Increase ? m_Armor+Amount : Amount;	
+	m_Armor = Increase ? m_Armor+Amount : Amount;	
 }
 /* Hunter end */

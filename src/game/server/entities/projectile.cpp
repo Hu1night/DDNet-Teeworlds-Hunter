@@ -76,7 +76,7 @@ void CProjectile::Tick()
 		if(m_Explosive)
 		{
 			GameServer()->CreateExplosion(CurPos, m_Owner, m_Weapon, false);
-			if(g_Config.m_HuntWpGrenadeFwAllow && OwnerChar && OwnerChar->GetPlayer() && OwnerChar->GetPlayer()->GetHunter())
+			if(OwnerChar && OwnerChar->GetPlayer() && OwnerChar->GetPlayer()->GetHunter())
 			{
 				/*
 				GameServer()->CreateExplosion(CurPos+vec2(50,50), m_Owner, m_Weapon, false);
@@ -92,7 +92,7 @@ void CProjectile::Tick()
 
 				CMsgPacker Msg(NETMSGTYPE_SV_EXTRAPROJECTILE);
 
-				for(int i=0;i<g_Config.m_HuntWpGrenadeFw;i++)
+				for(int i=0;i<g_Config.m_HuntWpGrenadeFrag;i++)
 				{
 					float a = (rand()%314)/5.0;
 					vec2 dir = vec2(cosf(a), sinf(a));
@@ -101,7 +101,7 @@ void CProjectile::Tick()
 						CurPos+dir,
 						dir*0.5,
 						(int)(Server()->TickSpeed()*GameServer()->Tuning()->m_ShotgunLifetime),
-						1, 0, 0, -1, SOUND_SHOTGUN_FIRE);
+						g_Config.m_HuntWpGrenadeFragDmg, 0, 0, -1, SOUND_SHOTGUN_FIRE);
 
 					// pack the Projectile and send it to the client Directly
 					CNetObj_Projectile p;

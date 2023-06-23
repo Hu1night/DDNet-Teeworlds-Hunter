@@ -599,6 +599,14 @@ void IGameController::Snap(int SnappingClient)
 
 	pGameInfoObj->m_RoundNum = (str_length(g_Config.m_SvMaprotation) && g_Config.m_SvRoundsPerMap) ? g_Config.m_SvRoundsPerMap : 0;
 	pGameInfoObj->m_RoundCurrent = m_RoundCount+1;
+	
+	/* Hunter start *
+	CNetObj_GameInfoEx *pGameInfoEx = Server()->SnapNewItem<CNetObj_GameInfoEx>(0);
+	if(!pGameInfoEx)
+		return;
+	
+	pGameInfoEx->m_Flags2 = GAMEINFOFLAG2_HUD_DDRACE;
+	* Hunter end */
 }
 
 int IGameController::GetAutoTeam(int NotThisID)

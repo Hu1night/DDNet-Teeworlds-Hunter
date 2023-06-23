@@ -48,6 +48,15 @@ const char *CNetObjHandler::ms_apObjNames[] = {
 	""
 };
 
+/* Hunter start *
+const char *CNetObjHandler::ms_apExObjNames[] = {
+	"invalid",
+	"DDNetCharacter",
+	"GameInfoEx",
+	""
+};
+* Hunter end */
+
 int CNetObjHandler::ms_aObjSizes[] = {
 	0,
 	sizeof(CNetObj_PlayerInput),
@@ -72,6 +81,14 @@ int CNetObjHandler::ms_aObjSizes[] = {
 	sizeof(CNetEvent_DamageInd),
 	0
 };
+
+/* Hunter start *
+int CNetObjHandler::ms_aUnpackedExObjSizes[] = {
+	0,
+	sizeof(CNetObj_DDNetCharacter),
+	sizeof(CNetObj_GameInfoEx),
+};
+* Hunter end */
 
 const char *CNetObjHandler::ms_apMsgNames[] = {
 	"invalid",
@@ -242,6 +259,25 @@ int CNetObjHandler::ValidateObj(int Type, void *pData, int Size)
 		ClampInt("m_SpectatorID", pObj->m_SpectatorID, SPEC_FREEVIEW, MAX_CLIENTS-1);
 		return 0;
 	}
+	
+	/* Hunter start *
+	case NETOBJTYPE_DDNETCHARACTER:
+	{
+		CNetObj_DDNetCharacter *pData = (CNetObj_DDNetCharacter *)m_aUnpackedData;
+		pData->m_Flags = pUnpacker->GetUncompressedIntOrDefault(0);
+		pData->m_Jumps = pUnpacker->GetUncompressedIntOrDefault(2);
+		pData->m_JumpedTotal = pUnpacker->GetUncompressedIntOrDefault(-1);
+		pData->m_NinjaActivationTick = pUnpacker->GetUncompressedIntOrDefault(-1);
+		pData->m_Jumps = ClampInt("m_Jumps", pData->m_Jumps, -1, 255);
+		pData->m_JumpedTotal = ClampInt("m_JumpedTotal", pData->m_JumpedTotal, -1, 255);
+	}
+	
+	case NETOBJTYPE_GAMEINFOEX:
+	{
+		CNetObj_GameInfoEx *pData = (CNetObj_GameInfoEx *)m_aUnpackedData;
+		pData->m_Flags2 = pUnpacker->GetUncompressedIntOrDefault(0);
+	}
+	* Hunter end */
 	
 	case NETEVENTTYPE_COMMON:
 	{

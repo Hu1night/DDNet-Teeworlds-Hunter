@@ -88,24 +88,19 @@ void CPickup::Tick()
 			case POWERUP_NINJA:
 				{
 					// activate ninja on target player
-					RespawnTime = g_Config.m_AnyWpNinjaRespawnTime;//g_pData->m_aPickups[m_Type].m_Respawntime;
-					/* Hunter start */
-					if(g_Config.m_AnyWpNinjaAllow)
+					RespawnTime = g_Config.m_AnyWpNinjaRespawnTime;//g_pData->m_aPickups[m_Type].m_Respawntime;// Hunter
+					pChr->SetHealth(1, 1);//每次捡起ninja额外给予1心 可以超出血量上限 可以叠加// Hunter
+					pChr->GiveNinja();
+
+					// loop through all players, setting their emotes
+					CCharacter *pC = static_cast<CCharacter *>(GameServer()->m_World.FindFirst(CGameWorld::ENTTYPE_CHARACTER));
+					for(; pC; pC = (CCharacter *)pC->TypeNext())
 					{
-						pChr->SetHealth(1, 1);//每次捡起ninja额外给予1心 可以超出血量上限 可以叠加
-						pChr->GiveNinja();
-
-						// loop through all players, setting their emotes
-						CCharacter *pC = static_cast<CCharacter *>(GameServer()->m_World.FindFirst(CGameWorld::ENTTYPE_CHARACTER));
-						for(; pC; pC = (CCharacter *)pC->TypeNext())
-						{
-							if (pC != pChr)
-								pC->SetEmote(EMOTE_SURPRISE, Server()->Tick() + Server()->TickSpeed());
-						}
-
-						pChr->SetEmote(EMOTE_ANGRY, Server()->Tick() + 1200 * Server()->TickSpeed() / 1000);
+						if (pC != pChr)
+							pC->SetEmote(EMOTE_SURPRISE, Server()->Tick() + Server()->TickSpeed());
 					}
-					/* Hunter start */
+
+					pChr->SetEmote(EMOTE_ANGRY, Server()->Tick() + 1200 * Server()->TickSpeed() / 1000);
 					break;
 				}
 
@@ -115,11 +110,13 @@ void CPickup::Tick()
 
 		if(RespawnTime >= 0)
 		{
-			//char aBuf[256];
-			//str_format(aBuf, sizeof(aBuf), "pickup player='%d:%s' item=%d/%d",
-			//	pChr->GetPlayer()->GetCID(), Server()->ClientName(pChr->GetPlayer()->GetCID()), m_Type, m_Subtype);
-			//GameServer()->Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
+			/* Hunter start *//*
+			char aBuf[256];
+			str_format(aBuf, sizeof(aBuf), "pickup player='%d:%s' item=%d/%d",
+				pChr->GetPlayer()->GetCID(), Server()->ClientName(pChr->GetPlayer()->GetCID()), m_Type, m_Subtype);
+			GameServer()->Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
 			//烦人的console回显
+			*//* Hunter end */
 			m_SpawnTick = Server()->Tick() + Server()->TickSpeed() * RespawnTime;
 		}
 	}

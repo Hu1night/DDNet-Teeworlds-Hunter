@@ -14,14 +14,14 @@ CPlayer::CPlayer(CGameContext *pGameServer, int ClientID, int Team)
 	m_pGameServer = pGameServer;
 	m_RespawnTick = Server()->Tick();
 	m_DieTick = Server()->Tick();
-	m_HiddenScore = 0;
+	m_HiddenScore = 0;// Hunter
 	m_Score = 0;
 	m_ScoreStartTick = Server()->Tick();
 	m_pCharacter = 0;
 	m_ClientID = ClientID;
 	m_Team = GameServer()->m_pController->ClampTeam(Team);
-	m_Hunter = false;
-	m_WantTeam = GameServer()->m_pController->ClampTeam(1);
+	m_Class = 0;// Hunter
+	m_WantTeam = GameServer()->m_pController->ClampTeam(1);// Hunter
 	m_SpectatorID = SPEC_FREEVIEW;
 	m_LastActionTick = Server()->Tick();
 	m_TeamChangeTick = Server()->Tick();
@@ -265,7 +265,7 @@ void CPlayer::SetTeam(int Team, bool DoChatMsg)
 	m_LastActionTick = Server()->Tick();
 	m_SpectatorID = SPEC_FREEVIEW;
 	// we got to wait 0.5 secs before respawning
-	m_RespawnTick = Server()->Tick()+Server()->TickSpeed()/50;// Hunter
+	m_RespawnTick = Server()->Tick()+Server()->TickSpeed()/2;
 	str_format(aBuf, sizeof(aBuf), "team_join player='%d:%s' m_Team=%d", m_ClientID, Server()->ClientName(m_ClientID), m_Team);
 	GameServer()->Console()->Print(IConsole::OUTPUT_LEVEL_DEBUG, "game", aBuf);
 
@@ -281,12 +281,12 @@ void CPlayer::SetTeam(int Team, bool DoChatMsg)
 		}
 	}
 }
-
+/* Hunter start */
 void CPlayer::SetTeamDirect(int Team)
 {
 	m_Team = Team;
 }
-
+/* Hunter end */
 void CPlayer::TryRespawn()
 {
 	vec2 SpawnPos;
@@ -299,9 +299,9 @@ void CPlayer::TryRespawn()
 	m_pCharacter->Spawn(this, SpawnPos);
 	GameServer()->CreatePlayerSpawn(SpawnPos);
 }
-
-void CPlayer::SetHunter(bool isHunter)
+/* Hunter start */
+void CPlayer::SetClass(int Class)
 {
-	m_Hunter = isHunter;
+	m_Class = Class;
 }
-
+/* Hunter end */

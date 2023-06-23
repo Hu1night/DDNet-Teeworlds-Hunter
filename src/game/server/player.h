@@ -21,10 +21,10 @@ public:
 	void TryRespawn();
 	void Respawn();
 	void SetTeam(int Team, bool DoChatMsg=true);
-	void SetTeamDirect(int Team);
-	void SetHunter(bool isHunter);
+	void SetTeamDirect(int Team);// Hunter
+	void SetClass(int Class);// Hunter
 	int GetTeam() const { return m_Team; };
-	bool GetHunter() const { return m_Hunter; };
+	bool GetHunter() const { return m_Class; };// Hunter
 	int GetCID() const { return m_ClientID; };
 
 	void Tick();
@@ -65,9 +65,9 @@ public:
 	int m_LastChangeInfo;
 	int m_LastEmote;
 	int m_LastKill;
-	int m_LastWhisperTo;
+	int m_LastWhisperTo;// Hunter
 
-	int m_WantTeam;
+	int m_WantTeam;// Hunter
 
 	// TODO: clean this up
 	struct
@@ -80,7 +80,7 @@ public:
 
 	int m_RespawnTick;
 	int m_DieTick;
-	int m_HiddenScore;
+	int m_HiddenScore;// Hunter
 	int m_Score;
 	int m_ScoreStartTick;
 	bool m_ForceBalanced;
@@ -114,7 +114,7 @@ private:
 	bool m_Spawning;
 	int m_ClientID;
 	int m_Team;
-	bool m_Hunter;
+	int m_Class;// Hunter
 };
 
 #endif

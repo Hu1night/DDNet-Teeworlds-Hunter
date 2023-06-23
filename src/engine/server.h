@@ -53,6 +53,13 @@ public:
 	virtual void SnapFreeID(int ID) = 0;
 	virtual void *SnapNewItem(int Type, int ID, int Size) = 0;
 
+	template<typename T>
+	T *SnapNewItem(int ID)
+	{
+		const int Type = T::ms_MsgID;
+		return static_cast<T *>(SnapNewItem(Type, ID, sizeof(T)));
+	}
+	
 	virtual void SnapSetStaticsize(int ItemType, int Size) = 0;
 
 	enum
